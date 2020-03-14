@@ -3,4 +3,4 @@ class UnfoundAdminException(Exception):
         self.__message = message
 
     def __str__(self):
-        return self.message
+        return self.__message
