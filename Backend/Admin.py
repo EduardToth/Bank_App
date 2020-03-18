@@ -1,5 +1,6 @@
+import hashlib
 import Bank
-import MySQLdb
+import PasswordAlreadyExistsException
 
 class Admin:
     def __init__(self, name, password, homeBank):
@@ -17,20 +18,18 @@ class Admin:
         clientsString = ""
 
         for x in myresult:
-            clientsString = 'Username: ' + x['name'] + '\n'
-            clientsString += 'Password: ' + x['password'] + '\n'
-            clientsString += 'Deposited money: ' + x['moneyOwned'] + '\n'
-            clientsString += 'Money borrowed: ' + x['debt'] + '\n'
+            clientsString += 'Username: ' + x[0] + '\n'
+            clientsString += 'Password: ' + x[1] + '\n'
+            clientsString += 'Deposited money: ' + str(x[2]) + '\n'
+            clientsString += 'Money borrowed: ' + str(x[3]) + '\n'
+            clientsString += '\n'
 
-        if (mydb.is_connected()):
-            mycursor.close()
-            mydb.close()
-            print("MySQL connection is closed")
+        mydb.close()
 
         return clientsString
 
-    def addMoneyForBank(self,money):
-        if( money < 0 ):
+    def addMoneyForBank(self, money):
+        if money < 0:
             raise Exception('There is no way to add a negative ammount of money')
 
         bank_sCredit = self.__homeBank.getTotalAmountOfMoney()
@@ -39,41 +38,73 @@ class Admin:
         mydb = Bank.Bank.createConnection()
         mycursor = mydb.cursor()
         try:
-            mycursor.execute("UPDATE bank SET `moneyOwned`=bank_sCredit WHERE name='ING'")
+            mycursor.execute("UPDATE bank SET moneyOwned = %s WHERE name='ING'", (bank_sCredit))
             mydb.commit()
 
+            result = mycursor.rowcount
+            if result == 0:
+                raise Exception('Unable to finish the update')
+            else:
+                print('The ammount of money was succesfully updated')
             return 1
-        except MySQLdb.Error as e:
+        except BaseException as e:
             print(e)
-            return 0
-        except:
-            print('Unknown exception')
+            print('Something happened in addMoneyForBank()')
             return 0
         finally:
-            if mydb.is_connected():
-                mycursor.close()
-                mydb.close()
-                print("MySQL connection is closed")
+            mydb.close()
 
-    def deleteClient(self, name, password):
+    def deleteClient(self, nameP, passwordP):
         mydb = Bank.Bank.createConnection()
+        passwordHashed = hashlib.md5(passwordP.encode("utf-8"))
+        passwordHexa = passwordHashed.hexdigest()
+
         mycursor = mydb.cursor()
         try:
-            mycursor.execute("DELETE FROM Clients WHERE name='name' AND password='password'")
+            result = mycursor.execute("DELETE FROM Clients WHERE name = %s AND password = %s", (nameP, passwordHexa))
             mydb.commit()
 
+            result = mycursor.rowcount
+            if result == 0:
+                raise Exception('The client is not present in our database')
+            else:
+                print('Record deleted successfully')
             return 1
-        except MySQLdb.Error as e:
+        except BaseException as e:
             print(e)
-            return 0
-        except:
-            print('Unknown exception')
+            print('Something happened in deleteClient()')
             return 0
         finally:
-            if mydb.is_connected():
-                mycursor.close()
-                mydb.close()
-                print("MySQL connection is closed")
+            mydb.close()
 
+    def __passwordExistInDatabase(self, mydb, password_introduced):
+        mycursor = mydb.cursor()
+        mycursor.execute("SELECT password FROM Admins")
 
+        myresult = mycursor.fetchall()
 
+        exist = 0
+        for x in myresult:
+            if x[0] == password_introduced:
+                exist = 1
+        return exist
+
+    def createAdminAccount(self, name, password):
+        mydb = Bank.Bank.createConnection()
+        if (self.__passwordExistInDatabase(mydb, password) == 1):
+            raise PasswordAlreadyExistsException.PasswordAlreadyExistsException()
+
+        mycursor = mydb.cursor()
+
+        try:
+            mycursor.execute("INSERT INTO Admins (name, password) VALUES (%s, %s)",(name, password))
+            mydb.commit()
+            print('New record created succesfully in admin table')
+        except BaseException as e:
+            print(e)
+            print('Something happened in createAdminAccount()')
+        finally:
+            mydb.close()
+
+    def __str__(self):
+        return "({0},{1})".format(self.__name, self.__password)

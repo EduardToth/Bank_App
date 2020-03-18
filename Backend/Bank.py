@@ -1,6 +1,5 @@
-import mysql.connector
 import hashlib
-import MySQLdb
+import pymysql
 import Admin
 import Client
 import UnfoundAdminException
@@ -11,117 +10,101 @@ class Bank:
     def __init__(self, name):
         self.__name = name
 
-    def __passwordExistInDatabase(self, mydb, password_introduced, table_name):
+    def __passwordExistInDatabase(self, mydb, password_introduced):
         mycursor = mydb.cursor()
-        mycursor.execute("SELECT password FROM table_name")
+        mycursor.execute("SELECT password FROM Clients")
 
         myresult = mycursor.fetchall()
 
         exist = 0
         for x in myresult:
-            if x == password_introduced:
+            if x[0] == password_introduced:
                 exist = 1
 
         return exist
 
     @staticmethod
-    def createConnection(self):
+    def createConnection():
         try:
-            mydb = mysql.connector.connect(
-                serverName = "localhost",
-                userName = "Illes",
-                password = "MindenOk10",
-                dbName = "Bank"
-            )
+            mydb = pymysql.connect("localhost", "Illes", "MindenOk10", "Bank")
             return mydb
-        except MySQLdb.Error as e:
+        except BaseException as e:
             print(e)
-        except:
             print('Something happened in createConnection()')
 
     def getTotalAmountOfMoney(self):
-         mydb = self.createConnection()
+         mydb = Bank.createConnection()
          mycursor = mydb.cursor()
 
-         mycursor.execute("SELECT `moneyOwned` FROM bank WHERE name='ING'")
+         mycursor.execute("SELECT moneyOwned FROM bank WHERE name='ING'")
          myresult = mycursor.fetchall()
 
          totalAmountOfMoney = 0
          for x in myresult:
-             totalAmountOfMoney = x['moneyOwned']
+             totalAmountOfMoney = x[0]
              break
 
-         if mydb.is_connected():
-             mycursor.close()
-             mydb.close()
-             print("MySQL connection is closed")
+         mydb.close()
 
          return totalAmountOfMoney
 
-    def createClientAccount(self, name, password, moneyAmmount):
-        mydb = self.createConnection()
-        password = hashlib.md5(password.encode())
+    def createClientAccount(self, nameP, passwordP, moneyAmmountP):
+        passwordHashed = hashlib.md5(passwordP.encode("utf-8"))
+        passwordHexa = passwordHashed.hexdigest()
 
-        if( self.__passwordExistInDatabase(mydb, password, 'Clients') == 1 ):
+        mydb = Bank.createConnection()
+        if( self.__passwordExistInDatabase(mydb, passwordHexa) == 1 ):
             raise PasswordAlreadyExistsException.PasswordAlreadyExistsException()
 
         mycursor = mydb.cursor()
 
         try:
-            mycursor.execute("INSERT INTO Clients (name, password, `moneyOwned`, debt) VALUES ('name', 'password', 'moneyAmmount', 0)")
+            mycursor.execute("INSERT INTO Clients (name, password, moneyOwned, debt) VALUES (%s, %s, %s, %s)", (nameP, passwordHexa, moneyAmmountP, 0))
             mydb.commit()
             print('New record created succesfully in user table')
-        except MySQLdb.Error as e:
+        except BaseException as e:
             print(e)
-        except:
-            print('Something happened in createClientAccount')
+            print('Something happened in createClientAccount()')
         finally:
-            if (mydb.is_connected()):
-                mycursor.close()
-                mydb.close()
-                print("MySQL connection is closed")
+            mydb.close()
 
-    def getClient(self, name, password):
+    def getClient(self, nameP, passwordP):
+        passwordHashed = hashlib.md5(passwordP.encode("utf-8"))
+        passwordHexa = passwordHashed.hexdigest()
+
         mydb = self.createConnection()
-        password = hashlib.md5(password.encode())
         mycursor= mydb.cursor()
 
-        mycursor.execute("SELECT * FROM Clients WHERE name='name' AND password='password'")
+        mycursor.execute("SELECT * FROM Clients WHERE name=%s AND password=%s", (nameP, passwordHexa))
 
         myresult = mycursor.fetchall()
 
         client = None
         for x in myresult:
-            client = Client.Client(x['name'], x['password'], self, x['moneyOwned'], x['debt'])
+            client = Client.Client(x[0], x[1], self, x[2], x[3])
             break
 
-        if mydb.is_connected():
-            mycursor.close()
-            mydb.close()
-            print("MySQL connection is closed")
+        mydb.close()
 
         if client is None:
               raise UnfoundClientException.UnfoundClientException()
         else:
               return client
 
-    def getAdmin(self, name, password):
+    def getAdmin(self, nameP, passwordP):
         mydb = self.createConnection()
         mycursor = mydb.cursor()
 
-        mycursor.execute("SELECT * FROM Admins WHERE name='name' AND password='password'")
+        mycursor.execute("SELECT * FROM Admins WHERE name=%s AND password=%s", (nameP, passwordP))
 
         myresult = mycursor.fetchall()
 
         admin = None
         for x in myresult:
-            admin = Admin.Admin(x['name'], x['passsword'], self)
+            admin = Admin.Admin(x[0], x[1], self)
             break
 
-        if mydb.is_connected():
-            mycursor.close()
-            mydb.close()
-            print("MySQL connection is closed")
+        mydb.close()
 
         if admin is None:
             raise UnfoundAdminException.UnfoundAdminException()
