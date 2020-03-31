@@ -7,7 +7,6 @@ import Client
 #b = Bank.Bank("")
 #print(b.getTotalAmountOfMoney())
 #mydb = Bank.Bank.createConnection()
-#print(b.passwordExistInDatabase(mydb,'illes_password','admins')) nu merge :(
 #b.createClientAccount('Mihai', '1234', 10090000)
 #print(b.getClient('Dragan', '1235').__str__())
 #print(b.getAdmin("Illes","illes_password").__str__())
