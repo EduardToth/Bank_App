@@ -8,180 +8,139 @@
     <link rel="stylesheet" href="../static/CSS/pagina_principala.css">
     <script src="../static/JavaScript/slide_show.js"></script>
     <script src="../static/JavaScript/navbar_customizing.js"></script>
-    <script data-dapp-detection="">
-        (function () {
-            let alreadyInsertedMetaTag = false
 
-            function __insertDappDetected() {
-                if (!alreadyInsertedMetaTag) {
-                    const meta = document.createElement('meta')
-                    meta.name = 'dapp-detected'
-                    document.head.appendChild(meta)
-                    alreadyInsertedMetaTag = true
-                }
-            }
-
-            if (window.hasOwnProperty('web3')) {
-                // Note a closure can't be used for this var because some sites like
-                // www.wnyc.org do a second script execution via eval for some reason.
-                window.__disableDappDetectionInsertion = true
-                // Likely oldWeb3 is undefined and it has a property only because
-                // we defined it. Some sites like wnyc.org are evaling all scripts
-                // that exist again, so this is protection against multiple calls.
-                if (window.web3 === undefined) {
-                    return
-                }
-                __insertDappDetected()
-            } else {
-                var oldWeb3 = window.web3
-                Object.defineProperty(window, 'web3', {
-                    configurable: true,
-                    set: function (val) {
-                        if (!window.__disableDappDetectionInsertion)
-                            __insertDappDetected()
-                        oldWeb3 = val
-                    },
-                    get: function () {
-                        if (!window.__disableDappDetectionInsertion)
-                            __insertDappDetected()
-                        return oldWeb3
-                    }
-                })
-            }
-        })()</script>
 </head>
 
 <body>
+<script>
+    window.addEventListener( "pageshow", function ( event ) {
+        var historyTraversal = event.persisted ||
+            ( typeof window.performance != "undefined" &&
+                window.performance.navigation.type === 2 );
+        if ( historyTraversal ) {
+            // Handle page restore.
+            window.location.reload();
+        }
+    });
+</script>
+<div>
+    <img class="nature" src="../static/pictures/bank_building.jpg" width="1837" height="400px"
+         style="display: block;">
+    <img class="nature" src="../static/pictures/business_men.jpg" width="1837" height="400px"
+         style="display: none;">
+    <img class="nature" src="../static/pictures/happyFaces.jpg" width="1837" height="400px" style="display: none;">
+    <img class="nature" src="../static/pictures/canapea.jpg" width="1837" height="400px" style="display: none;">
+</div>
+<div class="tab outer">
 
-    <div>
-        <img class="nature" src="../static/pictures/bank_building.jpg" width="1837" height="400px"
-            style="display: block;">
-        <img class="nature" src="../static/pictures/business_men.jpg" width="1837" height="400px"
-            style="display: none;">
-        <img class="nature" src="../static/pictures/happyFaces.jpg" width="1837" height="400px" style="display: none;">
-        <img class="nature" src="../static/pictures/canapea.jpg" width="1837" height="400px" style="display: none;">
-    </div>
-    <div class="tab outer">
+    <button class="tablinks active" onclick="executeButton(event, 'General information')">General
+        information</button>
+    <button class="tablinks" onclick="executeButton(event, 'Show all clients')">Show all clients</button>
+    <button class="tablinks" onclick="executeButton(event, 'Add money to bank\'s fortune')">Add money to bank's fortune</button>
+    <button class="tablinks" onclick="executeButton(event, 'Block client account')">Block client account</button>
+    <button class="tablinks" onclick="executeButton(event, 'Unblock client account')">Unblock client account</button>
+    <button type="button" class="tablinks" onclick="window.location.href='/';">Log out</button>
 
-        <button class="tablinks active" onclick="executeButton(event, 'General information')">General
-            information</button>
-        <button class="tablinks" onclick="executeButton(event, 'Deposit money')">Deposit money</button>
-        <button class="tablinks" onclick="executeButton(event, 'Withdraw money')">Withdraw money</button>
-        <button class="tablinks" onclick="executeButton(event, 'Get credit')">Get credit</button>
-        <button class="tablinks" onclick="executeButton(event, 'Pay debt')">Pay debt</button>
-        <button type="button" class="tablinks" onclick="window.location.href='/';">Log out</button>
+</div>
 
-    </div>
+<div id="General information" class="tabcontent" style="display: block;">
+    <p>The fortune of the bank is: {{money_ammount}}</p>
+    <p>The bank has {{nr_of_clients}} of clients</p>
+</div>
 
-    <div id="General information" class="tabcontent" style="display: block;">
-        <p>The fortune of the bank is: 1148443</p>
-        <p>The bank has 150 of clients</p>
-    </div>
+<div id="Show all clients" class="tabcontent" style="display: none;">
 
-    <div id="Deposit money" class="tabcontent" style="display: none;">
+    <h2>The clients of the bank are:</h2>
+    <pre>{{clients_in_string_format}}</pre>
 
-        <h2>Deposit money</h2>
+</div>
 
-        <form action="" method="post">
-            <div class="imgcontainer">
-                <img src="../static/pictures/roman_coins.jpeg" alt="Avatar" class="avatar">
-            </div>
+<div id="Add money to bank's fortune" class="tabcontent" style="display: none;">
+    <h2>Withdraw money</h2>
 
-            <div class="container">
-                <label for="money"><b>Enter the amount of money you want to deposit</b></label>
-                <label>
-                    <input type="text" placeholder="Enter a money amount" name="money" required="">
-                </label>
+    <form action="admin" method="post">
+        <div class="imgcontainer">
+            <img src="../static/pictures/safe.jpg" alt="Avatar" class="avatar">
+        </div>
 
-                <label class="hidden">
-                    Post type:
-                    <input type="radio" name="post-type" value="deposit" checked="checked">
-                </label>
+        <label class="hidden">
+            Post type:
+            <input type="text" name="login_id" value="{{login_id}}" checked="checked">
+        </label>
 
-                <button class="button_style" type="submit">Submit</button>
-            </div>
+        <div class="container">
+            <label>
+                <input type="text" placeholder="Enter a money amount" name="money" required="">
+            </label>
 
-        </form>
-    </div>
+            <label class="hidden">
+                Post type:
+                <input type="radio" name="post-type" value="deposit-money" checked="checked">
+            </label>
 
-    <div id="Withdraw money" class="tabcontent" style="display: none;">
-        <h2>Withdraw money</h2>
+            <button type="submit" class="button_style">Withdraw</button>
+        </div>
 
-        <form action="" method="post">
-            <div class="imgcontainer">
-                <img src="../static/pictures/withdraw.jpeg" alt="Avatar" class="avatar">
-            </div>
+    </form>
+</div>
 
-            <div class="container">
-                <label for="money"><b>Enter the amount of money you want to withdraw</b></label>
-                <label>
-                    <input type="text" placeholder="Enter a money amount" name="money" required="">
-                </label>
+<div id="Block client account" class="tabcontent" style="display: none;">
+    <h2>Block client</h2>
 
-                <label class="hidden">
-                    Post type:
-                    <input type="radio" name="post-type" value="withdraw" checked="checked">
-                </label>
+    <form action="admin" method="post">
+        <div class="imgcontainer">
+            <img src="../static/pictures/firing.jpeg" alt="Avatar" class="avatar">
+        </div>
 
-                <button type="submit" class="button_style">Withdraw</button>
-            </div>
+        <label class="hidden">
+            <input type="radio" name="login_id" value="{{login_id}}" checked="checked">
+        </label>
 
-        </form>
-    </div>
+        <div class="container">
+            <label>
+                <input type="text" placeholder="Enter the login id of the client you want to block" name="client-login-id" required="">
+            </label>
 
-    <div id="Get credit" class="tabcontent" style="display: none;">
-        <h2>Get credit</h2>
+            <label class="hidden">
+                <input type="radio" name="post-type" value="block-client" checked="checked">
+            </label>
 
-        <form action="ClientFront.php" method="post">
-            <div class="imgcontainer">
-                <img src="static/pictures/card.jpeg" alt="Avatar" class="avatar">
-            </div>
+            <button type="submit" class="button_style">Block client</button>
+        </div>
 
-            <div class="container">
-                <label for="money"><b>Enter the amount of money you want to get</b></label>
-                <label>
-                    <input type="text" placeholder="Enter Username" name="money" required="">
-                </label>
+    </form>
+</div>
 
-                <label class="hidden">
-                    Post type:
-                    <input type="radio" name="post-type" value="get_credit" checked="checked">
-                </label>
+<div id="Unblock client account" class="tabcontent" style="display: none;">
+    <h2>Unblock client</h2>
 
-                <button type="submit" class="button_style">Get the money</button>
-            </div>
+    <form action="admin" method="post">
+        <div class="imgcontainer">
+            <img src="../static/pictures/freedom.jpg" alt="Avatar" class="avatar">
+        </div>
 
-        </form>
-    </div>
+        <label class="hidden">
+            <input type="radio" name="login_id" value="{{login_id}}" checked="checked">
+        </label>
 
-    <div id="Pay debt" class="tabcontent" style="display: none;">
-        <h2>Get credit</h2>
+        <div class="container">
+            <label>
+                <input type="text" placeholder="Enter the login id of the client you want to unblock" name="client-login-id" required="">
+            </label>
 
-        <form action="" method="post">
-            <div class="imgcontainer">
-                <img src="../static/pictures/pay_debt.jpeg    " alt="Avatar" class="avatar">
-            </div>
+            <label class="hidden">
+                <input type="radio" name="post-type" value="unblock-client" checked="checked">
+            </label>
 
-            <div class="container">
-                <label for="money"><b>Enter the amount of money you want to pay</b></label>
-                <label>
-                    <input type="text" placeholder="Enter the money amount" name="money" required="">
-                </label>
+            <button type="submit" class="button_style">Unblock client</button>
+        </div>
 
-                <label class="hidden">
-                    Post type:
-                    <input type="radio" name="post-type" value="pay_debt" checked="checked">
-                </label>
+    </form>
+</div>
 
-                <button type="submit" class="button_style">Pay</button>
-            </div>
-
-        </form>
-    </div>
-
-    <script>
-        w3.slideshow(".nature", 3500);
-    </script>
+<script>
+    w3.slideshow(".nature", 3500);
+</script>
 
 
 
