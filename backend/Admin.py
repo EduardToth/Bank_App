@@ -1,7 +1,7 @@
 import hashlib
 from . import Bank
-from . import PasswordAlreadyExistsException
 from . import Client
+from .ClientException import ClientException
 
 
 class Admin :
@@ -18,9 +18,9 @@ class Admin :
         try :
             mycursor.execute ( "SELECT * FROM Clients" )
             my_database.close ( )
-        except BaseException as exception :
+        except Exception as exception :
             my_database.close ( )
-            raise exception
+            raise Exception ( "Something went wrong. Please try again later" )
 
         client_fields_array = mycursor.fetchall ( )
         clients_in_string_format = ""
@@ -44,14 +44,15 @@ class Admin :
 
             result = mycursor.rowcount
             if result == 0 :
-                raise Exception ( 'The client is not present in our database' )
-            else :
-                print ( 'Record deleted successfully' )
-            return 1
-        except BaseException as e :
-            print ( e )
-            print ( 'Something happened in deleteClient()' )
-            return 0
+                raise ClientException ( 'The client is not present in our database' )
+
+        except ClientException as e :
+            mydb.close ( )
+            raise e
+
+        except Exception as e:
+            mydb.close ( )
+            raise Exception ( "Something went wrong. Please try again later" )
         finally :
             mydb.close ( )
 
@@ -77,10 +78,9 @@ class Admin :
         try :
             mycursor.execute ( "INSERT INTO Admins (name, password) VALUES (%s, %s)" , (name , password) )
             mydb.commit ( )
-            print ( 'New record created succesfully in admin table' )
         except BaseException as e :
-            print ( e )
-            print ( 'Something happened in createAdminAccount()' )
+            mydb.close ( )
+            raise Exception ( "Something went wrong. Please try again later" )
         finally :
             mydb.close ( )
 
@@ -100,7 +100,7 @@ class Admin :
             my_db_connection.close ( )
         except BaseException as e :
             my_db_connection.close ( )
-            raise e
+            raise Exception ( "Something went wrong. Please try again later" )
 
     def __str__(self) :
         return "({0},{1})".format ( self.__name , self.__password )
@@ -110,7 +110,7 @@ class Admin :
 
     def block_client_account_after_the_login_id(self , login_id) :
         if Bank.Bank.is_blocked_the_account_with_id ( login_id ) :
-            raise Exception ( "The account is already blocked" )
+            raise ClientException ( "The account is already blocked" )
 
         database_connection = Bank.Bank.createConnection ( )
 
@@ -122,15 +122,19 @@ class Admin :
 
             result = my_cursor.rowcount
             if result == 0 :
-                raise Exception ( 'Unable to block the account' )
+                raise ClientException ( 'Unable to block the account' )
             database_connection.close ( )
+        except ClientException as exception:
+            database_connection.close()
+            raise exception
+
         except BaseException as e :
             database_connection.close ( )
-            raise e
+            raise Exception ( "Something went wrong. Please try again later" )
 
     def unblock_client_account_after_the_login_id(self , login_id) :
         if not Bank.Bank.is_blocked_the_account_with_id ( login_id ) :
-            raise Exception ( "The account is already unblocked" )
+            raise ClientException ( "The account is already unblocked" )
 
         database_connection = Bank.Bank.createConnection ( )
 
@@ -144,6 +148,10 @@ class Admin :
             if result == 0 :
                 raise Exception ( 'Unable to unblock the account' )
             database_connection.close ( )
+
+        except ClientException as ex:
+            database_connection.close()
+            raise ex
         except BaseException as e :
             database_connection.close ( )
-            raise e
+            raise Exception ( "Something went wrong. Please try again later" )

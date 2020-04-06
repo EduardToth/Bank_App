@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request
-from backend.Bank import Bank, PasswordAlreadyExistsException, Client
+from backend.Bank import Bank
 
 app = Flask(__name__)
 
@@ -17,20 +17,20 @@ def handle_client_register_request(bank):
 def handle_client_login_request(bank):
     name = request.form.get('name')
     password = request.form.get('password')
-    client = None
     try:
         client = bank.getClient(name, password)
+
+        message_for_general_information = "You have " + \
+            str(client.getDepositedMoney()) + " dollars in your account\n"
+        message_for_general_information += "You have to pay: " + \
+            str(client.getMoneyBorrowed()) + " to the bank"
+
+        return render_template('client.html', client=client,
+                               message_for_general_information=message_for_general_information,
+                               login_id=client.get_login_id())
     except Exception as ex:
         return ex.__str__()
 
-    message_for_general_information = "You have " + \
-        str(client.getDepositedMoney()) + " dollars in your account\n"
-    message_for_general_information += "You have to pay: " + \
-        str(client.getMoneyBorrowed()) + " to the bank"
-
-    return render_template('client.html', client=client,
-                           message_for_general_information=message_for_general_information,
-                           login_id=client.get_login_id())
 
 
 def handle_admin_login_request(bank):
