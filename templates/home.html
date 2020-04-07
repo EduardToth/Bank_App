@@ -1,0 +1,219 @@
+<html><head>
+    <meta charset="UTF-8">
+    <title>index</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="../static/CSS/pagina_principala.css">
+    <link rel="stylesheet" href="../static/CSS/Sign_in_style.css">
+    <script src="../static/JavaScript/navbar_customizing.js"></script>
+</head>
+<body>
+
+<img class="nature" src="../static/pictures/gold2.jpg" width="1837" height="400px" style="display: none;">
+<img class="nature" src="../static/pictures/euro.jpg" width="1837" height="400px" style="display: block;">
+<img class="nature" src="../static/pictures/bank_building.jpg" width="1837" height="400px" style="display: none;">
+<img class="nature" src="../static/pictures/faraoh.jpg" width="1837" height="400px" style="display: none;">
+
+<div class="tab">
+    <button class="tablinks" onclick="executeButton(event,'Home page')">Home page</button>
+    <button class="tablinks" onclick="executeButton(event,'Login')">Login as client</button>
+    <button class="tablinks" onclick="executeButton(event,'Sign in')">Sign in</button>
+    <button class="tablinks" onclick="executeButton(event,'Admin Login')">Login as admin</button>
+</div>
+
+<div id="Home page" class="tabcontent">
+    <pre>           General Terms and Conditions
+           ING Bank N.V. Amsterdam, Bucharest Branch
+           1. Introduction
+           1.1
+           ING Bank N.V. is a banking company registered
+           and existing in accordance with the Dutch law,
+           with its headquarters at Bijlmerplein 888, 1102
+           MG Amsterdam, The Netherlands, registered
+           under number 33031431 at the Trade Register of
+           the Chamber of Commerce and Industries for
+           Amsterdam, and authorized and regulated in the
+           Netherlands under licence number 12000059 by
+           De Nederlandsche Bank N.V. at Westeinde 1, 1017
+           ZN, Amsterdam and the Autoriteit Financiele
+           Markten at Vijzelgracht 50, 1017 HS, Amsterdam,
+           acting in Romania through ING Bank N.V.
+           Amsterdam, Bucharest Branch, having its
+           registered office at 48 Iancu de Hunedoara
+           Boulevard , 011745 Bucharest 1, Romania,
+           registered with the Trade Register under no.
+           J40/16100/1994, holding Unique Registration
+           Code no. RO 6151100 and registered with the
+           Credit Institutions Registry under no. RB-PJS-40-
+           024, account number 371160600101 opened with
+           NBR, telephone + 40 21 222 16 00; fax + 40 21
+           222 14 01; e-mail contact@ingromania.ro. The
+           Bank does not include any subsidiaries, or other
+           entities of ING Group.
+           The National Bank of Romania (25 Lipscani Street,
+           sector 3, Bucharest, postal code 030031;
+           telephone + 40 21 313 04 10, + 40 21 315 27 50;
+           fax + 40 21 312 38 31; e-mail info@bnro.ro) acts
+           as a secondary supervisory authority for ING Bank
+           N.V. Amsterdam, Bucharest Branch. All business
+           relationships between natural persons and legal
+           entities, whether residents or non-residents (the
+           “Customer”), and ING Bank N.V. Amsterdam,
+           Bucharest Branch and/or any of its offices in
+           Romania (the “Bank”) shall be governed by these
+           General Terms and Conditions (the “GTC”).
+           1.2
+           The Customers are asked to read these GTC
+           carefully since they will be legally bound by them
+           in their dealings with the Bank. To the Customers
+           are applicable those GTC published and posted by
+           the Bank for the category in which the Bank has
+           classified the Customer from the business line
+           point of view (Commercial Banking or Retail
+           Banking).
+           1.3
+           GTC and, as the case might be, the Presentation
+           Document for Financial Investment Services (the
+           “Presentation Document” or “PD”), Payments
+           Terms and Conditions (the “PTC”) and Terms and
+           Conditions on transactions through debit
+           instruments (checks, promissory note, draft
+           („TCID”) shall be given to each Customer together
+           with the Account Opening Application for
+           corporate accounts (the “AOA”).
+           The PD shall be complementary to the present
+           GTC and shall be applicable only to the
+           Customers which enter into financial investments
+           operations with the Bank. Also, the document
+           Payments Terms and Conditions and Terms and
+           Conditions on transactions through debit
+           instruments (checks, promissory note, draft) shall
+           be complementary to the present GTC and shall
+           be applicable to Customers in the payments
+           domain as well as on performing transactions
+           through debit instruments. Based on the
+           Customer’s request the GTC, the PD, PTC and TCID
+           may be delivered to him at any time during the
+           contractual relationship with the Bank.
+           1.4
+           By signing the AOA the Customer acknowledges
+           and approves all of the terms and conditions in
+           the GTC and, as the case might be, in the PD
+           and/or in the PTC and in the TCID as an
+           attachment and an integral part of the AOA.
+           1.5
+           As regards the payment services domain, in
+           deviation from art. 1.3, Customers opening a
+           relationship with at least one ING Bank NV entity
+           located in one of the following countries: Austria,
+           Belgium, Bulgaria, Czech Republic, France,
+           Germany, Hungary, Ireland, Italy, Luxemburg,
+           Nederland, Poland, Portugal, Slovakia, Spain,
+           Switzerland, United Kingdom, shall receive:
+            The ING Conditions for Payment Services
+           instead of PTC which shall apply only to
+           Customers opening locally a relationship only
+           with ING Bank N.V. Amsterdam, Bucharest
+           Branch.
+            The International Account and Product
+           Agreement (IAPA) instead of AOA which shall
+           apply only to Customers opening locally a
+       </pre>
+</div>
+
+<div id="Login" class="tabcontent">
+    <h2>Login Form</h2>
+
+    <form action="client" method="post">
+        <div class="imgcontainer">
+            <img src="../static/pictures/img_avatar2.png" alt="Avatar" class="avatar">
+        </div>
+
+        <div class="container">
+            <label for="name"><b>Username</b></label>
+            <label>
+                <input type="text" placeholder="Enter Username" name="name" required="">
+            </label>
+
+            <label for="password"><b>Password</b></label>
+            <label>
+                <input type="password" placeholder="Enter Password" name="password" required="">
+            </label>
+
+            <label class="hidden">
+                Post type:
+                <input type="radio" name="post-type" value="login" checked="checked">
+            </label>
+
+            <button type="submit" class="button_style">Login</button>
+        </div>
+
+    </form>
+</div>
+
+<div id="Sign in" class="tabcontent">
+    <h2>Registration Form</h2>
+
+    <form action="client" method="post">
+        <div class="imgcontainer">
+            <img src="../static/pictures/img_avatar2.png" alt="Avatar" class="avatar">
+        </div>
+
+        <div class="container">
+            <label for="name"><b>Username</b></label>
+            <label>
+                <input type="text" placeholder="Enter Username" name="name" required="">
+            </label>
+
+            <label for="password"><b>Password</b></label>
+            <label>
+                <input type="password" placeholder="Enter Password" name="password" required="">
+            </label>
+
+            <label class="hidden">
+                Post type:
+                <input type="radio" name="post-type" value="register" checked="checked">
+            </label>
+
+            <button type="submit" class="button_style">Register</button>
+        </div>
+
+    </form>
+</div>
+
+<div id="Admin Login" class="tabcontent">
+    <h2>Login Form for admins</h2>
+
+    <form action="admin" method="post">
+        <label class="hidden">
+            Post type:
+            <input type="radio" name="post-type" value="admin_login" checked="checked">
+        </label>
+        <div class="imgcontainer">
+            <img src="../static/pictures/admin_green.jpeg" alt="Avatar" class="avatar">
+        </div>
+
+        <div class="container">
+            <label for="name"><b>Username</b></label>
+            <label>
+                <input type="text" placeholder="Enter Username" name="name" required="">
+            </label>
+
+            <label for="password"><b>Password</b></label>
+            <label>
+                <input type="password" placeholder="Enter Password" name="password" required="">
+            </label>
+
+            <button type="submit" class="button_style">Login</button>
+        </div>
+
+    </form>
+</div>
+
+
+<script>
+    w3.slideshow(".nature", 3500);
+</script>
+
+
+</body></html>
