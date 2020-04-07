@@ -2,7 +2,7 @@ from flask import Flask, render_template, request
 from backend.Bank import Bank
 
 app = Flask(__name__)
-#It's me Mario!
+
 
 def handle_client_register_request(bank):
     name = request.form.get('name')
