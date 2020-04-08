@@ -70,8 +70,8 @@ class Admin :
 
     def createAdminAccount(self , name , password) :
         mydb = Bank.Bank.createConnection ( )
-        if (self.__passwordExistInDatabase ( mydb , password ) == 1) :
-            raise PasswordAlreadyExistsException.PasswordAlreadyExistsException ( )
+        if self.__passwordExistInDatabase ( mydb , password ) == 1 :
+            raise ClientException ("The client already exist in database" )
 
         mycursor = mydb.cursor ( )
 
@@ -152,6 +152,7 @@ class Admin :
         except ClientException as ex:
             database_connection.close()
             raise ex
+
         except BaseException as e :
             database_connection.close ( )
             raise Exception ( "Something went wrong. Please try again later" )
