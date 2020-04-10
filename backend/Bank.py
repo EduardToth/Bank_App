@@ -69,9 +69,10 @@ class Bank :
         try :
             login_id = self.get_last_login_id ( ) + 1
             is_blocked = False
+            is_logged = False
             mycursor.execute (
-                "INSERT INTO Clients (name, password, moneyOwned, debt, login_id, blocked) VALUES (%s, %s, %s, %s, %s, %s)" ,
-                (nameP , passwordHexa , moneyAmmountP , 0 , login_id , is_blocked) )
+                "INSERT INTO Clients (name, password, moneyOwned, debt, login_id, blocked, is_logged) VALUES (%s, %s, %s, %s, %s, %s, %s)" ,
+                (nameP , passwordHexa , moneyAmmountP , 0 , login_id , is_blocked , is_logged) )
             mydb.commit ( )
             mydb.close ( )
         except BaseException as e :
@@ -150,17 +151,18 @@ class Bank :
         mydb = Bank.createConnection ( )
         mycursor = mydb.cursor ( )
 
-        try:
+        try :
             mycursor.execute ( "SELECT * FROM Clients WHERE login_id = %s" , login_id )
-        except BaseException as exception:
-            mydb.close()
+        except BaseException as exception :
+            mydb.close ( )
             raise Exception ( "Something went wrong. Please try again later" )
         mydb.close ( )
         client_info = None
         client_infos = mycursor.fetchall ( )
         for client_info in client_infos :
-            client_info = Client.Client ( client_info[0] , client_info[1] , Bank ( "ING" ) , client_info[2] , client_info[3] , client_info[4] ,
-                                     client_info[5] )
+            client_info = Client.Client ( client_info[0] , client_info[1] , Bank ( "ING" ) , client_info[2] ,
+                                          client_info[3] , client_info[4] ,
+                                          client_info[5] )
             break
         return client_info
 
@@ -174,7 +176,7 @@ class Bank :
             mydb.close ( )
         except BaseException as exception :
             mydb.close ( )
-            raise Exception("Something went wrong. Please try again later")
+            raise Exception ( "Something went wrong. Please try again later" )
 
         blocked_values = mycursor.fetchall ( )
 
@@ -189,7 +191,7 @@ class Bank :
             my_database.close ( )
         except BaseException as exception :
             my_database.close ( )
-            raise Exception("Something went wrong. Please try again later")
+            raise Exception ( "Something went wrong. Please try again later" )
 
         login_ids = my_cursor.fetchall ( )
         # the number  of the clients of the bank. Each client has a login id
@@ -203,7 +205,7 @@ class Bank :
             mydb.close ( )
         except BaseException as exception :
             mydb.close ( )
-            raise Exception("Something went wrong. Please try again later")
+            raise Exception ( "Something went wrong. Please try again later" )
 
         admin_fields_array = mycursor.fetchall ( )
 
@@ -213,3 +215,31 @@ class Bank :
                 admin_fields[0] , admin_fields[1] , self , admin_fields[2] )
 
         return admin
+
+    def is_client_logged(self , login_id) :
+        database_connection = Bank.createConnection ( )
+        mycursor = database_connection.cursor ( )
+
+        try :
+            mycursor.execute ( "SELECT is_logged FROM Clients WHERE login_id = %s" , login_id )
+            database_connection.close ( )
+            is_logged_list = mycursor.fetchall ( )
+            return is_logged_list[0][0]
+        except BaseException as exception :
+            database_connection.close ( )
+            print ( exception.__str__ ( ) )
+            raise Exception ( "Something went wrong. Please try again later" )
+
+    def is_admin_logged(self , login_id) :
+        database_connection = Bank.createConnection ( )
+        mycursor = database_connection.cursor ( )
+
+        try :
+            mycursor.execute ( "SELECT is_logged FROM Admins WHERE id = %s" , login_id )
+            database_connection.close ( )
+            is_logged_list = mycursor.fetchall ( )
+            return is_logged_list[0][0]
+        except BaseException as exception :
+            database_connection.close ( )
+            print ( exception.__str__ ( ) )
+            raise Exception ( "Something went wrong. Please try again later" )

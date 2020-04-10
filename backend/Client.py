@@ -171,3 +171,18 @@ class Client :
 
     def is_blocked(self):
         return self.__is_blocked
+
+    def set_log_field(self , is_logged) :
+        database_connection = Bank.Bank.createConnection ( )
+        my_cursor = database_connection.cursor ( )
+
+        try :
+            my_cursor.execute ( "UPDATE Clients SET is_logged = %s WHERE login_id=%s" , (is_logged , self.__login_id) )
+            database_connection.commit ( )
+
+            database_connection.close ( )
+
+        except BaseException as e :
+            database_connection.close ( )
+            raise Exception ( "Something went wrong. Please try again later" )
+
