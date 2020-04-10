@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Apr 08, 2020 at 09:36 AM
+-- Generation Time: Apr 10, 2020 at 09:21 AM
 -- Server version: 10.1.31-MariaDB
 -- PHP Version: 7.2.4
 
@@ -33,15 +33,16 @@ USE `Bank`;
 CREATE TABLE `Admins` (
   `name` varchar(50) NOT NULL,
   `password` varchar(50) NOT NULL,
-  `id` int(11) NOT NULL
+  `id` int(11) NOT NULL,
+  `is_logged` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `Admins`
 --
 
-INSERT INTO `Admins` (`name`, `password`, `id`) VALUES
-('Illes', '56fba4f663e9a9262c890968bf8a72c8', 1);
+INSERT INTO `Admins` (`name`, `password`, `id`, `is_logged`) VALUES
+('Illes', '56fba4f663e9a9262c890968bf8a72c8', 1, 0);
 
 -- --------------------------------------------------------
 
@@ -73,29 +74,30 @@ CREATE TABLE `Clients` (
   `moneyOwned` int(11) NOT NULL,
   `debt` int(11) NOT NULL,
   `login_id` int(11) DEFAULT NULL,
-  `blocked` tinyint(1) NOT NULL
+  `blocked` tinyint(1) NOT NULL,
+  `is_logged` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `Clients`
 --
 
-INSERT INTO `Clients` (`name`, `password`, `moneyOwned`, `debt`, `login_id`, `blocked`) VALUES
-('Iulia', '23e8826c049dad22d3d2f6648122d950', 0, 0, 0, 1),
-('NicoletaCibotari', '039ad3b31d8b0c83249a0a0215c4166a', 10000, 456, 1, 1),
-('BeatriceRoxana', '119dd1bd86728b407fe82fce1f8b9369', 500, 0, 2, 0),
-('CibotariNicoleta', '56b4dd38de02b8d93f1b451bd16566f2', 2600, 1000, 3, 0),
-('something', '5f9f05d8df1197bc9bde2860fb9d4102', 0, 0, 4, 0),
-('Edy', '37b570e5c7d628c2874a5040f0cf8200', 0, 0, 5, 0),
-('Sanyi', '827ccb0eea8a706c4c34a16891f84e7b', 0, 0, 6, 0),
-('Illes Eduard', 'Valasztottam10', 0, 0, 7, 0),
-('Illes Eduard', 'dfghjkl;', 0, 0, 8, 0),
-('Ralu', 'ralu_password', 0, 0, 9, 0),
-('Vikto', 'f239f6a716553ab17078ee6f6102d10e', 10000, 0, 10, 0),
-('En', '527b8d7c6aec0988909cb1a4730bdf51', 1132843, 16000, 11, 0),
-('Ralu', '21742bc8fb01eb719992c6888f2c97c6', 0, 0, 12, 0),
-('Diana', 'ca84a068501a54a88d886b88d219fa20', 0, 0, 13, 0),
-('Illes2', '8443676fe784a7c644f7f1dfe6a57ad1', 4000, 6100, 14, 0);
+INSERT INTO `Clients` (`name`, `password`, `moneyOwned`, `debt`, `login_id`, `blocked`, `is_logged`) VALUES
+('Iulia', '23e8826c049dad22d3d2f6648122d950', 0, 0, 0, 1, 0),
+('NicoletaCibotari', '039ad3b31d8b0c83249a0a0215c4166a', 10000, 456, 1, 1, 0),
+('BeatriceRoxana', '119dd1bd86728b407fe82fce1f8b9369', 500, 0, 2, 0, 0),
+('CibotariNicoleta', '56b4dd38de02b8d93f1b451bd16566f2', 2600, 1000, 3, 0, 0),
+('something', '5f9f05d8df1197bc9bde2860fb9d4102', 0, 0, 4, 0, 0),
+('Edy', '37b570e5c7d628c2874a5040f0cf8200', 0, 0, 5, 0, 0),
+('Sanyi', '827ccb0eea8a706c4c34a16891f84e7b', 0, 0, 6, 0, 0),
+('Illes Eduard', 'Valasztottam10', 0, 0, 7, 0, 0),
+('Illes Eduard', 'dfghjkl;', 0, 0, 8, 0, 0),
+('Ralu', 'ralu_password', 0, 0, 9, 0, 0),
+('Vikto', 'f239f6a716553ab17078ee6f6102d10e', 10000, 0, 10, 0, 0),
+('En', '527b8d7c6aec0988909cb1a4730bdf51', 1133043, 16000, 11, 0, 0),
+('Ralu', '21742bc8fb01eb719992c6888f2c97c6', 0, 0, 12, 0, 0),
+('Diana', 'ca84a068501a54a88d886b88d219fa20', 0, 0, 13, 0, 0),
+('Illes2', '8443676fe784a7c644f7f1dfe6a57ad1', 4000, 6100, 14, 0, 0);
 
 --
 -- Indexes for dumped tables
@@ -410,7 +412,7 @@ CREATE TABLE `pma__userconfig` (
 --
 
 INSERT INTO `pma__userconfig` (`username`, `timevalue`, `config_data`) VALUES
-('root', '2020-04-08 07:35:54', '{\"Console\\/Mode\":\"collapse\"}');
+('root', '2020-04-10 07:21:30', '{\"Console\\/Mode\":\"collapse\"}');
 
 -- --------------------------------------------------------
 

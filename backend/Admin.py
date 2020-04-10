@@ -50,7 +50,7 @@ class Admin :
             mydb.close ( )
             raise e
 
-        except Exception as e:
+        except Exception as e :
             mydb.close ( )
             raise Exception ( "Something went wrong. Please try again later" )
         finally :
@@ -71,7 +71,7 @@ class Admin :
     def createAdminAccount(self , name , password) :
         mydb = Bank.Bank.createConnection ( )
         if self.__passwordExistInDatabase ( mydb , password ) == 1 :
-            raise ClientException ("The client already exist in database" )
+            raise ClientException ( "The client already exist in database" )
 
         mycursor = mydb.cursor ( )
 
@@ -124,8 +124,8 @@ class Admin :
             if result == 0 :
                 raise ClientException ( 'Unable to block the account' )
             database_connection.close ( )
-        except ClientException as exception:
-            database_connection.close()
+        except ClientException as exception :
+            database_connection.close ( )
             raise exception
 
         except BaseException as e :
@@ -149,9 +149,23 @@ class Admin :
                 raise Exception ( 'Unable to unblock the account' )
             database_connection.close ( )
 
-        except ClientException as ex:
-            database_connection.close()
+        except ClientException as ex :
+            database_connection.close ( )
             raise ex
+
+        except BaseException as e :
+            database_connection.close ( )
+            raise Exception ( "Something went wrong. Please try again later" )
+
+    def set_log_field(self , is_logged) :
+        database_connection = Bank.Bank.createConnection ( )
+        my_cursor = database_connection.cursor ( )
+
+        try :
+            my_cursor.execute ( "UPDATE Admins SET is_logged = %s WHERE id=%s" , (is_logged , self.__login_id) )
+            database_connection.commit ( )
+
+            database_connection.close ( )
 
         except BaseException as e :
             database_connection.close ( )

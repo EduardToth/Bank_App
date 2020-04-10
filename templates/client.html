@@ -9,156 +9,168 @@
     <script src="../static/JavaScript/navbar_customizing.js"></script>
 </head>
 <body>
+<div id='in_case_of_reloading'>
 
-<script>
-    window.addEventListener( "pageshow", function ( event ) {
-        var historyTraversal = event.persisted ||
-            ( typeof window.performance != "undefined" &&
-                window.performance.navigation.type === 2 );
-        if ( historyTraversal ) {
-            // Handle page restore.
-            window.location.reload();
-        }
-    });
-</script>
+    <script>
+        window.addEventListener( "pageshow", function ( event ) {
+            const historyTraversal = event.persisted ||
+                (typeof window.performance != "undefined" &&
+                    window.performance.navigation.type === 2);
 
+            if ( historyTraversal ) {
 
-<img class="nature" src="../static/pictures/bank_building.jpg" width="1837" height="400px" style="display: none;">
-<img class="nature" src="../static/pictures/business_men.jpg" width="1837" height="400px" style="display: block;">
-<img class="nature" src="../static/pictures/happyFaces.jpg" width="1837" height="400px" style="display: none;">
-<img class="nature" src="../static/pictures/canapea.jpg" width="1837" height="400px" style="display: none;">
+                function loadXMLDoc() {
+                    var xhttp = new XMLHttpRequest();
+                    xhttp.onreadystatechange = function() {
+                        if (this.readyState == 4 && this.status == 200) {
+                            document.getElementById("in_case_of_reloading").innerHTML =
+                                this.responseText;
+                        }
+                    };
+                    xhttp.open("GET", "client.html?id={{login_id}}", true);
+                    xhttp.send();
+                }
+                loadXMLDoc();
+            }
+        });
+    </script>
 
-<div class="tab outer">
+    <img class="nature" src="../static/pictures/bank_building.jpg" width="1837" height="400px" style="display: none;">
+    <img class="nature" src="../static/pictures/business_men.jpg" width="1837" height="400px" style="display: block;">
+    <img class="nature" src="../static/pictures/happyFaces.jpg" width="1837" height="400px" style="display: none;">
+    <img class="nature" src="../static/pictures/canapea.jpg" width="1837" height="400px" style="display: none;">
 
-    <button class="tablinks active" onclick="executeButton(event, 'General information')">General information</button>
-    <button class="tablinks" onclick="executeButton(event, 'Deposit money')">Deposit money</button>
-    <button class="tablinks" onclick="executeButton(event, 'Withdraw money')">Withdraw money</button>
-    <button class="tablinks" onclick="executeButton(event, 'Get credit')">Get credit</button>
-    <button class="tablinks" onclick="executeButton(event, 'Pay debt')">Pay debt</button>
-    <button type="button" class="tablinks" onclick="window.location.href='/';">Log out</button>
-</div>
+    <div class="tab outer">
 
-<div id="General information" class="tabcontent" style="display: block;">
-    <pre>{{message_for_general_information}}</pre>
-</div>
+        <button class="tablinks active" onclick="executeButton(event, 'General information')">General information</button>
+        <button class="tablinks" onclick="executeButton(event, 'Deposit money')">Deposit money</button>
+        <button class="tablinks" onclick="executeButton(event, 'Withdraw money')">Withdraw money</button>
+        <button class="tablinks" onclick="executeButton(event, 'Get credit')">Get credit</button>
+        <button class="tablinks" onclick="executeButton(event, 'Pay debt')">Pay debt</button>
+        <button type="button" onclick="window.location.href='home.html?id={{login_id}}&mode=1';">Log out</button>
+    </div>
 
-<div id="Deposit money" class="tabcontent" style="display: none;">
+    <div id="General information" class="tabcontent" style="display: block;">
+        <pre>{{message_for_general_information}}</pre>
+    </div>
 
-    <h2>Deposit money</h2>
+    <div id="Deposit money" class="tabcontent" style="display: none;">
 
-    <form action="client" method="post">
-        <div class="imgcontainer">
-            <img src="../static/pictures/roman_coins.jpeg" alt="Avatar" class="avatar">
-        </div>
-        <label class="hidden">
-            Post type:
-            <input type="text" name="login_id" value="{{login_id}}" checked="checked">
-        </label>
-        <div class="container">
-            <label for="money"><b>Enter the amount of money you want to deposit</b></label>
-            <label>
-                <input type="text" placeholder="Enter a money amount" name="money" required="">
-            </label>
+        <h2>Deposit money</h2>
 
+        <form action="client.html" method="post">
+            <div class="imgcontainer">
+                <img src="../static/pictures/roman_coins.jpeg" alt="Avatar" class="avatar">
+            </div>
             <label class="hidden">
                 Post type:
-                <input type="radio" name="post-type" value="deposit" checked="checked">
+                <input type="text" name="login_id" value="{{login_id}}" checked="checked">
             </label>
+            <div class="container">
+                <label for="money"><b>Enter the amount of money you want to deposit</b></label>
+                <label>
+                    <input type="text" placeholder="Enter a money amount" name="money" required="">
+                </label>
 
-            <button type="submit" class="button_style">Submit</button>
-        </div>
+                <label class="hidden">
+                    Post type:
+                    <input type="radio" name="post-type" value="deposit" checked="checked">
+                </label>
 
-    </form>
+                <button type="submit" class="button_style">Submit</button>
+            </div>
 
-</div>
+        </form>
 
-<div id="Withdraw money" class="tabcontent" style="display: none;">
-    <h2>Withdraw money</h2>
+    </div>
 
-    <form action="client" method="post">
-        <div class="imgcontainer">
-            <img src="../static/pictures/withdraw.jpeg" alt="Avatar" class="avatar">
-        </div>
-        <label class="hidden">
-            Post type:
-            <input type="text" name="login_id" value="{{login_id}}" checked="checked">
-        </label>
-        <div class="container">
-            <label for="money"><b>Enter the amount of money you want to withdraw</b></label>
-            <label>
-                <input type="text" placeholder="Enter a money amount" name="money" required="">
-            </label>
+    <div id="Withdraw money" class="tabcontent" style="display: none;">
+        <h2>Withdraw money</h2>
 
+        <form action="client.html" method="post">
+            <div class="imgcontainer">
+                <img src="../static/pictures/withdraw.jpeg" alt="Avatar" class="avatar">
+            </div>
             <label class="hidden">
                 Post type:
-                <input type="radio" name="post-type" value="withdraw" checked="checked">
+                <input type="text" name="login_id" value="{{login_id}}" checked="checked">
             </label>
-            <button type="submit" class="button_style">Withdraw</button>
-        </div>
+            <div class="container">
+                <label for="money"><b>Enter the amount of money you want to withdraw</b></label>
+                <label>
+                    <input type="text" placeholder="Enter a money amount" name="money" required="">
+                </label>
 
-    </form>
-</div>
+                <label class="hidden">
+                    Post type:
+                    <input type="radio" name="post-type" value="withdraw" checked="checked">
+                </label>
+                <button type="submit" class="button_style">Withdraw</button>
+            </div>
 
-<div id="Get credit" class="tabcontent" style="display: none;">
-    <h2>Get credit</h2>
+        </form>
+    </div>
 
-    <form action="" method="post">
-        <div class="imgcontainer">
-            <img src="../static/pictures/card.jpeg" alt="Avatar" class="avatar">
-        </div>
-        <label class="hidden">
-            Post type:
-            <input type="text" name="login_id" value="{{login_id}}" checked="checked">
-        </label>
-        <div class="container">
-            <label for="money"><b>Enter the amount of money you want to get</b></label>
-            <label>
-                <input type="text" placeholder="Enter Username" name="money" required="">
-            </label>
+    <div id="Get credit" class="tabcontent" style="display: none;">
+        <h2>Get credit</h2>
 
+        <form action="client.html" method="post">
+            <div class="imgcontainer">
+                <img src="../static/pictures/card.jpeg" alt="Avatar" class="avatar">
+            </div>
             <label class="hidden">
                 Post type:
-                <input type="radio" name="post-type" value="get_credit" checked="checked">
+                <input type="text" name="login_id" value="{{login_id}}" checked="checked">
             </label>
-            <button type="submit" class="button_style">Get the money</button>
-        </div>
+            <div class="container">
+                <label for="money"><b>Enter the amount of money you want to get</b></label>
+                <label>
+                    <input type="text" placeholder="Enter Username" name="money" required="">
+                </label>
 
-    </form>
+                <label class="hidden">
+                    Post type:
+                    <input type="radio" name="post-type" value="get_credit" checked="checked">
+                </label>
+                <button type="submit" class="button_style">Get the money</button>
+            </div>
 
-</div>
+        </form>
 
-<div id="Pay debt" class="tabcontent" style="display: none;">
-    <h2>Get credit</h2>
+    </div>
 
-    <form action="" method="post">
-        <div class="imgcontainer">
-            <img src="../static/pictures/pay_debt.jpeg" alt="Avatar" class="avatar">
-        </div>
-        <label class="hidden">
-            Post type:
-            <input type="text" name="login_id" value="{{login_id}}" checked="checked">
-        </label>
+    <div id="Pay debt" class="tabcontent" style="display: none;">
+        <h2>Get credit</h2>
 
-        <div class="container">
-            <label for="money"><b>Enter the amount of money you want to pay</b></label>
-            <label>
-                <input type="text" placeholder="Enter the money amount" name="money" required="">
-            </label>
-
+        <form action="client.html" method="post">
+            <div class="imgcontainer">
+                <img src="../static/pictures/pay_debt.jpeg" alt="Avatar" class="avatar">
+            </div>
             <label class="hidden">
                 Post type:
-                <input type="radio" name="post-type" value="pay_debt" checked="checked">
+                <input type="text" name="login_id" value="{{login_id}}" checked="checked">
             </label>
-            <button type="submit" class="button_style">Pay</button>
-        </div>
 
-    </form>
+            <div class="container">
+                <label for="money"><b>Enter the amount of money you want to pay</b></label>
+                <label>
+                    <input type="text" placeholder="Enter the money amount" name="money" required="">
+                </label>
+
+                <label class="hidden">
+                    Post type:
+                    <input type="radio" name="post-type" value="pay_debt" checked="checked">
+                </label>
+                <button type="submit" class="button_style">Pay</button>
+            </div>
+
+        </form>
+    </div>
+
+    <script>
+        w3.slideshow(".nature", 3500);
+    </script>
+
 </div>
-
-<script>
-    w3.slideshow(".nature", 3500);
-</script>
-
-
 
 </body></html>
