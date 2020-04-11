@@ -6,14 +6,22 @@ from backend.ClientException import ClientException
 app = Flask ( __name__ )
 
 
+def render_success_template(success_message) :
+    return render_template ( 'successTemplate.html' , success_message = success_message )
+
+
+def render_failure_template(error_message) :
+    return render_template ( 'failureTemplate.html' , error_message = error_message )
+
+
 def handle_client_register_request(bank) :
     name = request.form.get ( 'name' )
     password = request.form.get ( 'password' )
     try :
         bank.createClientAccount ( name , password , 0 )
-        return "Account created successfully"
+        return render_success_template ( "Account created successfully" )
     except Exception as ex :
-        return ex.__str__ ( )
+        return render_failure_template ( ex.__str__ ( ) )
 
 
 def handle_client_login_request(bank) :
@@ -24,7 +32,7 @@ def handle_client_login_request(bank) :
         client.set_log_field ( True )
         return get_client_template ( client )
     except Exception as ex :
-        return ex.__str__ ( )
+        return render_failure_template( ex.__str__ ( ) )
 
 
 def handle_admin_login_request(bank) :
@@ -35,7 +43,7 @@ def handle_admin_login_request(bank) :
         admin.set_log_field ( True )
         return get_admin_template ( admin , bank )
     except BaseException as exception :
-        return exception.__str__ ( )
+        return render_failure_template( exception.__str__ ( ) )
 
 
 def get_admin_template(admin , bank) :
@@ -57,9 +65,9 @@ def handle_deposit_money_as_client() :
 
     try :
         client.depositMoney ( money_to_deposit )
-        return "Money deposited successfully"
+        return render_success_template ( "Money deposited successfully" )
     except BaseException as ex :
-        return ex.__str__ ( )
+        return render_failure_template( ex.__str__ ( ) )
 
 
 def handle_withdraw_money_as_client() :
@@ -69,9 +77,9 @@ def handle_withdraw_money_as_client() :
 
     try :
         client.withdrawMoney ( money_to_withdraw )
-        return "Money withdrew successfully"
+        return render_success_template ( "Money withdrew successfully" )
     except BaseException as ex :
-        return ex.__str__ ( )
+        return render_failure_template( ex.__str__ ( ) )
 
 
 def handle_get_credit_request() :
@@ -81,9 +89,9 @@ def handle_get_credit_request() :
 
     try :
         client.getCreditFromBank ( money )
-        return "You have got the credit"
+        return render_success_template("You have got the credit")
     except BaseException as ex :
-        return ex.__str__ ( )
+        return render_failure_template( ex.__str__ ( ) )
 
 
 def handle_pay_debt_request() :
@@ -93,9 +101,9 @@ def handle_pay_debt_request() :
 
     try :
         client.payDebt ( money )
-        return "Debt paid successfully"
+        return render_success_template( "Debt paid successfully" )
     except BaseException as ex :
-        return ex.__str__ ( )
+        return render_failure_template( ex.__str__ ( ) )
 
 
 def handle_deposit_money_as_admin(bank) :
@@ -105,9 +113,9 @@ def handle_deposit_money_as_admin(bank) :
     try :
         admin = bank.get_admin_after_the_login_id ( login_id )
         admin.deposit_money_as_admin ( money )
-        return "Money deposited successfully"
+        return render_success_template( "Money deposited successfully" )
     except BaseException as exception :
-        return exception.__str__ ( )
+        return render_failure_template( exception.__str__ ( ) )
 
 
 def handle_block_client_account_request(bank) :
@@ -116,9 +124,9 @@ def handle_block_client_account_request(bank) :
     try :
         admin = bank.get_admin_after_the_login_id ( login_id_of_the_current_admin )
         admin.block_client_account_after_the_login_id ( client_s_login_id )
-        return "The client account was blocked"
+        return render_success_template( "The client account was blocked" )
     except BaseException as exception :
-        return exception.__str__ ( )
+        return render_failure_template( exception.__str__ ( ) )
 
 
 def handle_unblock_client_account_request(bank) :
@@ -127,9 +135,9 @@ def handle_unblock_client_account_request(bank) :
     try :
         admin = bank.get_admin_after_the_login_id ( login_id_of_the_current_admin )
         admin.unblock_client_account_after_the_login_id ( client_s_login_id )
-        return "The client account was unblocked"
+        return render_success_template( "The client account was unblocked" )
     except BaseException as exception :
-        return exception.__str__ ( )
+        return render_failure_template( exception.__str__ ( ) )
 
 
 def reload_client_page(bank) :
@@ -138,7 +146,7 @@ def reload_client_page(bank) :
     if is_logged :
         client = bank.get_client_after_the_login_id ( login_id )
         return get_client_template ( client )
-    raise ClientException ( "You are not logged in. Please login first" )
+    raise ClientException ( "You are not logged in as a client. Please login first" )
 
 
 def reload_admin_page(bank) :
@@ -147,7 +155,7 @@ def reload_admin_page(bank) :
     if is_logged :
         admin = bank.get_client_after_the_login_id ( login_id )
         return get_admin_template ( admin )
-    raise ClientException ( "You are not logged in. Please login first" )
+    raise ClientException ( "You are not logged in as an admin. Please login first" )
 
 
 def get_client_template(client) :
@@ -175,15 +183,14 @@ def handle_client_request() :
         elif request.form.get ( 'post-type' ) == 'get_credit' :
             return handle_get_credit_request ( )
         elif request.form.get ( 'post-type' ) == 'pay_debt' :
-            return handle_get_credit_request ( )
+            return handle_pay_debt_request ( )
         else :
-            return 'Something went wrong'
+            return render_failure_template('Something went wrong. Please try again later')
     else :
         try :
-            print("Am fost")
             return reload_client_page ( bank )
         except ClientException as exception :
-            return exception.__str__ ( )
+            return render_failure_template( exception.__str__ ( ) )
 
 
 @app.route ( '/admin.html' , methods = ['POST' , 'GET'] )
@@ -199,12 +206,12 @@ def handle_admin_request() :
         elif request.form.get ( 'post-type' ) == 'unblock-client' :
             return handle_unblock_client_account_request ( bank )
 
-        return 'Something went wrong'
+        return render_failure_template('Something went wrong. Please try again later')
     else :
         try :
             return reload_admin_page ( bank )
         except ClientException as exception :
-            return exception.__str__ ( )
+            return render_failure_template( exception.__str__ ( ) )
 
 
 @app.route ( '/home.html' )
