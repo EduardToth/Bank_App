@@ -1,10 +1,13 @@
-<html><head>
+<html xmlns:font="http://www.w3.org/1999/xhtml">
+<head>
     <meta charset="UTF-8">
     <title>index</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link rel="stylesheet" href="../static/CSS/pagina_principala.css">
     <link rel="stylesheet" href="../static/CSS/Sign_in_style.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <script src="../static/JavaScript/navbar_customizing.js"></script>
 </head>
 <body>
@@ -122,91 +125,94 @@
 </div>
 
 <div id="Login" class="tabcontent">
-    <h2>Login Form</h2>
-
     <form action="client.html" method="post">
-        <div class="imgcontainer">
-            <img src="../static/pictures/img_avatar2.png" alt="Avatar" class="avatar">
+        <div class="box">
+            <h1>Welcome on board!</h1>
+            <div class="imgcontainer">
+                <img src="../static/pictures/client_login.jpg" alt="Avatar" class="client">
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control" placeholder="Name" name="name" required=""><br>
+                <input type="password" class="form-control" placeholder="Password" name="password" required=""><br>
+
+                <label class="hidden">
+                    Post type:
+                    <input type="radio" name="post-type" value="login" checked="checked">
+                </label>
+
+                <button type="submit" class="btn btn-success btn-lg btn-block">Login</button>
+            </div>
         </div>
-
-        <div class="container">
-            <label for="name"><b>Username</b></label>
-            <label>
-                <input type="text" placeholder="Enter Username" name="name" required="">
-            </label>
-
-            <label for="password"><b>Password</b></label>
-            <label>
-                <input type="password" placeholder="Enter Password" name="password" required="">
-            </label>
-
-            <label class="hidden">
-                Post type:
-                <input type="radio" name="post-type" value="login" checked="checked">
-            </label>
-
-            <button type="submit" class="button_style">Login</button>
-        </div>
-
     </form>
 </div>
 
 <div id="Sign in" class="tabcontent">
-    <h2>Registration Form</h2>
-
     <form action="client.html" method="post">
-        <div class="imgcontainer">
-            <img src="../static/pictures/img_avatar2.png" alt="Avatar" class="avatar">
+        <div class="box">
+            <h1>Almost there!</h1>
+            <div class="imgcontainer">
+                <img src="../static/pictures/img_avatar2.png" alt="Avatar" class="avatar">
+            </div>
+
+            <div class="form-group">
+                <input type="text" class="form-control" placeholder="Name" name="name" required=""><br>
+                <input type="text" class="form-control" placeholder="Postal address" name="address" required=""><br>
+                <input type="text" class="form-control" placeholder="Phone number" name="phone" required=""><br>
+                <input type="text" class="form-control" placeholder="Nationality" name="nationality" required=""><br>
+                <input type="email" class="form-control" placeholder="Email" name="email" required=""><br>
+                <input type="password" class="form-control" placeholder="Password" name="password" required=""><br>
+                <input type="password" class="form-control" placeholder="Confirm password" name="password"
+                       required=""><br>
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="customCheck1">
+                    <label class="custom-control-label" for="customCheck1"><b>I Agree To The Terms And
+                        Conditions</b></label>
+                </div>
+                <br>
+                <div class="custom-control custom-radio custom-control-inline">
+                    <input type="radio" id="customRadioInline1" name="customRadioInline1" class="custom-control-input"
+                           checked="checked">
+                    <label class="custom-control-label" for="customRadioInline1"><b>Male</b></label>
+                </div>
+                <div class="custom-control custom-radio custom-control-inline">
+                    <input type="radio" id="customRadioInline2" name="customRadioInline1" class="custom-control-input">
+                    <label class="custom-control-label" for="customRadioInline2"><b>Female</b></label>
+                </div>
+                <label class="hidden">
+                    Post type:
+                    <input type="radio" name="post-type" value="register" checked="checked">
+                </label>
+                <button type="submit" class="btn btn-primary btn-lg btn-block">Register</button>
+            </div>
         </div>
-
-        <div class="container">
-            <label for="name"><b>Username</b></label>
-            <label>
-                <input type="text" placeholder="Enter Username" name="name" required="">
-            </label>
-
-            <label for="password"><b>Password</b></label>
-            <label>
-                <input type="password" placeholder="Enter Password" name="password" required="">
-            </label>
-
-            <label class="hidden">
-                Post type:
-                <input type="radio" name="post-type" value="register" checked="checked">
-            </label>
-
-            <button type="submit" class="button_style">Register</button>
-        </div>
-
     </form>
 </div>
 
 <div id="Admin Login" class="tabcontent">
-    <h2>Login Form for admins</h2>
-
     <form action="admin.html" method="post">
-        <label class="hidden">
-            Post type:
-            <input type="radio" name="post-type" value="admin_login" checked="checked">
-        </label>
-        <div class="imgcontainer">
-            <img src="../static/pictures/admin_green.jpeg" alt="Avatar" class="avatar">
+        <div class="box">
+            <h1>Prove us that you are admin!</h1>
+            <div class="imgcontainer">
+                <p> &nbsp If you are going to log in as admin, you will get some privileges like:</p>
+                <ul>
+                    <li>The possibility to block or unblock a client</li>
+                    <li>You can see all the clients</li>
+                    <li>Delete client</li>
+                    <li>Check the bank's sold</li>
+                </ul>
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control" placeholder="Name" name="name" required=""><br>
+                <input type="password" class="form-control" placeholder="Password" name="password" required=""><br>
+
+                <label class="hidden">
+                    Post type:
+                    <input type="radio" name="post-type" value="admin_login" checked="checked">
+                </label>
+
+                <button type="submit" class="btn btn-success btn-lg btn-block">Login</button>
+            </div>
         </div>
-
-        <div class="container">
-            <label for="name"><b>Username</b></label>
-            <label>
-                <input type="text" placeholder="Enter Username" name="name" required="">
-            </label>
-
-            <label for="password"><b>Password</b></label>
-            <label>
-                <input type="password" placeholder="Enter Password" name="password" required="">
-            </label>
-
-            <button type="submit" class="button_style">Login</button>
-        </div>
-
     </form>
 </div>
 
@@ -216,4 +222,5 @@
 </script>
 
 
-</body></html>
+</body>
+</html>

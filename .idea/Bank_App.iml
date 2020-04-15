@@ -7,7 +7,7 @@
     <content url="file://$MODULE_DIR$">
       <excludeFolder url="file://$MODULE_DIR$/bank_env/bin/python" />
     </content>
-    <orderEntry type="jdk" jdkName="Python 3.6 (Bank_App)" jdkType="Python SDK" />
+    <orderEntry type="jdk" jdkName="Python 3.7 (PythonInterpreter)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="bootstrap" level="application" />
   </component>
