@@ -7,11 +7,11 @@ app = Flask ( __name__ )
 
 
 def render_success_template(success_message) :
-    return render_template ( 'successTemplate.html' , success_message = success_message )
+    return render_template ('successTemplate.html', success_message = success_message)
 
 
 def render_failure_template(error_message) :
-    return render_template ( 'failureTemplate.html' , error_message = error_message )
+    return render_template ('failureTemplate.html', error_message = error_message)
 
 
 def handle_client_register_request(bank) :
@@ -51,11 +51,11 @@ def get_admin_template(admin , bank) :
     nr_of_clients = bank.get_nr_of_clients ( )
     clients_in_string_format = admin.getAllClientsAsString ( )
     login_id = admin.get_login_id ( )
-    return render_template ( 'admin.html' ,
-                             login_id = login_id ,
-                             money_ammount = money_ammount ,
-                             nr_of_clients = nr_of_clients ,
-                             clients_in_string_format = clients_in_string_format )
+    return render_template ('admin.html',
+                            login_id = login_id,
+                            money_ammount = money_ammount,
+                            nr_of_clients = nr_of_clients,
+                            clients_in_string_format = clients_in_string_format)
 
 
 def handle_deposit_money_as_client() :
@@ -163,9 +163,9 @@ def get_client_template(client) :
                                       str ( client.getDepositedMoney ( ) ) + " dollars in your account\n"
     message_for_general_information += "You have to pay: " + \
                                        str ( client.getMoneyBorrowed ( ) ) + " to the bank"
-    return render_template ( 'client.html' , client = client ,
-                             message_for_general_information = message_for_general_information ,
-                             login_id = client.get_login_id ( ) )
+    return render_template ('client.html', client = client,
+                            message_for_general_information = message_for_general_information,
+                            login_id = client.get_login_id ( ))
 
 
 @app.route ( '/client.html' , methods = ['POST' , 'GET'] )
@@ -222,12 +222,12 @@ def render_home_page_request() :
         login_id = request.args.get ( 'id' )
         client = bank.get_client_after_the_login_id ( login_id )
         client.set_log_field ( False )
-        return render_template ( 'home.html' )
+        return render_template ('home.html')
     elif request.args.get ( 'mode' ) == '2' :
         login_id = request.args.get ( 'id' )
         admin = bank.get_admin_after_the_login_id ( login_id )
         admin.set_log_field ( False )
-    return render_template ( 'home.html' )
+    return render_template ('home.html')
 
 
 if __name__ == '__main__' :
