@@ -14,7 +14,7 @@
 .box p{
     font-family: Brush Script MT;
     font-size: 150%;
-    padding-top: 10%;
+    padding-top: 8%;
 }
 
 .box ul li{
@@ -45,6 +45,33 @@ img.client{
     float: left;
     border-radius: 60%;
     padding: 5% 0% 0% 10%;
+}
+
+.generalInfo{
+    width: 50%;
+    text-align: justify;
+    font-family: URW Chancery L, cursive;
+    text-indent: 10%;
+    display: inline-block;
+}
+
+.generalInfo h2 {
+    font-family: Brush Script MT;
+    font-style: italic;
+    font-size: 220%;
+    text-align: center;
+    padding-top: 5%;
+    padding-bottom: 3%;
+}
+
+.leftDivHomePage{
+    width: 30%;
+    float: left;
+}
+
+.leftPhoto{
+    width: 60%;
+    float: left;
 }
 
 .hidden {
