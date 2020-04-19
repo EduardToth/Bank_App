@@ -17,11 +17,17 @@ def render_failure_template(error_message) :
 def handle_client_register_request(bank) :
     name = request.form.get ( 'name' )
     password = request.form.get ( 'password' )
+    postal_code = request.form.get('address')
+    phone_number = request.form.get('phone')
+    nationality = request.form.get('nationality')
+    email = request.form.get('email')
+    monthly_income = request.form.get('Monthly income')
+
     try :
-        bank.createClientAccount ( name , password , 0 )
+        bank.createClientAccount(name, password, postal_code, phone_number, nationality, email, monthly_income)
         return render_success_template ( "Account created successfully" )
     except Exception as ex :
-        return render_failure_template ( ex.__str__ ( ) )
+        return render_failure_template ( str( ex ) )
 
 
 def handle_client_login_request(bank) :
@@ -32,7 +38,7 @@ def handle_client_login_request(bank) :
         client.set_log_field ( True )
         return get_client_template ( client )
     except Exception as ex :
-        return render_failure_template( ex.__str__ ( ) )
+        return render_failure_template( str( ex ) )
 
 
 def handle_admin_login_request(bank) :
@@ -43,7 +49,7 @@ def handle_admin_login_request(bank) :
         admin.set_log_field ( True )
         return get_admin_template ( admin , bank )
     except BaseException as exception :
-        return render_failure_template( exception.__str__ ( ) )
+        return render_failure_template( str( exception ) )
 
 
 def get_admin_template(admin , bank) :

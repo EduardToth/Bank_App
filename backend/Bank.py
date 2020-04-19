@@ -1,4 +1,6 @@
 import hashlib
+from math import ceil
+
 import pymysql
 from . import Admin
 from . import Client
@@ -56,28 +58,14 @@ class Bank :
 
         return totalAmountOfMoney
 
-    def createClientAccount(self , nameP , passwordP , moneyAmmountP) :
-        passwordHashed = hashlib.md5 ( passwordP.encode ( "utf-8" ) )
+    def createClientAccount(self ,  userName , password,
+                            postal_code, phone_number, nationality, email, monthly_income) :
+        passwordHashed = hashlib.md5 ( password.encode ( "utf-8" ) )
         passwordHexa = passwordHashed.hexdigest ( )
-
-        mydb = Bank.createConnection ( )
-        if (self.__passwordExistInDatabase ( mydb , passwordHexa ) == 1) :
-            raise ClientException ( "Password already exists in dabase" )
-
-        mycursor = mydb.cursor ( )
-
-        try :
-            login_id = self.get_last_login_id ( ) + 1
-            is_blocked = False
-            is_logged = False
-            mycursor.execute (
-                "INSERT INTO Clients (name, password, moneyOwned, debt, login_id, blocked, is_logged) VALUES (%s, %s, %s, %s, %s, %s, %s)" ,
-                (nameP , passwordHexa , moneyAmmountP , 0 , login_id , is_blocked , is_logged) )
-            mydb.commit ( )
-            mydb.close ( )
-        except BaseException as e :
-            mydb.close ( )
-            raise Exception ( "Something went wrong. Please try again later" )
+        login_id = self.get_last_login_id ( ) + 1
+        client = Client.Client(userName, passwordHexa, self, 0, 0, login_id, False, postal_code, phone_number,
+                               nationality, email, monthly_income)
+        client.insert_data_to_database()
 
     def getClient(self , nameP , passwordP) :
         passwordHashed = hashlib.md5 ( passwordP.encode ( "utf-8" ) )
@@ -97,8 +85,7 @@ class Bank :
         mydb.close ( )
 
         for client_info in client_infos :
-            client = Client.Client ( client_info[0] , client_info[1] , self , client_info[2] , client_info[3] ,
-                                     client_info[4] , client_info[5] )
+            client = Client.Client.create_instance(self, client_info)
             if client is None :
                 raise ClientException ( "The client does not exist in our database" )
             return client
@@ -142,7 +129,8 @@ class Bank :
         login_ids = mycursor.fetchall ( )
         last_login_id = 0
         for login_id in reversed ( login_ids ) :
-            last_login_id = login_id[0]
+            if last_login_id < login_id[ 0 ]:
+                last_login_id = login_id[0]
 
         return last_login_id
 
@@ -243,3 +231,17 @@ class Bank :
             database_connection.close ( )
             print ( exception.__str__ ( ) )
             raise Exception ( "Something went wrong. Please try again later" )
+
+    @staticmethod
+    def is_safe_to_give_the_credit(monthly_income, money_requested, period_in_months):
+        if monthly_income < 3 * money_requested / period_in_months :
+            return False
+        return True
+
+    @staticmethod
+    def get_offer(monthly_income, money_requested):
+        money_to_pay_monthly = monthly_income / 3
+
+        period_in_month = ceil( money_requested / money_to_pay_monthly)
+
+        return period_in_month, money_to_pay_monthly
