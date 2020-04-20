@@ -73,7 +73,7 @@ def handle_deposit_money_as_client() :
         client.depositMoney ( money_to_deposit )
         return render_success_template ( "Money deposited successfully" )
     except BaseException as ex :
-        return render_failure_template( ex.__str__ ( ) )
+        return render_failure_template( str( ex ) )
 
 
 def handle_withdraw_money_as_client() :
@@ -85,7 +85,7 @@ def handle_withdraw_money_as_client() :
         client.withdrawMoney ( money_to_withdraw )
         return render_success_template ( "Money withdrew successfully" )
     except BaseException as ex :
-        return render_failure_template( ex.__str__ ( ) )
+        return render_failure_template( str( ex ) )
 
 
 def handle_get_credit_request() :
@@ -97,7 +97,7 @@ def handle_get_credit_request() :
         client.getCreditFromBank ( money )
         return render_success_template("You have got the credit")
     except BaseException as ex :
-        return render_failure_template( ex.__str__ ( ) )
+        return render_failure_template(  str( ex ) )
 
 
 def handle_pay_debt_request() :
@@ -109,7 +109,7 @@ def handle_pay_debt_request() :
         client.payDebt ( money )
         return render_success_template( "Debt paid successfully" )
     except BaseException as ex :
-        return render_failure_template( ex.__str__ ( ) )
+        return render_failure_template( str( ex ) )
 
 
 def handle_deposit_money_as_admin(bank) :
@@ -121,7 +121,7 @@ def handle_deposit_money_as_admin(bank) :
         admin.deposit_money_as_admin ( money )
         return render_success_template( "Money deposited successfully" )
     except BaseException as exception :
-        return render_failure_template( exception.__str__ ( ) )
+        return render_failure_template( str( exception ) )
 
 
 def handle_block_client_account_request(bank) :
@@ -132,7 +132,7 @@ def handle_block_client_account_request(bank) :
         admin.block_client_account_after_the_login_id ( client_s_login_id )
         return render_success_template( "The client account was blocked" )
     except BaseException as exception :
-        return render_failure_template( exception.__str__ ( ) )
+        return render_failure_template( str( exception ) )
 
 
 def handle_unblock_client_account_request(bank) :
@@ -143,7 +143,7 @@ def handle_unblock_client_account_request(bank) :
         admin.unblock_client_account_after_the_login_id ( client_s_login_id )
         return render_success_template( "The client account was unblocked" )
     except BaseException as exception :
-        return render_failure_template( exception.__str__ ( ) )
+        return render_failure_template( str( exception ) )
 
 
 def reload_client_page(bank) :
@@ -160,7 +160,7 @@ def reload_admin_page(bank) :
     is_logged = bank.is_admin_logged ( login_id )
     if is_logged :
         admin = bank.get_client_after_the_login_id ( login_id )
-        return get_admin_template ( admin )
+        return get_admin_template ( admin, bank)
     raise ClientException ( "You are not logged in as an admin. Please login first" )
 
 
@@ -196,7 +196,7 @@ def handle_client_request() :
         try :
             return reload_client_page ( bank )
         except ClientException as exception :
-            return render_failure_template( exception.__str__ ( ) )
+            return render_failure_template( str( exception) )
 
 
 @app.route ( '/admin.html' , methods = ['POST' , 'GET'] )
@@ -217,7 +217,7 @@ def handle_admin_request() :
         try :
             return reload_admin_page ( bank )
         except ClientException as exception :
-            return render_failure_template( exception.__str__ ( ) )
+            return render_failure_template( str( exception) )
 
 
 @app.route ( '/home.html' )

@@ -12,7 +12,7 @@ from .Debt import Debt
 
 class Client :
     def __init__(self , userName , password , homeBank , depositedMoney , moneyBorrowed , login_id , is_blocked
-                 , postal_code, phone_number, nationality, email, monthly_income, gender) :
+                 , postal_code, phone_number, nationality, email, monthly_income) :
         self.__userName = userName
         self.__password = password
         self.__homeBank = homeBank
@@ -254,6 +254,7 @@ class Client :
         nationality = parameter_list[ 8 ]
         email = parameter_list[ 9 ]
         monthly_income = parameter_list[ 10 ]
+
 
         return Client(userName, password, homeBank, depositedMoney, moneyBorrowed, login_id,
                       is_blocked, postal_code, phone_number,
