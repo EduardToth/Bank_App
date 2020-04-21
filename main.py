@@ -1,11 +1,8 @@
 import os
 
 import flask
-from flask import Flask , render_template , request
-from backend.Bank import Bank
-from backend.ClientException import ClientException
+
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
-from flask_login import current_user
 from flask_sqlalchemy import SQLAlchemy
 from flask import Flask, render_template, url_for, flash, redirect, request
 from backend.forms import ResetPasswordForm, RequestResetForm
@@ -316,8 +313,12 @@ def render_home_page_request() :
         return render_template ( 'home.html' )
     elif request.args.get ( 'mode' ) == '2' :
         login_id = request.args.get ( 'id' )
-        admin = bank.get_admin_after_the_login_id ( login_id )
-        admin.set_log_field ( False )
+        try:
+            admin = bank.get_admin_after_the_login_id ( login_id )
+            admin.set_log_field ( False )
+        except:
+            return render_template ( 'home.html' )
+
     return render_template ( 'home.html' )
 
 def send_reset_email(user):
