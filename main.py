@@ -259,7 +259,6 @@ def get_client_template(client) :
                              message_for_general_information = message_for_general_information ,
                              login_id = client.get_login_id ( ) )
 
-
 @app.route ( '/client.html' , methods = ['POST' , 'GET'] )
 def handle_client_request() :
     bank = Bank ( "ING" )
@@ -305,7 +304,7 @@ def handle_admin_request() :
         except ClientException as exception :
             return render_failure_template ( str ( exception ) )
 
-
+@app.route('/')
 @app.route ( '/home.html' )
 def render_home_page_request() :
     bank = Bank ( "ING" )
