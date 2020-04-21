@@ -1,10 +1,44 @@
-from backend.Bank import Bank
+# import datetime
+#
+#
+# from dateutil.relativedelta import relativedelta
+#
+# from backend import Bank
+#
+# database_connection = None
+# try :
+#     today = datetime.date.today()
+#     database_connection = Bank.Bank.createConnection ( )
+#     my_cursor = database_connection.cursor ( )
+#     my_cursor.execute (
+#         "INSERT INTO Admins   (name, password,"
+#         " id, is_logged,"
+#         " email)"
+#         "VALUES (%s, %s, %s, %s, %s)" ,
+#         ('Vitomir Dragan',
+#          '4ed9407630eb1000c0f6b63842defa7d',
+#          2 ,
+#          0,
+#          'vitomir_dragan86@yahoo.com'
+#          ) )
+#
+#     database_connection.commit ( )
+#     database_connection.close ( )
+# except BaseException as exception :
+#     print ( str ( exception ) )
+#     database_connection.close ( )
+#     raise Exception ( "Something went wrong. Please try again later" )
+#
+#
+# # INSERT INTO `admins` (`name`, `password`, `id`, `email`, `is_logged`) VALUES
+# # ('Illes', '56fba4f663e9a9262c890968bf8a72c8', 1, '	 eduardtoth98@gmail.com', 1),
+# # ('Vitomir Dragan', '4ed9407630eb1000c0f6b63842defa7d', 2, 'vitomir_dragan86@yahoo.com', 0)
 
-db_connection = Bank.createConnection()
 
-my_cursor = db_connection.cursor()
+def f() :
+    return 1 , 2
 
-my_cursor.execute("UPDATE Clients SET postal_code = %s, phone_number = %s, nationality = %s, email = %s, monthly_income = %s WHERE True",
-                  ('3030046', '0752164477', 'Romanian', 'my_bankAccount@gmail.com', 2000))
-db_connection.commit()
-print( my_cursor.rowcount )
+
+(x , y) = f ( )
+
+print ( y )
