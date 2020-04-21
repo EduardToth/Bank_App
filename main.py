@@ -4,8 +4,78 @@ import flask
 from flask import Flask , render_template , request
 from backend.Bank import Bank
 from backend.ClientException import ClientException
+from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
+from flask_login import current_user
+from flask_sqlalchemy import SQLAlchemy
+from flask import Flask, render_template, url_for, flash, redirect, request
+from backend.forms import ResetPasswordForm, RequestResetForm
+from backend.Bank import Bank
+from backend.ClientException import ClientException
+import hashlib
+
+from flask_mail import Mail
+
+from flask_mail import Message
 
 app = Flask ( __name__ )
+
+app.config['SECRET_KEY'] = '5791628bb0b13ce0c676dfde280ba245'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:root@localhost/bank'
+db = SQLAlchemy(app)
+app.config['MAIL_SERVER'] = 'smtp.googlemail.com'
+app.config['MAIL_PORT'] = 587
+app.config['MAIL_USE_TLS'] = True
+app.config['MAIL_USERNAME'] = 'bankappCDE'
+app.config['MAIL_PASSWORD'] = 'bankapp1234'
+mail = Mail(app)
+
+class Admins(db.Model):
+    name = db.Column(db.String(50), nullable=False)
+    password = db.Column(db.String(50), unique=True)
+    id = db.Column(db.Integer, unique=True, primary_key=True)
+    email = db.Column(db.String(50))
+    is_logged = db.Column(db.Integer)
+
+    def get_reset_token(self, expires_sec=1800):
+        s = Serializer(app.config['SECRET_KEY'], expires_sec)
+        return s.dumps({'user_id': self.id}).decode('utf-8')
+
+    @staticmethod
+    def verify_reset_token(token):
+        s = Serializer(app.config['SECRET_KEY'])
+        try:
+            user_id = s.loads(token)['user_id']
+        except:
+            return None
+        return Admins.query.get(user_id)
+
+
+class Clients(db.Model):
+    name = db.Column(db.String(50), nullable=False)
+    password = db.Column(db.String(255), unique=True)
+    moneyOwned = db.Column(db.Integer)
+    debt = db.Column(db.Integer)
+    login_id = db.Column(db.Integer, unique=True, primary_key=True)
+    blocked = db.Column(db.Integer)
+    is_logged = db.Column(db.Integer)
+    postal_code = db.Column(db.String(50))
+    nationality = db.Column(db.String(50))
+    phone_number = db.Column(db.String(50))
+    email = db.Column(db.String(50))
+    monthly_income = db.Column(db.Integer)
+
+    def get_reset_token(self, expires_sec=1800):
+        s = Serializer(app.config['SECRET_KEY'], expires_sec)
+        return s.dumps({'user_id': self.login_id}).decode('utf-8')
+
+    @staticmethod
+    def verify_reset_token(token):
+        s = Serializer(app.config['SECRET_KEY'])
+        try:
+            user_id = s.loads(token)['user_id']
+        except:
+            return None
+        return Clients.query.get(user_id)
 
 
 def render_success_template(success_message) :
@@ -250,6 +320,69 @@ def render_home_page_request() :
         admin = bank.get_admin_after_the_login_id ( login_id )
         admin.set_log_field ( False )
     return render_template ( 'home.html' )
+
+def send_reset_email(user):
+    token = user.get_reset_token()
+    msg = Message('Password Reset Request',
+                  sender='noreply@demo.com',
+                  recipients=[user.email])
+    msg.body = f'''To reset your password, visit the following link:
+{url_for('.reset_token', token=token, user=user, _external=True)}
+If you did not make this request then simply ignore this email and no changes will be made.
+'''
+    mail.send(msg)
+
+
+@app.route("/reset_password", methods=['GET', 'POST'])
+def reset_request_client():
+    form = RequestResetForm()
+    if form.validate_on_submit():
+        client = Clients.query.filter_by(email=form.email.data).first()
+        if client is None:
+            flash('That email does not exist in our database!', 'warning')
+        else:
+            send_reset_email(client)
+            flash('An email has been sent with instructions to reset your password.', 'info')
+            return redirect(url_for('render_home_page_request'))
+    return render_template('reset_request.html', form=form)
+
+
+@app.route("/reset_password/admin", methods=['GET', 'POST'])
+def reset_request_admin():
+    form = RequestResetForm()
+    if form.validate_on_submit():
+        admin = Admins.query.filter_by(email=form.email.data).first()
+        if admin is None:
+            flash('That email does not exist in our database!', 'warning')
+        else:
+            send_reset_email(admin)
+            flash('An email has been sent with instructions to reset your password.', 'info')
+            return redirect(url_for('render_home_page_request'))
+    return render_template('reset_request.html', form=form)
+
+
+@app.route("/reset_password/<token>/<user>", methods=['GET', 'POST'])
+def reset_token(token, user):
+    c = user[1]
+    if c == 'C':
+        user = Clients.verify_reset_token(token)
+    else:
+        user = Admins.verify_reset_token(token)
+    if user is None:
+        flash('That is an invalid or expired token', 'warning')
+        if c == 'C':
+            return redirect(url_for('reset_request_client'))
+        else:
+            return redirect(url_for('reset_request_admin'))
+    form = ResetPasswordForm()
+    if form.validate_on_submit():
+        passwordHashed = hashlib.md5((form.password.data).encode("utf-8"))
+        passwordHexa = passwordHashed.hexdigest()
+        user.password = passwordHexa
+        db.session.commit()
+        flash('Your password has been updated! You are now able to log in', 'success')
+        return redirect(url_for('render_home_page_request'))
+    return render_template('reset_token.html', title='Reset Password', form=form)
 
 
 if __name__ == '__main__' :
