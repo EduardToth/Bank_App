@@ -24,6 +24,19 @@
     <button class="tablinks" onclick="executeButton(event,'Admin Login')">Login as admin</button>
 </div>
 
+<div class="col-md-8">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+    {% block content %}{% endblock %}
+</div>
+
 <div id="Home page" class="tabcontent">
     <div class="leftDivHomePage">
         <img src="../static/pictures/wealth3.jpg" alt="Avatar" class="leftPhoto">
@@ -48,7 +61,7 @@
             ING Bank N.V. Amsterdam, Bucharest Branch</p>
         <h3 style="font-size: 130%">1. Introduction</h3>
         <p style="font-weight: bold">1.1</p>
-            <p>ING Bank N.V. is a banking company registered
+        <p>ING Bank N.V. is a banking company registered
             and existing in accordance with the Dutch law,
             with its headquarters at Bijlmerplein 888, 1102
             MG Amsterdam, The Netherlands, registered
@@ -71,8 +84,8 @@
             NBR, telephone + 40 21 222 16 00; fax + 40 21
             222 14 01; e-mail contact@ingromania.ro. The
             Bank does not include any subsidiaries, or other
-                entities of ING Group.</p>
-            <p>The National Bank of Romania (25 Lipscani Street,
+            entities of ING Group.</p>
+        <p>The National Bank of Romania (25 Lipscani Street,
             sector 3, Bucharest, postal code 030031;
             telephone + 40 21 313 04 10, + 40 21 315 27 50;
             fax + 40 21 312 38 31; e-mail info@bnro.ro) acts
@@ -83,18 +96,18 @@
             “Customer”), and ING Bank N.V. Amsterdam,
             Bucharest Branch and/or any of its offices in
             Romania (the “Bank”) shall be governed by these
-                General Terms and Conditions (the “GTC”).</p>
+            General Terms and Conditions (the “GTC”).</p>
         <p style="font-weight: bold">1.2</p>
-            <p>The Customers are asked to read these GTC
+        <p>The Customers are asked to read these GTC
             carefully since they will be legally bound by them
             in their dealings with the Bank. To the Customers
             are applicable those GTC published and posted by
             the Bank for the category in which the Bank has
             classified the Customer from the business line
             point of view (Commercial Banking or Retail
-                Banking).</p>
+            Banking).</p>
         <p style="font-weight: bold">1.3</p>
-            <p>GTC and, as the case might be, the Presentation
+        <p>GTC and, as the case might be, the Presentation
             Document for Financial Investment Services (the
             “Presentation Document” or “PD”), Payments
             Terms and Conditions (the “PTC”) and Terms and
@@ -116,32 +129,34 @@
             through debit instruments. Based on the
             Customer’s request the GTC, the PD, PTC and TCID
             may be delivered to him at any time during the
-                contractual relationship with the Bank.</p>
+            contractual relationship with the Bank.</p>
         <p style="font-weight: bold">1.4</p>
-            <p>By signing the AOA the Customer acknowledges
+        <p>By signing the AOA the Customer acknowledges
             and approves all of the terms and conditions in
             the GTC and, as the case might be, in the PD
             and/or in the PTC and in the TCID as an
-                attachment and an integral part of the AOA.</p>
+            attachment and an integral part of the AOA.</p>
         <p style="font-weight: bold">1.5</p>
-            <p>As regards the payment services domain, in
+        <p>As regards the payment services domain, in
             deviation from art. 1.3, Customers opening a
             relationship with at least one ING Bank NV entity
             located in one of the following countries: Austria,
             Belgium, Bulgaria, Czech Republic, France,
             Germany, Hungary, Ireland, Italy, Luxemburg,
             Nederland, Poland, Portugal, Slovakia, Spain,
-                Switzerland, United Kingdom, shall receive:</p>
-            <ul>
+            Switzerland, United Kingdom, shall receive:</p>
+        <ul>
             <li> The ING Conditions for Payment Services
-            instead of PTC which shall apply only to
-            Customers opening locally a relationship only
-            with ING Bank N.V. Amsterdam, Bucharest
-                Branch.</li>
+                instead of PTC which shall apply only to
+                Customers opening locally a relationship only
+                with ING Bank N.V. Amsterdam, Bucharest
+                Branch.
+            </li>
             <li> The International Account and Product
-            Agreement (IAPA) instead of AOA which shall
-                apply only to Customers.</li>
-            </ul>
+                Agreement (IAPA) instead of AOA which shall
+                apply only to Customers.
+            </li>
+        </ul>
     </div>
 </div>
 
@@ -162,6 +177,9 @@
                 </label>
 
                 <button type="submit" class="btn btn-success btn-lg btn-block">Login</button>
+                <small class="text-muted ml-2">
+                    <a href="{{ url_for('reset_request_client') }}">Forgot Password?</a>
+                </small>
             </div>
         </div>
     </form>
@@ -181,7 +199,8 @@
                 <input type="text" class="form-control" placeholder="Phone number" name="phone" required=""><br>
                 <input type="text" class="form-control" placeholder="Nationality" name="nationality" required=""><br>
                 <input type="email" class="form-control" placeholder="Email" name="email" required=""><br>
-                <input type="text" class="form-control" placeholder="Monthly income" name="Monthly income" required=""><br>
+                <input type="text" class="form-control" placeholder="Monthly income" name="Monthly income"
+                       required=""><br>
                 <input type="password" class="form-control" placeholder="Password" name="password" required=""><br>
                 <input type="password" class="form-control" placeholder="Confirm password" name="password"
                        required=""><br>
@@ -233,6 +252,9 @@
                 </label>
 
                 <button type="submit" class="btn btn-success btn-lg btn-block">Login</button>
+                <small class="text-muted ml-2">
+                    <a href="{{ url_for('reset_request_admin') }}">Forgot Password?</a>
+                </small>
             </div>
         </div>
     </form>
