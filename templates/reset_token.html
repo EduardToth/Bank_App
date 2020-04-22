@@ -8,6 +8,18 @@
 </head>
 <body>
 <div class="content-section">
+    <div class="col-md-8">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        {% block content %}{% endblock %}
+    </div>
     <form method="POST" action="">
         {{ form.hidden_tag() }}
         <fieldset class="form-group">
