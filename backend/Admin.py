@@ -1,22 +1,25 @@
 import hashlib
+import os
+
 from . import Bank
 from . import Client
 from .ClientException import ClientException
 
 
 class Admin :
-    def __init__(self , name , password , homeBank , login_id) :
+    def __init__(self , name , password , homeBank , login_id, email) :
         self.__name = name
         self.__password = password
         self.__homeBank = homeBank
         self.__login_id = login_id
+        self.__email = email
 
     def getAllClientsAsString(self) :
         my_database = Bank.Bank.createConnection ( )
         mycursor = my_database.cursor ( )
 
         try :
-            mycursor.execute ( "SELECT * FROM Clients" )
+            mycursor.execute ( "SELECT login_id FROM Clients" )
             my_database.close ( )
         except Exception as exception :
             my_database.close ( )
@@ -24,37 +27,11 @@ class Admin :
 
         client_fields_array = mycursor.fetchall ( )
         clients_in_string_format = ""
-        for client_fields in client_fields_array :
-            client = Client.Client ( client_fields[0] , client_fields[1] , self , client_fields[2] , client_fields[3] ,
-                                     client_fields[4] , client_fields[5] )
-            clients_in_string_format += client.__str__ ( ) + "\n"
+        for client_info in client_fields_array:
+            client = Bank.Bank.get_client_after_the_login_id( client_info[ 0 ])
+            clients_in_string_format += str( client ) + os.linesep
 
         return clients_in_string_format
-
-    def deleteClient(self , nameP , passwordP) :
-        mydb = Bank.Bank.createConnection ( )
-        passwordHashed = hashlib.md5 ( passwordP.encode ( "utf-8" ) )
-        passwordHexa = passwordHashed.hexdigest ( )
-
-        mycursor = mydb.cursor ( )
-        try :
-            result = mycursor.execute ( "DELETE FROM Clients WHERE name = %s AND password = %s" ,
-                                        (nameP , passwordHexa) )
-            mydb.commit ( )
-
-            result = mycursor.rowcount
-            if result == 0 :
-                raise ClientException ( 'The client is not present in our database' )
-
-        except ClientException as e :
-            mydb.close ( )
-            raise e
-
-        except Exception as e :
-            mydb.close ( )
-            raise Exception ( "Something went wrong. Please try again later" )
-        finally :
-            mydb.close ( )
 
     def __passwordExistInDatabase(self , mydb , password_introduced) :
         mycursor = mydb.cursor ( )
@@ -170,3 +147,14 @@ class Admin :
         except BaseException as e :
             database_connection.close ( )
             raise Exception ( "Something went wrong. Please try again later" )
+
+
+    @staticmethod
+    def create_instance(parameter_list):
+        name = parameter_list[ 0 ]
+        password = parameter_list[ 1 ]
+        homeBank = Bank.Bank('ING')
+        login_id = parameter_list[ 2 ]
+        email = parameter_list[ 4 ]
+
+        return Admin(name, password, homeBank, login_id, email)

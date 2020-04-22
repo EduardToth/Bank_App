@@ -1,6 +1,6 @@
 import datetime
 import os
-
+from dateutil.relativedelta import relativedelta
 from . import Bank
 from .ClientException import ClientException
 
@@ -148,14 +148,14 @@ class Debt :
 
     # merge
     def pay_debt(self) :
-        date_difference_in_months = self.get_date_difference_in_months ( self.__last_payment ,
-                                                                         datetime.date.today ( ) )
+        date_difference_in_months = self.get_date_difference_in_months (  datetime.date.today ( ), self.__last_payment )
         if date_difference_in_months == 0 :
             raise ClientException ( 'The debt has been paid for this month already' )
 
         self.__money_to_pay -= self.__money_to_pay_monthly
+        date_difference_in_months = date_difference_in_months - 1
 
-        self.__last_payment = datetime.date.today ( )
+        self.__last_payment = datetime.date.today ( ) - relativedelta ( months = +date_difference_in_months )
 
         if self.__money_to_pay == 0 :
             self.__is_debt_paid = True
@@ -176,7 +176,9 @@ class Debt :
         if self.debt_was_paid_for_this_month ( ) :
             text += '     The debt was paid for this month'
         else :
-            text += '     The debt has not been paid for ' + str ( date_difference_in_months ) + ' months'
+            text += '     The debt has not been paid for ' +\
+                    str ( Debt.get_date_difference_in_months( datetime.date.today(),
+                                                              self.__last_payment)) + ' months'
         text += os.linesep
 
         return text
@@ -209,9 +211,15 @@ class Debt :
         debt = Debt ( money_to_pay , today , ending_date , person_id , False ,
                       rate_of_interest , today , Debt.get_last_debt_id ( ) + 1 )
 
-        debt.insert_to_database ( )
         return debt
 
     def debt_was_paid_for_this_month(self) :
         date_difference_in_months = self.get_date_difference_in_months ( self.__last_payment , datetime.date.today ( ) )
         return date_difference_in_months == 0
+
+    def __eq__(self , other) :
+
+        if isinstance ( other , Debt ) :
+            return self.__debt_id == other.__debt_id
+        return False
+
