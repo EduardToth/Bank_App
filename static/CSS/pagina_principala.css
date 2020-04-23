@@ -4,7 +4,7 @@ body {font-family: Arial;}
 .tab {
   overflow: hidden;
   border: 1px solid #ccc;
-  background-color: #BEBEBE;
+  background-color: #f1f1f1;
 }
 
 /* Style the buttons inside the tab */
@@ -19,24 +19,58 @@ body {font-family: Arial;}
   font-size: 17px;
 }
 
+.jumbotron h1{
+ text-align: center;
+}
+
+.jumbotron p{
+  text-align: center;
+ }
+
+/* Style the buttons inside the nav */
+.nav-item button {
+  background-color:#343a40;
+  color:white;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  transition: 0.3s;
+  font-size: 17px;
+}
+
+.nav-item button:hover {
+  background-color: #ddd;
+}
+
+/* Style the buttons inside the jumbotron */
+.jumbotron button{
+  background-color:#343a40;
+  color:white;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  transition: 0.3s;
+  font-size: 17px;
+ }
+
 /* Change background color of buttons on hover */
 .tab button:hover {
   background-color: #ddd;
 }
 
 /* Create an active/current tablink class */
-.tab button.active {
-  background-color: #ccc;
-}
+
 
 /* Style the tab content */
 .tabcontent {
-  background: #ECECEC;
   display: none;
   padding: 6px 12px;
-  border: 1px solid #39cc56;
+  border: 1px solid #ccc;
   border-top: none;
-  overflow: auto;
 }
 
 #outer
@@ -47,4 +81,25 @@ body {font-family: Arial;}
 .inner
 {
   display: inline-block;
+}
+
+.footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color:#343a40;
+  color:white;
+  text-align: center;
+}
+
+.footer-company-name{
+	color:  #222;
+	font-size: 14px;
+	font-weight: normal;
+	margin: 0;
+}
+
+.lead{
+  text-align: center;
 }
