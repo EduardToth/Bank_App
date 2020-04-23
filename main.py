@@ -1,10 +1,6 @@
 import os
 
 import flask
-<<<<<<< HEAD
-=======
-
->>>>>>> 04659a68dddfc9a40dd93bc0a0d137c482386088
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 from flask_sqlalchemy import SQLAlchemy
 from flask import Flask, render_template, url_for, flash, redirect, request
@@ -321,12 +317,8 @@ def render_home_page_request() :
             admin.set_log_field ( False )
         except:
             return render_template ( 'home.html' )
-<<<<<<< HEAD
     return render_template('home.html')
-=======
 
-    return render_template ( 'home.html' )
->>>>>>> 04659a68dddfc9a40dd93bc0a0d137c482386088
 
 def send_reset_email(user):
     token = user.get_reset_token()
