@@ -1,8 +1,6 @@
-import hashlib
 import os
 
 from . import Bank
-from . import Client
 from .ClientException import ClientException
 
 
@@ -14,18 +12,18 @@ class Admin :
         self.__login_id = login_id
         self.__email = email
 
-    def getAllClientsAsString(self) :
+    def get_all_clients_as_string(self) :
         my_database = Bank.Bank.createConnection ( )
-        mycursor = my_database.cursor ( )
+        my_cursor = my_database.cursor ( )
 
         try :
-            mycursor.execute ( "SELECT login_id FROM Clients" )
+            my_cursor.execute ( "SELECT login_id FROM Clients" )
             my_database.close ( )
         except Exception as exception :
             my_database.close ( )
             raise Exception ( "Something went wrong. Please try again later" )
 
-        client_fields_array = mycursor.fetchall ( )
+        client_fields_array = my_cursor.fetchall ( )
         clients_in_string_format = ""
         for client_info in client_fields_array:
             client = Bank.Bank.get_client_after_the_login_id( client_info[ 0 ])
@@ -33,21 +31,21 @@ class Admin :
 
         return clients_in_string_format
 
-    def __passwordExistInDatabase(self , mydb , password_introduced) :
+    def __password_exist_in_database(self , mydb , password_introduced) :
         mycursor = mydb.cursor ( )
         mycursor.execute ( "SELECT password FROM Admins" )
 
         myresult = mycursor.fetchall ( )
 
-        exist = 0
+        exist = False
         for x in myresult :
             if x[0] == password_introduced :
-                exist = 1
+                exist = True
         return exist
 
-    def createAdminAccount(self , name , password) :
+    def create_admin_account(self , name , password) :
         mydb = Bank.Bank.createConnection ( )
-        if self.__passwordExistInDatabase ( mydb , password ) == 1 :
+        if self.__password_exist_in_database ( mydb , password ) == 1 :
             raise ClientException ( "The client already exist in database" )
 
         mycursor = mydb.cursor ( )
@@ -62,7 +60,7 @@ class Admin :
             mydb.close ( )
 
     def deposit_money_as_admin(self , money) :
-        bank_sCredit = self.__homeBank.getTotalAmountOfMoney ( )
+        bank_sCredit = self.__homeBank.get_total_ammount_of_money ( )
         bank_sCredit += money
 
         my_db_connection = Bank.Bank.createConnection ( )

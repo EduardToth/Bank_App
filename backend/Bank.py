@@ -11,8 +11,8 @@ class Bank :
     def __init__(self , name) :
         self.__name = name
 
-    def __passwordExistInDatabase(self ,  password_introduced) :
-        db = Bank.createConnection()
+    def __passwordExistInDatabase(self , password_introduced) :
+        db = Bank.createConnection ( )
         my_cursor = db.cursor ( )
 
         try :
@@ -27,46 +27,47 @@ class Bank :
         for x in myresult :
             if x[0] == password_introduced :
                 exist = True
-        db.close()
+        db.close ( )
         return exist
 
     @staticmethod
     def createConnection() :
-        mydb = None
+        db_connection = None
         try :
-            mydb = pymysql.connect ( "localhost" , "Illes" , "MindenOk10" , "Bank" )
-            return mydb
+            db_connection = pymysql.connect ( "localhost" , "Illes" , "MindenOk10" , "Bank" )
+            return db_connection
         except BaseException as e :
-            mydb.close ( )
+            if db_connection is not None :
+                db_connection.close ( )
             raise Exception ( "Something went wrong. Please try again later" )
 
-    def getTotalAmountOfMoney(self) :
-        mydb = Bank.createConnection ( )
-        mycursor = mydb.cursor ( )
+    def get_total_ammount_of_money(self) :
+        db_connection = Bank.createConnection ( )
+        my_cursor = db_connection.cursor ( )
         try :
-            mycursor.execute ( "SELECT moneyOwned FROM bank WHERE name='ING'" )
+            my_cursor.execute ( "SELECT moneyOwned FROM bank WHERE name='ING'" )
         except BaseException as ex :
-            mydb.close ( )
+            db_connection.close ( )
             raise Exception ( "Something went wrong. Please try again later" )
 
-        myresult = mycursor.fetchall ( )
+        myresult = my_cursor.fetchall ( )
 
-        totalAmountOfMoney = 0
+        total_amount_of_money = 0
         for x in myresult :
-            totalAmountOfMoney = x[0]
+            total_amount_of_money = x[0]
             break
 
-        mydb.close ( )
+        db_connection.close ( )
 
-        return totalAmountOfMoney
+        return total_amount_of_money
 
-    def createClientAccount(self , userName , password ,
-                            postal_code , phone_number , nationality , email , monthly_income) :
+    def create_client_account(self , userName , password ,
+                              postal_code , phone_number , nationality , email , monthly_income) :
         passwordHashed = hashlib.md5 ( password.encode ( "utf-8" ) )
         passwordHexa = passwordHashed.hexdigest ( )
         login_id = self.get_last_login_id ( ) + 1
-        if self.__passwordExistInDatabase(passwordHexa):
-            raise BaseException('Something went wrong. Please try again later')
+        if self.__passwordExistInDatabase ( passwordHexa ) :
+            raise BaseException ( 'Something went wrong. Please try again later' )
 
         client = Client.Client ( userName , passwordHexa , self , 0 , 0 , login_id , False , postal_code ,
                                  phone_number ,
@@ -115,9 +116,9 @@ class Bank :
         admin_infos = mycursor.fetchall ( )
 
         database_connection.close ( )
-        if len( admin_infos) > 0:
-            return Admin.Admin.create_instance( admin_infos[ 0 ])
-        raise ClientException('The admin does not exist in database')
+        if len ( admin_infos ) > 0 :
+            return Admin.Admin.create_instance ( admin_infos[0] )
+        raise ClientException ( 'The admin does not exist in database' )
 
     def get_last_login_id(self) :
         mydb = Bank.createConnection ( )
@@ -150,8 +151,8 @@ class Bank :
             raise Exception ( "Something went wrong. Please try again later" )
         db_connection.close ( )
         client_infos = my_cursor.fetchall ( )
-        if len( client_infos ) > 0:
-            return Client.Client.create_instance(Bank('ING'), client_infos[ 0 ])
+        if len ( client_infos ) > 0 :
+            return Client.Client.create_instance ( Bank ( 'ING' ) , client_infos[0] )
         raise Exception ( "Something went wrong. Please try again later" )
 
     @staticmethod
@@ -228,15 +229,14 @@ class Bank :
             print ( str ( exception ) )
             raise Exception ( "Something went wrong. Please try again later" )
 
-
     @staticmethod
     def get_offer(login_id , money_requested) :
-        client = Bank.get_client_after_the_login_id( login_id)
-        sum = client.get_monthly_debt_sum()
-        money_the_client_could_pay_monthly = client.get_monthly_income() / 3 - sum
+        client = Bank.get_client_after_the_login_id ( login_id )
+        sum = client.get_monthly_debt_sum ( )
+        money_the_client_could_pay_monthly = client.get_monthly_income ( ) / 3 - sum
 
-        if money_the_client_could_pay_monthly <= 50:
-            raise ClientException("The bank cannot give any credit to you")
+        if money_the_client_could_pay_monthly <= 50 :
+            raise ClientException ( "The bank cannot give any credit to you" )
 
         period_in_months = ceil ( money_requested / money_the_client_could_pay_monthly )
         return period_in_months , Bank.get_rate_of_interest ( period_in_months )
@@ -252,20 +252,16 @@ class Bank :
             rate_of_interest = 20
         return rate_of_interest
 
-
     @staticmethod
-    def is_safe_to_give_the_credit(login_id, money_requested, period_in_months):
-        client = Bank.get_client_after_the_login_id( login_id )
-        monthly_debt = client.get_monthly_debt_sum()
+    def is_safe_to_give_the_credit(login_id , money_requested , period_in_months) :
+        client = Bank.get_client_after_the_login_id ( login_id )
+        monthly_debt = client.get_monthly_debt_sum ( )
 
-        the_money_the_client_could_pay = client.get_monthly_income() / 3 - monthly_debt
+        the_money_the_client_could_pay = client.get_monthly_income ( ) / 3 - monthly_debt
 
-        if the_money_the_client_could_pay <= 50:
-            raise ClientException("The bank can't give any credit to you. It's too risky")
+        if the_money_the_client_could_pay <= 50 :
+            raise ClientException ( "The bank can't give any credit to you. It's too risky" )
 
-        if money_requested / period_in_months <= the_money_the_client_could_pay:
+        if money_requested / period_in_months <= the_money_the_client_could_pay :
             return True
         return False
-
-
-
