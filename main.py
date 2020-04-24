@@ -359,7 +359,7 @@ def reset_request_client() :
 
 @app.route ( "/reset_password/admin" , methods = ['GET' , 'POST'] )
 def reset_request_admin() :
-    form = RequestResetForm ( )
+    form = RequestResetForm ()
     if form.validate_on_submit ( ) :
         admin = Admins.query.filter_by ( email = form.email.data ).first ( )
         if admin is None :
@@ -397,3 +397,6 @@ def reset_token(token , user) :
 
 if __name__ == '__main__' :
     app.run ( debug = True )
+
+
+
