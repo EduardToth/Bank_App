@@ -34,7 +34,7 @@ class Bank :
     def createConnection() :
         db_connection = None
         try :
-            db_connection = pymysql.connect ( "localhost" , "Illes" , "MindenOk10" , "Bank" )
+            db_connection = pymysql.connect ( "localhost" , "clau1" , "clau" , "Bank2" )
             return db_connection
         except BaseException as e :
             if db_connection is not None :

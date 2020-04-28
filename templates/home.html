@@ -1,28 +1,49 @@
 <html xmlns:font="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>index</title>
+    <title>bome</title>
+    <link rel="icon" type="image/png" href="../static/pictures/logo_search.svg"/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
+    <link href="../static/CSS/bootstrap-4.4.1-dist/css/bootstrap.min.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="../static/CSS/pagina_principala.css">
     <link rel="stylesheet" href="../static/CSS/home_style.css">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <script src="../static/JavaScript/navbar_customizing.js"></script>
 </head>
 <body>
 
-<img class="nature" src="../static/pictures/gold2.jpg" width="100%" height="45%" style="display: none;">
-<img class="nature" src="../static/pictures/euro.jpg" width="100%" height="45%" style="display: block;">
-<img class="nature" src="../static/pictures/bank_building.jpg" width="100%" height="45%" style="display: none;">
-<img class="nature" src="../static/pictures/faraoh.jpg" width="100%" height="45%" style="display: none;">
-
-<div class="tab">
-    <button class="tablinks" onclick="executeButton(event,'Home page')">Home page</button>
-    <button class="tablinks" onclick="executeButton(event,'Login')">Login as client</button>
-    <button class="tablinks" onclick="executeButton(event,'Sign in')">Sign in</button>
-    <button class="tablinks" onclick="executeButton(event,'Admin Login')">Login as admin</button>
-</div>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
+        <div class="container">
+          <a class="navbar-brand" href="home.html">
+                <img src="../static/pictures/logo.svg" width="400" height="33,3%">
+              </a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+          <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
+              <li class="nav-item active">
+                <button class="tablinks" onclick="executeButton(event,'Home page')">Home page</button>
+              </li>
+              <li class="nav-item">
+                <button class="tablinks" onclick="executeButton(event,'Login')">Login as client</button>
+              </li>
+              <li class="nav-item">
+                <button class="tablinks" onclick="executeButton(event,'Sign in')">Sign in</button>
+              </li>
+              <li class="nav-item">
+                <button class="tablinks" onclick="executeButton(event,'Admin Login')">Login as admin</button>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    <div class="jumbotron">
+        <h1 class="display-4" display="center"> Stop Scraping By and Get Your Financial Life Together!</h1>
+        <h1 class="display-4" display="center">So, BankOnMe!</h1> 
+        <hr class="my-4">
+        <p class="lead">Let us help you find your financial peace.</p> 
+        <button class="tablinks" style="width:120px;margin:0 50%;position:relative;left:-50px;" onclick="executeButton(event,'Home page')">LearnMore</button>
+    </div>
 
 <div class="col-md-8">
     {% with messages = get_flashed_messages(with_categories=true) %}
@@ -45,14 +66,6 @@
         <img src="../static/pictures/ing_bank.jpg" alt="Avatar" class="leftPhoto">
         <img src="../static/pictures/money.jpg" alt="Avatar" class="leftPhoto">
         <img src="../static/pictures/bank.jpg" alt="Avatar" class="leftPhoto">
-        <img src="../static/pictures/wealth2.jpg" alt="Avatar" class="leftPhoto">
-        <img src="../static/pictures/ing_bank2.jpg" alt="Avatar" class="leftPhoto">
-        <img src="../static/pictures/euro.jpg" alt="Avatar" class="leftPhoto">
-        <img src="../static/pictures/card.jpeg" alt="Avatar" class="leftPhoto">
-        <img src="../static/pictures/bank_building.jpg" alt="Avatar" class="leftPhoto">
-        <img src="../static/pictures/gold2.jpg" alt="Avatar" class="leftPhoto">
-        <img src="../static/pictures/interiorBank2.jpg" alt="Avatar" class="leftPhoto">
-        <img src="../static/pictures/wealth1.jpg" alt="Avatar" class="leftPhoto">
     </div>
 
     <div class="generalInfo">
@@ -162,15 +175,14 @@
 
 <div id="Login" class="tabcontent">
     <form action="client.html" method="post">
-        <div class="box">
-            <h1>Welcome on board!</h1>
-            <div class="imgcontainer">
-                <img src="../static/pictures/client_login.jpg" alt="Avatar" class="client">
-            </div>
-            <div class="form-group">
+        <div class="box">     
+            <center>
+            <div class="form-group"> 
+                <div class="subform-group">        
+                <h1>Hi,BOME user!</h1>
                 <input type="text" class="form-control" placeholder="Name" name="name" required=""><br>
                 <input type="password" class="form-control" placeholder="Password" name="password" required=""><br>
-
+                </div>
                 <label class="hidden">
                     Post type:
                     <input type="radio" name="post-type" value="login" checked="checked">
@@ -181,6 +193,7 @@
                     <a href="{{ url_for('reset_request_client') }}">Forgot Password?</a>
                 </small>
             </div>
+        </center>
         </div>
     </form>
 </div>
@@ -188,28 +201,12 @@
 <div id="Sign in" class="tabcontent">
     <form action="client.html" method="post">
         <div class="box">
-            <h1>Almost there!</h1>
-            <div class="imgcontainer">
-                <img src="../static/pictures/img_avatar2.png" alt="Avatar" class="avatar">
-            </div>
-
+           
+            <center>
             <div class="form-group">
+                <div class="subform-group">
+                    <h1>Create a New Account</h1>
                 <input type="text" class="form-control" placeholder="Name" name="name" required=""><br>
-                <input type="text" class="form-control" placeholder="Postal address" name="address" required=""><br>
-                <input type="text" class="form-control" placeholder="Phone number" name="phone" required=""><br>
-                <input type="text" class="form-control" placeholder="Nationality" name="nationality" required=""><br>
-                <input type="email" class="form-control" placeholder="Email" name="email" required=""><br>
-                <input type="text" class="form-control" placeholder="Monthly income" name="Monthly income"
-                       required=""><br>
-                <input type="password" class="form-control" placeholder="Password" name="password" required=""><br>
-                <input type="password" class="form-control" placeholder="Confirm password" name="password"
-                       required=""><br>
-                <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" id="customCheck1">
-                    <label class="custom-control-label" for="customCheck1"><b>I Agree To The Terms And
-                        Conditions</b></label>
-                </div>
-                <br>
                 <div class="custom-control custom-radio custom-control-inline">
                     <input type="radio" id="customRadioInline1" name="customRadioInline1" class="custom-control-input"
                            checked="checked">
@@ -219,12 +216,30 @@
                     <input type="radio" id="customRadioInline2" name="customRadioInline1" class="custom-control-input">
                     <label class="custom-control-label" for="customRadioInline2"><b>Female</b></label>
                 </div>
+                <br><br>
+                <input type="text" class="form-control" placeholder="Postal address" name="address" required=""><br>
+                <input type="text" class="form-control" placeholder="Phone number" name="phone" required=""><br>
+                <input type="text" class="form-control" placeholder="Nationality" name="nationality" required=""><br>
+                <input type="email" class="form-control" placeholder="Email" name="email" required=""><br>
+                <input type="text" class="form-control" placeholder="Monthly income" name="Monthly income"
+                       required=""><br>
+                <input type="password" class="form-control" placeholder="Password" name="password" required=""><br>
+                <input type="password" class="form-control" placeholder="Confirm password" name="password"
+                       required="">
+                </div>
+                       <br>
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="customCheck1">
+                    <label class="custom-control-label" for="customCheck1"><b>I Agree To The Terms And
+                        Conditions</b></label>
+                </div>
                 <label class="hidden">
                     Post type:
                     <input type="radio" name="post-type" value="register" checked="checked">
                 </label>
                 <button type="submit" class="btn btn-primary btn-lg btn-block">Register</button>
             </div>
+        </center>
         </div>
     </form>
 </div>
@@ -232,20 +247,13 @@
 <div id="Admin Login" class="tabcontent">
     <form action="admin.html" method="post">
         <div class="box">
-            <h1>Prove us that you are admin!</h1>
-            <div class="imgcontainer">
-                <p> &nbsp If you are going to log in as admin, you will get some privileges like:</p>
-                <ul>
-                    <li>The possibility to block or unblock a client</li>
-                    <li>You can see all the clients</li>
-                    <li>Delete client</li>
-                    <li>Check the bank's sold</li>
-                </ul>
-            </div>
+            <center>
             <div class="form-group">
+                <div class="subform-group">
+                <h1>Hi,BOME admin!</h1>
                 <input type="text" class="form-control" placeholder="Name" name="name" required=""><br>
                 <input type="password" class="form-control" placeholder="Password" name="password" required=""><br>
-
+                </div>
                 <label class="hidden">
                     Post type:
                     <input type="radio" name="post-type" value="admin_login" checked="checked">
@@ -256,15 +264,66 @@
                     <a href="{{ url_for('reset_request_admin') }}">Forgot Password?</a>
                 </small>
             </div>
+        </center>
         </div>
     </form>
 </div>
 
-
+<br>
+<p class="lead">Support Team</p> 
+    <div class="container">
+        <div class="card-deck mb-3 text-center">
+          <div class="card mb-4 shadow-sm">
+            <div class="card-header">
+              <h4 class="my-0 font-weight-normal">Eduard Toth</h4>
+            </div>
+            <div class="card-body">
+              <img src="../static/pictures/1.png" width="120px" height="120px">
+              <ul class="list-unstyled mt-3 mb-4">
+                <li>Email support</li>
+                <li>Help center access</li>
+              </ul>
+              <h1 class="card-title pricing-card-title">toth@bome.ro</h1>
+            </div>
+          </div>
+          <div class="card mb-4 shadow-sm">
+            <div class="card-header">
+              <h4 class="my-0 font-weight-normal">Claudia Budimir</h4>
+            </div>
+            <div class="card-body">
+              <img src="../static/pictures/2.png" width="120px" height="120px">
+              <ul class="list-unstyled mt-3 mb-4">
+                <li>Priority email support</li>
+                <li>Help center access</li>
+              </ul>
+              <h1 class="card-title pricing-card-title">budi@bome.ro</h1>
+            </div>
+          </div>
+          <div class="card mb-4 shadow-sm">
+            <div class="card-header">
+              <h4 class="my-0 font-weight-normal">Dragan Vitomir</h4>
+            </div>
+            <div class="card-body">
+              <img src="../static/pictures/3.png" width="120px" height="120px">
+              <ul class="list-unstyled mt-3 mb-4">
+                <li>Phone and email support</li>
+                <li>+40 0730376140</li>
+              </ul>
+              <h1 class="card-title pricing-card-title">vitomir@bome.ro</h1>
+            </div>
+          </div>
+        </div>
 <script>
     w3.slideshow(".nature", 3500);
 </script>
 
-
+ <div class="footer">
+    <p class="footer-company-name">BankOnMe © 2020</p>
+  </div> 
+<!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 </body>
 </html>
