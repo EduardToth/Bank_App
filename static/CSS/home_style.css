@@ -4,8 +4,6 @@
 }
 
 .box h1 {
-    font-family: Brush Script MT;
-    font-style: italic;
     font-size: 220%;
     text-align: center;
     padding-top: 3%;
@@ -31,7 +29,7 @@
     width: 100%;
     padding: 2% 4% 4% 4%;
     border-radius: 25px;
-    border: 2px solid #343a40;
+    border: 10px solid #f1f1f1;  
 }
 .imgcontainer {
     width: 40%;

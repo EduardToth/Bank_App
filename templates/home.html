@@ -1,329 +1,347 @@
 <html xmlns:font="http://www.w3.org/1999/xhtml">
+
 <head>
     <meta charset="UTF-8">
     <title>bome</title>
-    <link rel="icon" type="image/png" href="../static/pictures/logo_search.svg"/>
+    <link rel="icon" type="image/png" href="../static/pictures/logo_search.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="../static/CSS/bootstrap-4.4.1-dist/css/bootstrap.min.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="../static/CSS/pagina_principala.css">
     <link rel="stylesheet" href="../static/CSS/home_style.css">
     <script src="../static/JavaScript/navbar_customizing.js"></script>
 </head>
+
 <body>
 
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
         <div class="container">
-          <a class="navbar-brand" href="home.html">
-                <img src="../static/pictures/logo.svg" width="400" height="33,3%">
-              </a>
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <a class="navbar-brand" href="home.html">
+                <img src="../static/pictures/logo.svg" width="70" height="33,3%">
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
-              </button>
-          <div class="collapse navbar-collapse" id="navbarResponsive">
-            <ul class="navbar-nav ml-auto">
-              <li class="nav-item active">
-                <button class="tablinks" onclick="executeButton(event,'Home page')">Home page</button>
-              </li>
-              <li class="nav-item">
-                <button class="tablinks" onclick="executeButton(event,'Login')">Login as client</button>
-              </li>
-              <li class="nav-item">
-                <button class="tablinks" onclick="executeButton(event,'Sign in')">Sign in</button>
-              </li>
-              <li class="nav-item">
-                <button class="tablinks" onclick="executeButton(event,'Admin Login')">Login as admin</button>
-              </li>
-            </ul>
-          </div>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item active">
+                        <button class="tablinks" onclick="executeButton(event,'Home page')">Home page</button>
+                    </li>
+                    <li class="nav-item">
+                        <button class="tablinks" onclick="executeButton(event,'Login')">Client Login</button>
+                    </li>
+                    <li class="nav-item">
+                        <button class="tablinks" onclick="executeButton(event,'Admin Login')">Banker Login</button>
+                    </li>
+                    <li class="nav-item">
+                        <button class="tablinks" onclick="executeButton(event,'Sign in')">Sign up</button>
+                    </li>
+                </ul>
+            </div>
         </div>
-      </nav>
+    </nav>
     <div class="jumbotron">
         <h1 class="display-4" display="center"> Stop Scraping By and Get Your Financial Life Together!</h1>
-        <h1 class="display-4" display="center">So, BankOnMe!</h1> 
+        <h1 class="display-4" display="center">So, BankOnMe!</h1>
         <hr class="my-4">
-        <p class="lead">Let us help you find your financial peace.</p> 
-        <button class="tablinks" style="width:120px;margin:0 50%;position:relative;left:-50px;" onclick="executeButton(event,'Home page')">LearnMore</button>
+        <p class="lead">Let us help you find your financial peace.</p>
+        <button class="tablinks" style="width:120px;margin:0 50%;position:relative;left:-50px;"
+            onclick="executeButton(event,'Home page')">LearnMore</button>
     </div>
 
-<div class="col-md-8">
-    {% with messages = get_flashed_messages(with_categories=true) %}
+    <div class="col-md-8">
+        {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
-            {% for category, message in messages %}
-                <div class="alert alert-{{ category }}">
-                    {{ message }}
-                </div>
-            {% endfor %}
+        {% for category, message in messages %}
+        <div class="alert alert-{{ category }}">
+            {{ message }}
+        </div>
+        {% endfor %}
         {% endif %}
-    {% endwith %}
-    {% block content %}{% endblock %}
-</div>
-
-<div id="Home page" class="tabcontent">
-    <div class="leftDivHomePage">
-        <img src="../static/pictures/wealth3.jpg" alt="Avatar" class="leftPhoto">
-        <img src="../static/pictures/interiorBank1.jpg" alt="Avatar" class="leftPhoto">
-        <img src="../static/pictures/gold3.jpg" alt="Avatar" class="leftPhoto">
-        <img src="../static/pictures/ing_bank.jpg" alt="Avatar" class="leftPhoto">
-        <img src="../static/pictures/money.jpg" alt="Avatar" class="leftPhoto">
-        <img src="../static/pictures/bank.jpg" alt="Avatar" class="leftPhoto">
+        {% endwith %}
+        {% block content %}{% endblock %}
     </div>
 
-    <div class="generalInfo">
-        <h2>About us</h2>
-        <p> General Terms and Conditions
-            ING Bank N.V. Amsterdam, Bucharest Branch</p>
-        <h3 style="font-size: 130%">1. Introduction</h3>
-        <p style="font-weight: bold">1.1</p>
-        <p>ING Bank N.V. is a banking company registered
-            and existing in accordance with the Dutch law,
-            with its headquarters at Bijlmerplein 888, 1102
-            MG Amsterdam, The Netherlands, registered
-            under number 33031431 at the Trade Register of
-            the Chamber of Commerce and Industries for
-            Amsterdam, and authorized and regulated in the
-            Netherlands under licence number 12000059 by
-            De Nederlandsche Bank N.V. at Westeinde 1, 1017
-            ZN, Amsterdam and the Autoriteit Financiele
-            Markten at Vijzelgracht 50, 1017 HS, Amsterdam,
-            acting in Romania through ING Bank N.V.
-            Amsterdam, Bucharest Branch, having its
-            registered office at 48 Iancu de Hunedoara
-            Boulevard , 011745 Bucharest 1, Romania,
-            registered with the Trade Register under no.
-            J40/16100/1994, holding Unique Registration
-            Code no. RO 6151100 and registered with the
-            Credit Institutions Registry under no. RB-PJS-40-
-            024, account number 371160600101 opened with
-            NBR, telephone + 40 21 222 16 00; fax + 40 21
-            222 14 01; e-mail contact@ingromania.ro. The
-            Bank does not include any subsidiaries, or other
-            entities of ING Group.</p>
-        <p>The National Bank of Romania (25 Lipscani Street,
-            sector 3, Bucharest, postal code 030031;
-            telephone + 40 21 313 04 10, + 40 21 315 27 50;
-            fax + 40 21 312 38 31; e-mail info@bnro.ro) acts
-            as a secondary supervisory authority for ING Bank
-            N.V. Amsterdam, Bucharest Branch. All business
-            relationships between natural persons and legal
-            entities, whether residents or non-residents (the
-            “Customer”), and ING Bank N.V. Amsterdam,
-            Bucharest Branch and/or any of its offices in
-            Romania (the “Bank”) shall be governed by these
-            General Terms and Conditions (the “GTC”).</p>
-        <p style="font-weight: bold">1.2</p>
-        <p>The Customers are asked to read these GTC
-            carefully since they will be legally bound by them
-            in their dealings with the Bank. To the Customers
-            are applicable those GTC published and posted by
-            the Bank for the category in which the Bank has
-            classified the Customer from the business line
-            point of view (Commercial Banking or Retail
-            Banking).</p>
-        <p style="font-weight: bold">1.3</p>
-        <p>GTC and, as the case might be, the Presentation
-            Document for Financial Investment Services (the
-            “Presentation Document” or “PD”), Payments
-            Terms and Conditions (the “PTC”) and Terms and
-            Conditions on transactions through debit
-            instruments (checks, promissory note, draft
-            („TCID”) shall be given to each Customer together
-            with the Account Opening Application for
-            corporate accounts (the “AOA”).
-            The PD shall be complementary to the present
-            GTC and shall be applicable only to the
-            Customers which enter into financial investments
-            operations with the Bank. Also, the document
-            Payments Terms and Conditions and Terms and
-            Conditions on transactions through debit
-            instruments (checks, promissory note, draft) shall
-            be complementary to the present GTC and shall
-            be applicable to Customers in the payments
-            domain as well as on performing transactions
-            through debit instruments. Based on the
-            Customer’s request the GTC, the PD, PTC and TCID
-            may be delivered to him at any time during the
-            contractual relationship with the Bank.</p>
-        <p style="font-weight: bold">1.4</p>
-        <p>By signing the AOA the Customer acknowledges
-            and approves all of the terms and conditions in
-            the GTC and, as the case might be, in the PD
-            and/or in the PTC and in the TCID as an
-            attachment and an integral part of the AOA.</p>
-        <p style="font-weight: bold">1.5</p>
-        <p>As regards the payment services domain, in
-            deviation from art. 1.3, Customers opening a
-            relationship with at least one ING Bank NV entity
-            located in one of the following countries: Austria,
-            Belgium, Bulgaria, Czech Republic, France,
-            Germany, Hungary, Ireland, Italy, Luxemburg,
-            Nederland, Poland, Portugal, Slovakia, Spain,
-            Switzerland, United Kingdom, shall receive:</p>
-        <ul>
-            <li> The ING Conditions for Payment Services
-                instead of PTC which shall apply only to
-                Customers opening locally a relationship only
-                with ING Bank N.V. Amsterdam, Bucharest
-                Branch.
-            </li>
-            <li> The International Account and Product
-                Agreement (IAPA) instead of AOA which shall
-                apply only to Customers.
-            </li>
-        </ul>
+    <div id="Home page" class="tabcontent">
+        <div class="leftDivHomePage">
+            <img src="../static/pictures/wealth3.jpg" alt="Avatar" class="leftPhoto">
+            <img src="../static/pictures/interiorBank1.jpg" alt="Avatar" class="leftPhoto">
+            <img src="../static/pictures/gold3.jpg" alt="Avatar" class="leftPhoto">
+            <img src="../static/pictures/ing_bank.jpg" alt="Avatar" class="leftPhoto">
+            <img src="../static/pictures/money.jpg" alt="Avatar" class="leftPhoto">
+            <img src="../static/pictures/bank.jpg" alt="Avatar" class="leftPhoto">
+        </div>
+
+        <div class="generalInfo">
+            <h2>About us</h2>
+            <p> General Terms and Conditions
+                ING Bank N.V. Amsterdam, Bucharest Branch</p>
+            <h3 style="font-size: 130%">1. Introduction</h3>
+            <p style="font-weight: bold">1.1</p>
+            <p>ING Bank N.V. is a banking company registered
+                and existing in accordance with the Dutch law,
+                with its headquarters at Bijlmerplein 888, 1102
+                MG Amsterdam, The Netherlands, registered
+                under number 33031431 at the Trade Register of
+                the Chamber of Commerce and Industries for
+                Amsterdam, and authorized and regulated in the
+                Netherlands under licence number 12000059 by
+                De Nederlandsche Bank N.V. at Westeinde 1, 1017
+                ZN, Amsterdam and the Autoriteit Financiele
+                Markten at Vijzelgracht 50, 1017 HS, Amsterdam,
+                acting in Romania through ING Bank N.V.
+                Amsterdam, Bucharest Branch, having its
+                registered office at 48 Iancu de Hunedoara
+                Boulevard , 011745 Bucharest 1, Romania,
+                registered with the Trade Register under no.
+                J40/16100/1994, holding Unique Registration
+                Code no. RO 6151100 and registered with the
+                Credit Institutions Registry under no. RB-PJS-40-
+                024, account number 371160600101 opened with
+                NBR, telephone + 40 21 222 16 00; fax + 40 21
+                222 14 01; e-mail contact@ingromania.ro. The
+                Bank does not include any subsidiaries, or other
+                entities of ING Group.</p>
+            <p>The National Bank of Romania (25 Lipscani Street,
+                sector 3, Bucharest, postal code 030031;
+                telephone + 40 21 313 04 10, + 40 21 315 27 50;
+                fax + 40 21 312 38 31; e-mail info@bnro.ro) acts
+                as a secondary supervisory authority for ING Bank
+                N.V. Amsterdam, Bucharest Branch. All business
+                relationships between natural persons and legal
+                entities, whether residents or non-residents (the
+                “Customer”), and ING Bank N.V. Amsterdam,
+                Bucharest Branch and/or any of its offices in
+                Romania (the “Bank”) shall be governed by these
+                General Terms and Conditions (the “GTC”).</p>
+            <p style="font-weight: bold">1.2</p>
+            <p>The Customers are asked to read these GTC
+                carefully since they will be legally bound by them
+                in their dealings with the Bank. To the Customers
+                are applicable those GTC published and posted by
+                the Bank for the category in which the Bank has
+                classified the Customer from the business line
+                point of view (Commercial Banking or Retail
+                Banking).</p>
+            <p style="font-weight: bold">1.3</p>
+            <p>GTC and, as the case might be, the Presentation
+                Document for Financial Investment Services (the
+                “Presentation Document” or “PD”), Payments
+                Terms and Conditions (the “PTC”) and Terms and
+                Conditions on transactions through debit
+                instruments (checks, promissory note, draft
+                („TCID”) shall be given to each Customer together
+                with the Account Opening Application for
+                corporate accounts (the “AOA”).
+                The PD shall be complementary to the present
+                GTC and shall be applicable only to the
+                Customers which enter into financial investments
+                operations with the Bank. Also, the document
+                Payments Terms and Conditions and Terms and
+                Conditions on transactions through debit
+                instruments (checks, promissory note, draft) shall
+                be complementary to the present GTC and shall
+                be applicable to Customers in the payments
+                domain as well as on performing transactions
+                through debit instruments. Based on the
+                Customer’s request the GTC, the PD, PTC and TCID
+                may be delivered to him at any time during the
+                contractual relationship with the Bank.</p>
+            <p style="font-weight: bold">1.4</p>
+            <p>By signing the AOA the Customer acknowledges
+                and approves all of the terms and conditions in
+                the GTC and, as the case might be, in the PD
+                and/or in the PTC and in the TCID as an
+                attachment and an integral part of the AOA.</p>
+            <p style="font-weight: bold">1.5</p>
+            <p>As regards the payment services domain, in
+                deviation from art. 1.3, Customers opening a
+                relationship with at least one ING Bank NV entity
+                located in one of the following countries: Austria,
+                Belgium, Bulgaria, Czech Republic, France,
+                Germany, Hungary, Ireland, Italy, Luxemburg,
+                Nederland, Poland, Portugal, Slovakia, Spain,
+                Switzerland, United Kingdom, shall receive:</p>
+            <ul>
+                <li> The ING Conditions for Payment Services
+                    instead of PTC which shall apply only to
+                    Customers opening locally a relationship only
+                    with ING Bank N.V. Amsterdam, Bucharest
+                    Branch.
+                </li>
+                <li> The International Account and Product
+                    Agreement (IAPA) instead of AOA which shall
+                    apply only to Customers.
+                </li>
+            </ul>
+        </div>
     </div>
-</div>
 
-<div id="Login" class="tabcontent">
-    <form action="client.html" method="post">
-        <div class="box">     
-            <center>
-            <div class="form-group"> 
-                <div class="subform-group">        
-                <h1>Hi,BOME user!</h1>
-                <input type="text" class="form-control" placeholder="Name" name="name" required=""><br>
-                <input type="password" class="form-control" placeholder="Password" name="password" required=""><br>
-                </div>
-                <label class="hidden">
-                    Post type:
-                    <input type="radio" name="post-type" value="login" checked="checked">
-                </label>
+    <div id="Login" class="tabcontent">
+        <form action="client.html" method="post">
+            <div class="box">
+                <center>
+                    <div class="form-group">
+                        <div class="subform-group">
+                            <h1>BOME Client.</h1>
+                            <input type="text" class="form-control" placeholder="Name" name="name" required=""><br>
+                            <input type="password" class="form-control" placeholder="Password" name="password"
+                                required=""><br>
+                        </div>
+                        <label class="hidden">
+                            Post type:
+                            <input type="radio" name="post-type" value="login" checked="checked">
+                        </label>
 
-                <button type="submit" class="btn btn-success btn-lg btn-block">Login</button>
-                <small class="text-muted ml-2">
-                    <a href="{{ url_for('reset_request_client') }}">Forgot Password?</a>
-                </small>
+                        <button type="submit" class="btn btn-success btn-lg btn-block">Login</button>
+                        <small class="text-muted ml-2">
+                            <a href="{{ url_for('reset_request_client') }}">Forgot Password?</a>
+                        </small>
+                    </div>
+                </center>
             </div>
-        </center>
-        </div>
-    </form>
-</div>
+        </form>
+    </div>
 
-<div id="Sign in" class="tabcontent">
-    <form action="client.html" method="post">
-        <div class="box">
-           
-            <center>
-            <div class="form-group">
-                <div class="subform-group">
-                    <h1>Create a New Account</h1>
-                <input type="text" class="form-control" placeholder="Name" name="name" required=""><br>
-                <div class="custom-control custom-radio custom-control-inline">
-                    <input type="radio" id="customRadioInline1" name="customRadioInline1" class="custom-control-input"
-                           checked="checked">
-                    <label class="custom-control-label" for="customRadioInline1"><b>Male</b></label>
-                </div>
-                <div class="custom-control custom-radio custom-control-inline">
-                    <input type="radio" id="customRadioInline2" name="customRadioInline1" class="custom-control-input">
-                    <label class="custom-control-label" for="customRadioInline2"><b>Female</b></label>
-                </div>
-                <br><br>
-                <input type="text" class="form-control" placeholder="Postal address" name="address" required=""><br>
-                <input type="text" class="form-control" placeholder="Phone number" name="phone" required=""><br>
-                <input type="text" class="form-control" placeholder="Nationality" name="nationality" required=""><br>
-                <input type="email" class="form-control" placeholder="Email" name="email" required=""><br>
-                <input type="text" class="form-control" placeholder="Monthly income" name="Monthly income"
-                       required=""><br>
-                <input type="password" class="form-control" placeholder="Password" name="password" required=""><br>
-                <input type="password" class="form-control" placeholder="Confirm password" name="password"
-                       required="">
-                </div>
-                       <br>
-                <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" id="customCheck1">
-                    <label class="custom-control-label" for="customCheck1"><b>I Agree To The Terms And
-                        Conditions</b></label>
-                </div>
-                <label class="hidden">
-                    Post type:
-                    <input type="radio" name="post-type" value="register" checked="checked">
-                </label>
-                <button type="submit" class="btn btn-primary btn-lg btn-block">Register</button>
+    <div id="Sign in" class="tabcontent">
+        <form action="client.html" method="post">
+            <div class="box">
+
+                <center>
+                    <div class="form-group">
+                        <div class="subform-group">
+                            <h1>Create a New Account</h1>
+                            <input type="text" class="form-control" placeholder="Name" name="name" required=""><br>
+                            <div class="custom-control custom-radio custom-control-inline">
+                                <input type="radio" id="customRadioInline1" name="customRadioInline1"
+                                    class="custom-control-input" checked="checked">
+                                <label class="custom-control-label" for="customRadioInline1"><b>Male</b></label>
+                            </div>
+                            <div class="custom-control custom-radio custom-control-inline">
+                                <input type="radio" id="customRadioInline2" name="customRadioInline1"
+                                    class="custom-control-input">
+                                <label class="custom-control-label" for="customRadioInline2"><b>Female</b></label>
+                            </div>
+                            <br><br>
+                            <input type="text" class="form-control" placeholder="Postal address" name="address"
+                                required=""><br>
+                            <input type="text" class="form-control" placeholder="Phone number" name="phone"
+                                required=""><br>
+                            <input type="text" class="form-control" placeholder="Nationality" name="nationality"
+                                required=""><br>
+                            <input type="email" class="form-control" placeholder="Email" name="email" required=""><br>
+                            <input type="text" class="form-control" placeholder="Monthly income" name="Monthly income"
+                                required=""><br>
+                            <input type="password" class="form-control" placeholder="Password" name="password"
+                                required=""><br>
+                            <input type="password" class="form-control" placeholder="Confirm password" name="password"
+                                required="">
+                        </div>
+                        <br>
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="customCheck1">
+                            <label class="custom-control-label" for="customCheck1"><b>I Agree To The Terms And
+                                    Conditions</b></label>
+                        </div>
+                        <label class="hidden">
+                            Post type:
+                            <input type="radio" name="post-type" value="register" checked="checked">
+                        </label>
+                        <button type="submit" class="btn btn-primary btn-lg btn-block">Register</button>
+                    </div>
+                </center>
             </div>
-        </center>
-        </div>
-    </form>
-</div>
+        </form>
+    </div>
 
-<div id="Admin Login" class="tabcontent">
-    <form action="admin.html" method="post">
-        <div class="box">
-            <center>
-            <div class="form-group">
-                <div class="subform-group">
-                <h1>Hi,BOME admin!</h1>
-                <input type="text" class="form-control" placeholder="Name" name="name" required=""><br>
-                <input type="password" class="form-control" placeholder="Password" name="password" required=""><br>
-                </div>
-                <label class="hidden">
-                    Post type:
-                    <input type="radio" name="post-type" value="admin_login" checked="checked">
-                </label>
+    <div id="Admin Login" class="tabcontent">
+        <form action="admin.html" method="post">
+            <div class="box">
+                <center>
+                    <div class="form-group">
+                        <div class="subform-group">
+                            <h1>BOME Banker.</h1>
+                            <input type="text" class="form-control" placeholder="Name" name="name" required=""><br>
+                            <input type="password" class="form-control" placeholder="Password" name="password"
+                                required=""><br>
+                        </div>
+                        <label class="hidden">
+                            Post type:
+                            <input type="radio" name="post-type" value="admin_login" checked="checked">
+                        </label>
 
-                <button type="submit" class="btn btn-success btn-lg btn-block">Login</button>
-                <small class="text-muted ml-2">
-                    <a href="{{ url_for('reset_request_admin') }}">Forgot Password?</a>
-                </small>
+                        <button type="submit" class="btn btn-success btn-lg btn-block">Login</button>
+                        <small class="text-muted ml-2">
+                            <a href="{{ url_for('reset_request_admin') }}">Forgot Password?</a>
+                        </small>
+                    </div>
+                </center>
             </div>
-        </center>
-        </div>
-    </form>
-</div>
+        </form>
+    </div>
 
-<br>
-<p class="lead">Support Team</p> 
+    <br>
+    <p class="lead">Support Team</p>
     <div class="container">
         <div class="card-deck mb-3 text-center">
-          <div class="card mb-4 shadow-sm">
-            <div class="card-header">
-              <h4 class="my-0 font-weight-normal">Eduard Toth</h4>
+            <div class="card mb-4 shadow-sm">
+                <div class="card-header">
+                    <h4 class="my-0 font-weight-normal">Eduard Toth</h4>
+                </div>
+                <div class="card-body">
+                    <img src="../static/pictures/1.png" width="120px" height="120px">
+                    <ul class="list-unstyled mt-3 mb-4">
+                        <li>Email support</li>
+                        <li>Help center access</li>
+                    </ul>
+                    <h1 class="card-title pricing-card-title">toth@bome.ro</h1>
+                </div>
             </div>
-            <div class="card-body">
-              <img src="../static/pictures/1.png" width="120px" height="120px">
-              <ul class="list-unstyled mt-3 mb-4">
-                <li>Email support</li>
-                <li>Help center access</li>
-              </ul>
-              <h1 class="card-title pricing-card-title">toth@bome.ro</h1>
+            <div class="card mb-4 shadow-sm">
+                <div class="card-header">
+                    <h4 class="my-0 font-weight-normal">Claudia Budimir</h4>
+                </div>
+                <div class="card-body">
+                    <img src="../static/pictures/2.png" width="120px" height="120px">
+                    <ul class="list-unstyled mt-3 mb-4">
+                        <li>Priority email support</li>
+                        <li>Help center access</li>
+                    </ul>
+                    <h1 class="card-title pricing-card-title">budi@bome.ro</h1>
+                </div>
             </div>
-          </div>
-          <div class="card mb-4 shadow-sm">
-            <div class="card-header">
-              <h4 class="my-0 font-weight-normal">Claudia Budimir</h4>
+            <div class="card mb-4 shadow-sm">
+                <div class="card-header">
+                    <h4 class="my-0 font-weight-normal">Dragan Vitomir</h4>
+                </div>
+                <div class="card-body">
+                    <img src="../static/pictures/3.png" width="120px" height="120px">
+                    <ul class="list-unstyled mt-3 mb-4">
+                        <li>Phone and email support</li>
+                        <li>+40 0730376140</li>
+                    </ul>
+                    <h1 class="card-title pricing-card-title">drvit@bome.ro</h1>
+                </div>
             </div>
-            <div class="card-body">
-              <img src="../static/pictures/2.png" width="120px" height="120px">
-              <ul class="list-unstyled mt-3 mb-4">
-                <li>Priority email support</li>
-                <li>Help center access</li>
-              </ul>
-              <h1 class="card-title pricing-card-title">budi@bome.ro</h1>
-            </div>
-          </div>
-          <div class="card mb-4 shadow-sm">
-            <div class="card-header">
-              <h4 class="my-0 font-weight-normal">Dragan Vitomir</h4>
-            </div>
-            <div class="card-body">
-              <img src="../static/pictures/3.png" width="120px" height="120px">
-              <ul class="list-unstyled mt-3 mb-4">
-                <li>Phone and email support</li>
-                <li>+40 0730376140</li>
-              </ul>
-              <h1 class="card-title pricing-card-title">vitomir@bome.ro</h1>
-            </div>
-          </div>
         </div>
-<script>
-    w3.slideshow(".nature", 3500);
-</script>
+        <script>
+            w3.slideshow(".nature", 3500);
+        </script>
 
- <div class="footer">
-    <p class="footer-company-name">BankOnMe © 2020</p>
-  </div> 
-<!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+        <div class="footer">
+            <p class="footer-company-name">BankOnMe © 2020</p>
+        </div>
+        <!-- Optional JavaScript -->
+        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+        <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+            integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+            crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+            integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+            crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+            integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+            crossorigin="anonymous"></script>
 </body>
+
 </html>
