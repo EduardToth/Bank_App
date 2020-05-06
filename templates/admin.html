@@ -2,141 +2,151 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>AdminPage</title>
+    <title>bome</title>
+    <link rel="icon" type="image/png" href="../static/pictures/logo_search.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="../static/CSS/client&admin_style.css">
+    <link href="../static/CSS/bootstrap-4.4.1-dist/css/bootstrap.min.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="../static/CSS/pagina_principala.css">
+    <link rel="stylesheet" href="../static/CSS/client&admin_style.css">
     <script src="../static/JavaScript/slide_show.js"></script>
-    <script src="../static/JavaScript/navbar_customizing.js"></script>
     <script src="../static/JavaScript/utility_module.js"></script>
+    <script src="../static/JavaScript/navbar_customizing.js"></script>
 
 </head>
 
 <body>
-<div id='in_case_of_reloading'>
-    <script>
-       reload_page_on_back_button('in_case_of_reloading', "admin.html?id={{login_id}}")
-    </script>
-    <div>
-        <img class="nature" src="../static/pictures/bank_building.jpg" width="100%" height="45%"
-             style="display: block;">
-        <img class="nature" src="../static/pictures/business_men.jpg" width="100%" height="45%"
-             style="display: none;">
-        <img class="nature" src="../static/pictures/happyFaces.jpg" width="100%" height="45%" style="display: none;">
-        <img class="nature" src="../static/pictures/canapea.jpg" width="100%" height="45%" style="display: none;">
-    </div>
-    <div class="tab outer">
+    <div id='in_case_of_reloading'>
+        <script>
+            reload_page_on_back_button('in_case_of_reloading', "admin.html?id={{login_id}}")
+        </script>
 
-        <button class="tablinks active" onclick="executeButton(event, 'General information')">General
-            information</button>
-        <button class="tablinks" onclick="executeButton(event, 'Show all clients')">Show all clients</button>
-        <button class="tablinks" onclick="executeButton(event, 'Add money to bank\'s fortune')">Add money to bank's fortune</button>
-        <button class="tablinks" onclick="executeButton(event, 'Block client account')">Block client account</button>
-        <button class="tablinks" onclick="executeButton(event, 'Unblock client account')">Unblock client account</button>
-        <button type="button" class="tablinks" onclick="window.location.href='home.html?id={{login_id}}&mode=2';">Log out</button>
-
-    </div>
-
-    <div id="General information" class="tabcontent" style="display: block;">
-        <p>The fortune of the bank is: {{money_ammount}}</p>
-        <p>The bank has {{nr_of_clients}} of clients</p>
-    </div>
-
-    <div id="Show all clients" class="tabcontent" style="display: none;">
-
-        <h2>The clients of the bank are:</h2>
-        <pre>{{clients_in_string_format}}</pre>
-
-    </div>
-
-    <div id="Add money to bank's fortune" class="tabcontent" style="display: none;">
-        <h2>Withdraw money</h2>
-
-        <form action="admin.html" method="post">
-            <div class="imgcontainer">
-                <img src="../static/pictures/safe.jpg" alt="Avatar" class="avatar">
-            </div>
-
-            <label class="hidden">
-                Post type:
-                <input type="text" name="login_id" value="{{login_id}}" checked="checked">
-            </label>
-
-            <div class="container">
-                <label>
-                    <input type="text" placeholder="Enter a money amount" name="money" required="">
-                </label>
-
-                <label class="hidden">
-                    Post type:
-                    <input type="radio" name="post-type" value="deposit-money" checked="checked">
-                </label>
-
-                <button type="submit" class="button_style">Deposit</button>
-            </div>
-
-        </form>
-    </div>
-
-    <div id="Block client account" class="tabcontent" style="display: none;">
-        <h2>Block client</h2>
-
-        <form action="admin.html" method="post">
-            <div class="imgcontainer">
-                <img src="../static/pictures/firing.jpeg" alt="Avatar" class="avatar">
-            </div>
-
-            <label class="hidden">
-                <input type="radio" name="login_id" value="{{login_id}}" checked="checked">
-            </label>
-
-            <div class="container">
-                <label>
-                    <input type="text" placeholder="Enter the login id of the client you want to block" name="client-login-id" required="">
-                </label>
-
-                <label class="hidden">
-                    <input type="radio" name="post-type" value="block-client" checked="checked">
-                </label>
-
-                <button type="submit" class="button_style">Block client</button>
-            </div>
-
-        </form>
-    </div>
-
-    <div id="Unblock client account" class="tabcontent" style="display: none;">
-        <h2>Unblock client</h2>
-
-    <form action="admin.html" method="post">
-        <div class="imgcontainer">
-            <img src="../static/pictures/freedom.jpg" alt="Avatar" class="avatar">
+        <div class="tab outer">
+            <button class="tablinks active" onclick="executeButton(event, 'General information')">General
+                information</button>
+            <button class="tablinks" onclick="executeButton(event, 'Show all clients')">Show all clients</button>
+            <button class="tablinks" onclick="executeButton(event, 'Add money to bank\'s fortune')">Add money to bank's
+                fortune</button>
+            <button class="tablinks" onclick="executeButton(event, 'Block client account')">Block client
+                account</button>
+            <button class="tablinks" onclick="executeButton(event, 'Unblock client account')">Unblock client
+                account</button>
+            <button type="button" class="tablinks"
+                onclick="window.location.href='home.html?id={{login_id}}&mode=2';">Log out</button>
         </div>
 
-        <label class="hidden">
-            <input type="radio" name="login_id" value="{{login_id}}" checked="checked">
-        </label>
-
-        <div class="container">
-            <label>
-                <input type="text" placeholder="Enter the login id of the client you want to unblock" name="client-login-id" required="">
-            </label>
-
-            <label class="hidden">
-                <input type="radio" name="post-type" value="unblock-client" checked="checked">
-            </label>
-
-            <button type="submit" class="button_style">Unblock client</button>
+        <div class="jumbotron">
+            <h1 class="display-4" display="center">Thank you for making online banking easier!</h1>
+            <hr class="my-4">
+            <p class="lead">Manage your client requests.</p>
+            <button class="tablinks" style="width:120px;margin:0 50%;position:relative;left:-50px;"
+                onclick="executeButton(event,'Show all clients')">ShowClients</button>
         </div>
 
-    </form>
+        <div id="General information" class="tabcontent" style="display: block;">
+            <hr>
+            <p>The fortune of the bank is: {{money_ammount}}</p>
+            <p>The bank has {{nr_of_clients}} of clients</p>
+        </div>
+
+        <div id="Show all clients" class="tabcontent" style="display: none;">
+
+            <h2>The clients of the bank are:</h2>
+            <pre>{{clients_in_string_format}}</pre>
+
+        </div>
+
+        <div id="Add money to bank's fortune" class="tabcontent" style="display: none;">
+
+            <center>
+                <form action="admin.html" method="post">
+                    <label class="hidden">
+                        Post type:
+                        <input type="text" name="login_id" value="{{login_id}}" checked="checked">
+                    </label>
+                    <h1>Add money to bank's fortune.</h1>
+                    <div class="container">
+                        <label>
+                            <input type="text" placeholder="Enter a money amount" name="money" required="">
+                        </label>
+
+                        <label class="hidden">
+                            Post type:
+                            <input type="radio" name="post-type" value="deposit-money" checked="checked">
+                        </label>
+
+                        <button type="submit" class="button_style">Deposit</button>
+                    </div>
+
+                </form>
+            </center><br>
+        </div>
+
+        <div id="Block client account" class="tabcontent" style="display: none;">
+            <center>
+                <form action="admin.html" method="post">
+                    <label class="hidden">
+                        <input type="radio" name="login_id" value="{{login_id}}" checked="checked">
+                    </label><br><br><br><br>
+                    <h1>Block client account.</h1>
+                    <div class="container">
+                        <label>
+                            <input type="text" placeholder="Enter the login id of the client you want to block"
+                                name="client-login-id" required="">
+                        </label>
+
+                        <label class="hidden">
+                            <input type="radio" name="post-type" value="block-client" checked="checked">
+                        </label>
+
+                        <button type="submit" class="button_style">Block client</button>
+                    </div>
+                </form>
+            </center><br>
+        </div>
+
+        <div id="Unblock client account" class="tabcontent" style="display: none;">
+            <center>
+                <form action="admin.html" method="post">
+                    <label class="hidden">
+                        <input type="radio" name="login_id" value="{{login_id}}" checked="checked">
+                    </label><br><br><br><br>
+                    <h1>Unblock client account.</h1>
+                    <div class="container">
+                        <label>
+                            <input type="text" placeholder="Enter the login id of the client you want to unblock"
+                                name="client-login-id" required="">
+                        </label>
+
+                        <label class="hidden">
+                            <input type="radio" name="post-type" value="unblock-client" checked="checked">
+                        </label>
+
+                        <button type="submit" class="button_style">Unblock client</button>
+                    </div>
+                </form>
+            </center><br>
+        </div>
+
+        <script>
+            w3.slideshow(".nature", 3500);
+        </script>
+
+        <div class="footer">
+            <p class="footer-company-name">BankOnMe © 2020</p>
+        </div>
+        <!-- Optional JavaScript -->
+        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+        <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+            integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+            crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+            integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+            crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+            integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+            crossorigin="anonymous"></script>
+
     </div>
-
-    <script>
-        w3.slideshow(".nature", 3500);
-    </script>
-
-</div>
 
 </body>
 
