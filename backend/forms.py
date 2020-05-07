@@ -4,7 +4,7 @@ from wtforms.validators import DataRequired , Length , Email , EqualTo , Validat
 
 
 class RequestResetForm ( FlaskForm ) :
-    email = StringField ( 'Email' ,
+    email = StringField ( 'Please enter the email associated with your account:' ,
                           validators = [DataRequired ( ) , Email ( )] )
     submit = SubmitField ( 'Request Password Reset' )
 

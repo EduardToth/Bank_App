@@ -4,8 +4,6 @@
 }
 
 .box h1 {
-    font-family: Brush Script MT;
-    font-style: italic;
     font-size: 220%;
     text-align: center;
     padding-top: 3%;
@@ -23,11 +21,16 @@
 }
 
 .form-group {
-    width: 50%;
-    float: right;
-    padding: 5% 5% 0% 0%;
+    width: 60%;
+    padding: 0% 0% 0% 0%;
 }
 
+.subform-group {
+    width: 100%;
+    padding: 2% 4% 4% 4%;
+    border-radius: 25px;
+    border: 10px solid #f1f1f1;  
+}
 .imgcontainer {
     width: 40%;
     float: left;

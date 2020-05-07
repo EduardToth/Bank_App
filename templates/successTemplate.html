@@ -1,14 +1,28 @@
 <!doctype html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8">
-  <title>SuccessTemplate</title>
-    <link rel="stylesheet" href="../static/CSS/success_template.css">
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <meta charset="UTF-8">
+    <title>bome</title>
+    <link rel="icon" type="image/png" href="../static/pictures/logo_search.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="../static/CSS/bootstrap-4.4.1-dist/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="../static/CSS/pagina_principala.css">
 </head>
-	 <body class="container-fluid">
 
-    <p>{{ success_message }}<p>
-    
-  </body>
+<body class="jumbotron">
+  <center>
+    <h1>{{ success_message }}.</h1>
+    <br>
+    <p>If you have any questions please press the link below to meat our support team.</p>
+    <center>
+      <a href="home.html">Support
+      </a></center>
+  </center>
+  <div class="footer">
+    <p class="footer-company-name">BankOnMe © 2020</p>
+  </div>
+</body>
+
 </html>

@@ -1,5 +1,10 @@
 body {font-family: Arial, Helvetica, sans-serif;}
-form {border: 3px solid #f1f1f1;}
+
+form {  width: 60%;
+    padding: 0% 2% 2% 2%;
+    border-radius: 25px;
+    border: 10px solid #f1f1f1; 
+ }
 
 input[type=text], input[type=password] {
     width: 100%;
@@ -11,17 +16,19 @@ input[type=text], input[type=password] {
 }
 
 .button_style {
-    background-color: #4CAF50;
+    background-color:#343a40;
     color: white;
     padding: 14px 20px;
     margin: 8px 0;
     border: none;
     cursor: pointer;
-    width: 100%;
+    width: 32%;
 }
 
 button:hover {
-    opacity: 0.8;
+    color: #fff;
+    background-color: #0069d9;
+    border-color: #0062cc
 }
 
 .cancelbtn {
@@ -41,7 +48,7 @@ img.avatar {
 }
 
 .container {
-    padding: 30px;
+    padding: 0% 2% 5% 2%;
 }
 
 span.psw {
