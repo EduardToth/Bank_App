@@ -5,7 +5,7 @@ from dateutil.relativedelta import relativedelta
 
 from . import Bank
 import hashlib
-
+from .encryption import crypt, decrypt
 from .ClientException import ClientException
 from .Debt import Debt
 
@@ -41,7 +41,7 @@ class Client :
                 raise ClientException ( "The account is blocked. Could not deposit money" )
 
             my_cursor.execute ( "UPDATE Clients SET moneyOwned = %s WHERE name = %s AND password = %s" ,
-                               (self.__depositedMoney , self.__userName , password_in_hexa) )
+                               (crypt(self.__depositedMoney) , self.__userName , password_in_hexa) )
             db_connection.commit ( )
 
             result = my_cursor.rowcount
@@ -71,7 +71,7 @@ class Client :
             if Bank.Bank.is_blocked_the_account_with_id ( self.__login_id ) :
                 raise ClientException ( "The account is blocked. Could not withdraw money" )
             mycursor.execute ( "UPDATE Clients SET moneyOwned = %s WHERE name = %s AND password = %s" ,
-                               (self.__depositedMoney , self.__userName , passwordHexa) )
+                               (crypt(self.__depositedMoney) , self.__userName , passwordHexa) )
             mydb.commit ( )
 
             result = mycursor.rowcount
@@ -94,7 +94,7 @@ class Client :
 
         try :
             mycursor.execute ( "UPDATE Clients SET debt = %s WHERE name = %s AND password = %s" ,
-                               (self.__moneyBorrowed , self.__userName , passwordHexa) )
+                               (crypt(self.__moneyBorrowed) , self.__userName , passwordHexa) )
             mydb.commit ( )
             mydb.close ( )
         except BaseException as e :
@@ -119,13 +119,13 @@ class Client :
             database_connection = Bank.Bank.createConnection ( )
             my_cursor = database_connection.cursor ( )
 
-            my_cursor.execute ( "UPDATE bank SET moneyOwned = %s WHERE name='ING'" , bank_s_credit )
+            my_cursor.execute ( "UPDATE bank SET moneyOwned = %s WHERE name='ING'" , crypt(bank_s_credit) )
             database_connection.commit ( )
 
             self.__depositedMoney += money_requested
             self.__moneyBorrowed += money_requested
             my_cursor.execute ( "UPDATE Clients SET moneyOwned = %s WHERE password=%s" ,
-                                (self.__depositedMoney , self.__password) )
+                                (crypt(self.__depositedMoney) , self.__password) )
             database_connection.commit ( )
 
             self.__update_debt ( )
@@ -156,7 +156,7 @@ class Client :
             debt.pay_debt ( )
             bank_s_credit += debt.get_money_to_pay_monthly ( )
             mycursor = mydb.cursor ( )
-            mycursor.execute ( "UPDATE bank SET moneyOwned = %s WHERE name='ING'" , bank_s_credit )
+            mycursor.execute ( "UPDATE bank SET moneyOwned = %s WHERE name='ING'" , crypt(bank_s_credit) )
             mydb.commit ( )
 
             result = mycursor.rowcount
@@ -167,7 +167,7 @@ class Client :
 
             self.__depositedMoney -= debt.get_money_to_pay_monthly ( )
             mycursor.execute ( "UPDATE Clients SET moneyOwned = %s WHERE login_id=%s" ,
-                               (self.__depositedMoney , self.__login_id) )
+                               (crypt(self.__depositedMoney) , self.__login_id) )
             mydb.commit ( )
             mydb.close ( )
         except ClientException as exception :
@@ -232,15 +232,15 @@ class Client :
         userName = parameter_list[0]
         password = parameter_list[1]
         homeBank = bank
-        depositedMoney = parameter_list[2]
-        moneyBorrowed = parameter_list[3]
+        depositedMoney = decrypt(parameter_list[2])
+        moneyBorrowed = decrypt(parameter_list[3])
         login_id = parameter_list[4]
         is_blocked = parameter_list[5]
         postal_code = parameter_list[7]
         phone_number = parameter_list[8]
         nationality = parameter_list[9]
         email = parameter_list[10]
-        monthly_income = parameter_list[11]
+        monthly_income = decrypt(parameter_list[11])
 
         return Client ( userName , password , homeBank , depositedMoney , moneyBorrowed , login_id ,
                         is_blocked , postal_code , phone_number ,
@@ -257,8 +257,8 @@ class Client :
                                 "VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)" ,
                                 (self.__userName ,
                                  self.__password ,
-                                 self.__depositedMoney ,
-                                 self.__moneyBorrowed ,
+                                 crypt(self.__depositedMoney) ,
+                                 crypt(self.__moneyBorrowed) ,
                                  self.__login_id ,
                                  self.__is_blocked ,
                                  0 ,
@@ -266,13 +266,13 @@ class Client :
                                  self.__phone_number ,
                                  self.__nationality ,
                                  self.__email ,
-                                 self.__monthly_income) )
+                                 crypt(int(self.__monthly_income))) )
 
             database_connection.commit ( )
             database_connection.close ( )
         except BaseException as exception :
             database_connection.close ( )
-            raise Exception ( "Something went wrong. Please try again later" )
+            raise Exception ( "Something went wrong. Please try again later: ")
 
     def get_monthly_income(self) :
         return self.__monthly_income

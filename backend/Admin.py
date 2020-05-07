@@ -2,7 +2,7 @@ import os
 
 from . import Bank
 from .ClientException import ClientException
-
+from .encryption import crypt, decrypt
 
 class Admin :
     def __init__(self , name , password , homeBank , login_id, email) :
@@ -66,7 +66,7 @@ class Admin :
         my_db_connection = Bank.Bank.createConnection ( )
         mycursor = my_db_connection.cursor ( )
         try :
-            mycursor.execute ( "UPDATE bank SET moneyOwned = %s WHERE name='ING'" , (bank_sCredit) )
+            mycursor.execute ( "UPDATE bank SET moneyOwned = %s WHERE name='ING'" , crypt(bank_sCredit) )
             my_db_connection.commit ( )
 
             result = mycursor.rowcount

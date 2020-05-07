@@ -2,10 +2,10 @@ import hashlib
 from math import ceil
 
 import pymysql
+from .encryption import crypt, decrypt
 from . import Admin
 from . import Client
 from .ClientException import ClientException
-
 
 class Bank :
     def __init__(self , name) :
@@ -34,7 +34,7 @@ class Bank :
     def createConnection() :
         db_connection = None
         try :
-            db_connection = pymysql.connect ( "localhost" , "Illes" , "MindenOk10" , "Bank" )
+            db_connection = pymysql.connect ( "localhost" , "root" , "" , "Bank" )
             return db_connection
         except BaseException as e :
             if db_connection is not None :
@@ -54,7 +54,7 @@ class Bank :
 
         total_amount_of_money = 0
         for x in myresult :
-            total_amount_of_money = x[0]
+            total_amount_of_money = decrypt(x[0])
             break
 
         db_connection.close ( )

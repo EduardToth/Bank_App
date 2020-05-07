@@ -1,3 +1,4 @@
+import hashlib
 # import datetime
 #
 #
@@ -35,10 +36,10 @@
 # # ('Vitomir Dragan', '4ed9407630eb1000c0f6b63842defa7d', 2, 'vitomir_dragan86@yahoo.com', 0)
 
 
-def f() :
-    return 1 , 2
+#def f() :
+#    return 1 , 2
 
 
-(x , y) = f ( )
+#(x , y) = f ( )
 
-print ( y )
+#print ( y )
