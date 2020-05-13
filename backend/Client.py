@@ -40,9 +40,9 @@ class Client:
             if Bank.Bank.is_blocked_the_account_with_id(self.__login_id):
                 raise ClientException("The account is blocked. Could not deposit money")
 
-            my_cursor.execute ( "UPDATE Clients SET moneyOwned = %s WHERE name = %s AND password = %s" ,
-                               (crypt(self.__depositedMoney) , self.__userName , password_in_hexa) )
-            db_connection.commit ( )
+            my_cursor.execute("UPDATE Clients SET moneyOwned = %s WHERE name = %s AND password = %s",
+                              (crypt(self.__depositedMoney), self.__userName, password_in_hexa))
+            db_connection.commit()
 
             result = my_cursor.rowcount
             if result == 0:
@@ -66,13 +66,13 @@ class Client:
 
         self.__depositedMoney -= moneyRequested
 
-        mycursor = mydb.cursor ( )
-        try :
-            if Bank.Bank.is_blocked_the_account_with_id ( self.__login_id ) :
-                raise ClientException ( "The account is blocked. Could not withdraw money" )
-            mycursor.execute ( "UPDATE Clients SET moneyOwned = %s WHERE name = %s AND password = %s" ,
-                               (crypt(self.__depositedMoney) , self.__userName , passwordHexa) )
-            mydb.commit ( )
+        mycursor = mydb.cursor()
+        try:
+            if Bank.Bank.is_blocked_the_account_with_id(self.__login_id):
+                raise ClientException("The account is blocked. Could not withdraw money")
+            mycursor.execute("UPDATE Clients SET moneyOwned = %s WHERE name = %s AND password = %s",
+                             (crypt(self.__depositedMoney), self.__userName, passwordHexa))
+            mydb.commit()
 
             result = mycursor.rowcount
             if result == 0:
@@ -92,14 +92,14 @@ class Client:
         passwordHexa = self.getPassword()
         mycursor = mydb.cursor()
 
-        try :
-            mycursor.execute ( "UPDATE Clients SET debt = %s WHERE name = %s AND password = %s" ,
-                               (crypt(self.__moneyBorrowed) , self.__userName , passwordHexa) )
-            mydb.commit ( )
-            mydb.close ( )
-        except BaseException as e :
-            mydb.close ( )
-            raise Exception ( "Something went wrong. Please try again later" )
+        try:
+            mycursor.execute("UPDATE Clients SET debt = %s WHERE name = %s AND password = %s",
+                             (crypt(self.__moneyBorrowed), self.__userName, passwordHexa))
+            mydb.commit()
+            mydb.close()
+        except BaseException as e:
+            mydb.close()
+            raise Exception("Something went wrong. Please try again later")
 
     def get_credit_from_bank(self, money_requested, interest_rate, period_to_pay_in_months):
         if Bank.Bank.is_blocked_the_account_with_id(self.__login_id):
@@ -119,26 +119,26 @@ class Client:
             database_connection = Bank.Bank.createConnection()
             my_cursor = database_connection.cursor()
 
-            my_cursor.execute ( "UPDATE bank SET moneyOwned = %s WHERE name='ING'" , crypt(bank_s_credit) )
-            database_connection.commit ( )
+            my_cursor.execute("UPDATE bank SET moneyOwned = %s WHERE name='ING'", crypt(bank_s_credit))
+            database_connection.commit()
 
             self.__depositedMoney += money_requested
             self.__moneyBorrowed += money_requested
-            my_cursor.execute ( "UPDATE Clients SET moneyOwned = %s WHERE password=%s" ,
-                                (crypt(self.__depositedMoney) , self.__password) )
-            database_connection.commit ( )
+            my_cursor.execute("UPDATE Clients SET moneyOwned = %s WHERE password=%s",
+                              (crypt(self.__depositedMoney), self.__password))
+            database_connection.commit()
 
-            self.__update_debt ( )
-            database_connection.close ( )
-        except BaseException as e :
-            database_connection.close ( )
-            raise Exception ( "Something went wrong. Please try again later" )
+            self.__update_debt()
+            database_connection.close()
+        except BaseException as e:
+            database_connection.close()
+            raise Exception("Something went wrong. Please try again later")
 
-    def is_debt_mine(self , debt_id) :
-        debt_list = Debt.get_all_debts_with_person_id ( self.__login_id )
-        my_debt = Debt.get_debt_with_id ( debt_id )
-        for debt in debt_list :
-            if debt == my_debt :
+    def is_debt_mine(self, debt_id):
+        debt_list = Debt.get_all_debts_with_person_id(self.__login_id)
+        my_debt = Debt.get_debt_with_id(debt_id)
+        for debt in debt_list:
+            if debt == my_debt:
                 return True
         return False
 
@@ -151,31 +151,32 @@ class Client:
             raise ClientException("You cannot pay this debt. You have not enough money")
         mydb = None
 
-        bank_s_credit = self.__homeBank.get_total_ammount_of_money ( )
-        try :
-            mydb = Bank.Bank.createConnection ( )
-            debt.pay_debt ( )
-            bank_s_credit += debt.get_money_to_pay_monthly ( )
-            mycursor = mydb.cursor ( )
-            mycursor.execute ( "UPDATE bank SET moneyOwned = %s WHERE name='ING'" , crypt(bank_s_credit) )
-            mydb.commit ( )
+        bank_s_credit = self.__homeBank.get_total_ammount_of_money()
+        try:
+            mydb = Bank.Bank.createConnection()
+            debt.pay_debt()
+            bank_s_credit += debt.get_money_to_pay_monthly()
+            mycursor = mydb.cursor()
+            mycursor.execute("UPDATE bank SET moneyOwned = %s WHERE name='ING'", crypt(bank_s_credit))
+            mydb.commit()
 
             result = mycursor.rowcount
-            if result == 0 :
-                raise Exception ( 'Unable to pay the debt' )
-            self.__moneyBorrowed -= debt.get_money_to_pay_monthly ( )
-            self.__update_debt ( )
+            if result == 0:
+                raise Exception('Unable to pay the debt')
+            self.__moneyBorrowed -= debt.get_money_to_pay_monthly()
+            self.__update_debt()
 
-            self.__depositedMoney -= debt.get_money_to_pay_monthly ( )
-            mycursor.execute ( "UPDATE Clients SET moneyOwned = %s WHERE login_id=%s" ,
-                               (crypt(self.__depositedMoney) , self.__login_id) )
-            mydb.commit ( )
-            mydb.close ( )
-        except ClientException as exception :
-            mydb.close ( )
+            self.__depositedMoney -= debt.get_money_to_pay_monthly()
+            mycursor.execute("UPDATE Clients SET moneyOwned = %s WHERE login_id=%s",
+                             (crypt(self.__depositedMoney), self.__login_id))
+            mydb.commit()
+            mydb.close()
+        except ClientException as exception:
+            mydb.close()
 
             raise exception
         except BaseException as e:
+            print(str(e))
             mydb.close()
             raise Exception("Something went wrong. Please try again later")
 
@@ -250,33 +251,33 @@ class Client:
 
     def insert_data_to_database(self):
         database_connection = None
-        try :
-            database_connection = Bank.Bank.createConnection ( )
-            my_cursor = database_connection.cursor ( )
-            my_cursor.execute ( "INSERT INTO Clients (name , password,"
-                                " moneyOwned , debt , login_id , blocked, is_logged,"
-                                " postal_code, phone_number, nationality, email, monthly_income)"
-                                "VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)" ,
-                                (self.__userName ,
-                                 self.__password ,
-                                 crypt(self.__depositedMoney) ,
-                                 crypt(self.__moneyBorrowed) ,
-                                 self.__login_id ,
-                                 self.__is_blocked ,
-                                 0 ,
-                                 self.__postal_code ,
-                                 self.__phone_number ,
-                                 self.__nationality ,
-                                 self.__email ,
-                                 crypt(int(self.__monthly_income))) )
+        try:
+            database_connection = Bank.Bank.createConnection()
+            my_cursor = database_connection.cursor()
+            my_cursor.execute("INSERT INTO Clients (name , password,"
+                              " moneyOwned , debt , login_id , blocked, is_logged,"
+                              " postal_code, phone_number, nationality, email, monthly_income)"
+                              "VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
+                              (self.__userName,
+                               self.__password,
+                               crypt(self.__depositedMoney),
+                               crypt(self.__moneyBorrowed),
+                               self.__login_id,
+                               self.__is_blocked,
+                               0,
+                               self.__postal_code,
+                               self.__phone_number,
+                               self.__nationality,
+                               self.__email,
+                               crypt(int(self.__monthly_income))))
 
-            database_connection.commit ( )
-            database_connection.close ( )
-        except BaseException as exception :
-            database_connection.close ( )
-            raise Exception ( "Something went wrong. Please try again later: ")
+            database_connection.commit()
+            database_connection.close()
+        except BaseException as exception:
+            database_connection.close()
+            raise Exception("Something went wrong. Please try again later: ")
 
-    def get_monthly_income(self) :
+    def get_monthly_income(self):
         return self.__monthly_income
 
     def get_monthly_debt_sum(self):

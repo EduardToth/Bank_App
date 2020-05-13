@@ -1,8 +1,20 @@
 import os
-key = int(os.environ.get('SECRET_KEY'))
+
+key = None
+try:
+    key = int(os.environ.get("SECRET_KEY"))
+    print("O mers")
+except BaseException as exception:
+    print(str(exception))
+    key = 9152873
+
+
 def crypt(number):
-    return (number + key//2)^key
+    return (int(number) + key // 2) ^ key
+
 
 def decrypt(number):
-    return (number^key) - key//2
+    return (int(number) ^ key) - key // 2
 
+
+print(crypt(12))

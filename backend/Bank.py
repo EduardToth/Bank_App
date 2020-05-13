@@ -7,8 +7,9 @@ from . import Admin
 from . import Client
 from .ClientException import ClientException
 
-class Bank :
-    def __init__(self , name) :
+
+class Bank:
+    def __init__(self, name):
         self.__name = name
 
     def __passwordExistInDatabase(self, password_introduced):
@@ -34,8 +35,8 @@ class Bank :
     def createConnection():
         db_connection = None
 
-        try :
-            db_connection = pymysql.connect ( "localhost" , "root" , "" , "Bank" )
+        try:
+            db_connection = pymysql.connect("localhost", "Edy", "Edy_password", "bank2")
             return db_connection
         except BaseException as e:
             if db_connection is not None:
@@ -55,7 +56,7 @@ class Bank :
 
         total_amount_of_money = 0
 
-        for x in myresult :
+        for x in myresult:
             total_amount_of_money = decrypt(x[0])
             break
 
