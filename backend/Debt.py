@@ -3,6 +3,7 @@ import os
 from dateutil.relativedelta import relativedelta
 from . import Bank
 from .ClientException import ClientException
+from .encryption import crypt, decrypt
 
 
 class Debt:
@@ -45,7 +46,7 @@ class Debt:
                 "last_payment,"
                 "debt_id)"
                 "VALUES (%s, %s, %s, %s, %s, %s, %s, %s)",
-                (self.__money_to_pay,
+                (crypt(self.__money_to_pay),
                  self.__starting_date,
                  self.__ending_date,
                  self.__person_id,
@@ -74,7 +75,7 @@ class Debt:
                 " Debt_paid = %s,"
                 "last_payment = %s"
                 " WHERE  debt_id = %s",
-                (self.__money_to_pay,
+                (crypt(self.__money_to_pay),
                  self.__is_debt_paid,
                  self.__last_payment,
                  self.__debt_id))
@@ -89,7 +90,7 @@ class Debt:
     # merge
     @staticmethod
     def get_instance(debt_parameter_tuple):
-        money_to_pay = debt_parameter_tuple[0]
+        money_to_pay = decrypt(debt_parameter_tuple[0])
         starting_date = debt_parameter_tuple[1]
         ending_date = debt_parameter_tuple[2]
         person_id = debt_parameter_tuple[3]
