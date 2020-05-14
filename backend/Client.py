@@ -280,6 +280,22 @@ class Client:
     def get_monthly_income(self):
         return self.__monthly_income
 
+    def transfer_money(self, client, money_to_transfer):
+        try:
+            self.withdrawMoney(money_to_transfer)
+        except ClientException as exception:
+            raise exception
+        except BaseException as exception:
+            raise Exception("Something went wrong. Please try again later: ")
+
+        try:
+            client.depositMoney(money_to_transfer)
+        except ClientException as exception:
+            self.depositMoney(money_to_transfer)
+            raise ClientException("Transaction could not be executed")
+        except BaseException as exception:
+            raise Exception("Something went wrong. Please try again later: ")
+
     def get_monthly_debt_sum(self):
         sum = 0
         for debt in self.__debts:

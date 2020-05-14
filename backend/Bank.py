@@ -36,7 +36,7 @@ class Bank:
         db_connection = None
 
         try:
-            db_connection = pymysql.connect("localhost", "root", "", "bank")
+            db_connection = pymysql.connect("localhost", "Edy", "Edy_password", "Bank2")
             return db_connection
         except BaseException as e:
             if db_connection is not None:
