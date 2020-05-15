@@ -274,6 +274,7 @@ class Client:
             database_connection.commit()
             database_connection.close()
         except BaseException as exception:
+            print(str(exception))
             database_connection.close()
             raise Exception("Something went wrong. Please try again later: ")
 
