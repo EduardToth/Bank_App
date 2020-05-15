@@ -17,7 +17,7 @@ from flask_mail import Message
 app = Flask(__name__)
 
 app.config['SECRET_KEY'] = '5791628bb0b13ce0c676dfde280ba245'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root@localhost/bank'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://Edy:Edy_password@localhost/Bank2'
 db = SQLAlchemy(app)
 app.config['MAIL_SERVER'] = 'smtp.googlemail.com'
 app.config['MAIL_PORT'] = 587
@@ -265,6 +265,24 @@ def get_client_template(client):
                            login_id=client.get_login_id())
 
 
+def handle_money_transfer_request():
+    try:
+        sender_login_id = int(request.form.get("login_id"))
+    except:
+        print("naspa")
+    receiver_login_id = int(request.form.get("destinator_id"))
+    money_to_transfer = int(request.form.get("money"))
+
+    try:
+        sender_client = Bank.get_client_after_the_login_id(sender_login_id)
+        receiver_client = Bank.get_client_after_the_login_id(receiver_login_id)
+        sender_client.transfer_money(receiver_client, money_to_transfer)
+    except BaseException as exception:
+        return render_failure_template("There is no any client with the id: " + str(receiver_login_id))
+
+    return render_success_template("Money transfered successfully")
+
+
 @app.route('/client.html', methods=['POST', 'GET'])
 def handle_client_request():
     bank = Bank("ING")
@@ -281,6 +299,9 @@ def handle_client_request():
             return handle_get_credit_request()
         elif request.form.get('post-type') == 'pay_debt':
             return handle_pay_debt_request()
+        elif request.form.get('post-type') == 'transfer':
+            return handle_money_transfer_request()
+
         else:
             return render_failure_template('Something went wrong. Please try again later')
     else:
