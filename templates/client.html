@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>bome</title>
-    <link rel="icon" type="image/png" href="../static/pictures/logo_search.svg" />
+    <link rel="icon" type="image/png" href="../static/pictures/logo_search.svg"/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="../static/CSS/bootstrap-4.4.1-dist/css/bootstrap.min.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="../static/CSS/pagina_principala.css">
@@ -14,248 +14,250 @@
 </head>
 
 <body>
-    <div id='in_case_of_reloading'>
+<div id='in_case_of_reloading'>
 
-        <script>
-            reload_page_on_back_button('in_case_of_reloading', "client.html?id={{login_id}}")
-        </script>
+    <script>
+        reload_page_on_back_button('in_case_of_reloading', "client.html?id={{login_id}}")
+    </script>
 
-        <div class="tab outer">
-            <button class="tablinks active" onclick="executeButton(event, 'General information')">General
-                information</button>
-            <button class="tablinks" onclick="executeButton(event, 'Deposit money')">Deposit money</button>
-            <button class="tablinks" onclick="executeButton(event, 'Withdraw money')">Withdraw money</button>
-            <button class="tablinks" onclick="executeButton(event, 'Get credit')">Get credit</button>
-            <button class="tablinks" onclick="executeButton(event, 'Transfer money')">Transfer money</button>
-            <button class="tablinks" onclick="executeButton(event, 'Pay debt')">Pay debt</button>
-            <button class="tablinks" type="button"
-                onclick="window.location.href='home.html?id={{login_id}}&mode=1';">Log out</button>
-        </div>
+    <div class="tab outer">
+        <button class="tablinks active" onclick="executeButton(event, 'General information')">General
+            information
+        </button>
+        <button class="tablinks" onclick="executeButton(event, 'Deposit money')">Deposit money</button>
+        <button class="tablinks" onclick="executeButton(event, 'Withdraw money')">Withdraw money</button>
+        <button class="tablinks" onclick="executeButton(event, 'Get credit')">Get credit</button>
+        <button class="tablinks" onclick="executeButton(event, 'Transfer money')">Transfer money</button>
+        <button class="tablinks" onclick="executeButton(event, 'Pay debt')">Pay debt</button>
+        <button class="tablinks" type="button"
+                onclick="window.location.href='home.html?id={{ login_id }}&mode=1';">Log out
+        </button>
+    </div>
 
-        <div class="jumbotron">
-            <h1 class="display-4" display="center">Where you know your banker and your banker knows you.</h1>
-            <hr class="my-4">
-            <p class="lead">My advice is to BankOnMe!</p>
-            <button class="tablinks" style="width:120px;margin:0 50%;position:relative;left:-50px;"
-                onclick="executeButton(event,'Get credit')">GetCredit</button>
-        </div>
+    <div class="jumbotron">
+        <h1 class="display-4" display="center">Where you know your banker and your banker knows you.</h1>
+        <hr class="my-4">
+        <p class="lead">My advice is to BankOnMe!</p>
+        <button class="tablinks" style="width:120px;margin:0 50%;position:relative;left:-50px;"
+                onclick="executeButton(event,'Get credit')">GetCredit
+        </button>
+    </div>
 
 
+    <div id="General information" class="tabcontent" style="display: block;">
+        <center>
+            <pre>{{ message_for_general_information }}</pre>
+        </center>
+    </div>
 
-        <div id="General information" class="tabcontent" style="display: block;">
-            <center>
-                <pre>{{message_for_general_information}}</pre>
-            </center>
-        </div>
+    <div id="Deposit money" class="tabcontent" style="display: none;">
+        <center>
+            <form action="client.html" method="post">
+                <label class="hidden">
+                    Post type:
+                    <input type="number" min="0" name="login_id" value="{{ login_id }}" checked="checked">
+                </label>
+                <h1>Save money and money will save you.</h1>
+                <div class="container">
+                    <label for="money"><b>Enter the amount of money you want to deposit:</b></label>
+                    <br>
+                    <label>
+                        <input type="number" min="0" placeholder="Enter a money amount" name="money" required="">
+                    </label>
 
-        <div id="Deposit money" class="tabcontent" style="display: none;">
-            <center>
-                <form action="client.html" method="post">
+                    <button type="submit" class="button_style">Submit</button>
                     <label class="hidden">
                         Post type:
-                        <input type="text" name="login_id" value="{{login_id}}" checked="checked">
+                        <input type="radio" name="post-type" value="deposit" checked="checked">
                     </label>
-                    <h1>Save money and money will save you.</h1>
-                    <div class="container">
-                        <label for="money"><b>Enter the amount of money you want to deposit:</b></label>
-                        <br>
-                        <label>
-                            <input type="number" min="0"  placeholder="Enter a money amount" name="money" required="">
-                        </label>
-
-                        <label class="hidden">
-                            Post type:
-                            <input type="radio" name="post-type" value="deposit" checked="checked">
-                        </label>
-
-                        <button type="submit" class="button_style">Submit</button>
-                    </div>
-
-                </form>
-            </center>
-        </div>
-
-        <div id="Withdraw money" class="tabcontent" style="display: none;">
-            <center>
-                <form action="client.html" method="post">
-                    <label class="hidden">
-                        Post type:
-                        <input type="text" name="login_id" value="{{login_id}}" checked="checked">
-                    </label>
-                    <h1>Cash(your)flow.</h1>
-                    <div class="container">
-                        <label for="money"><b>Enter the amount of money you want to withdraw:</b></label>
-                        <br>
-                        <label>
-                            <input type="text" placeholder="Enter a money amount" name="money" required="">
-                        </label>
-
-                        <label class="hidden">
-                            <input type="radio" name="post-type" value="withdraw" checked="checked">
-                        </label>
-                        <button type="submit" class="button_style">Withdraw</button>
-                    </div>
-
-                </form>
-            </center>
-        </div>
-
-          <div id="Transfer money" class="tabcontent" style="display: none;">
-             <center>
-                <form action="client.html" method="post">
-                    <label class="hidden">
-                        <input type="text" name="login_id" value="{{login_id}}" checked="checked">
-                    </label>
-                    <h1>Transfer money</h1>
-                    <div class="container">
-                        <label for="money"><b>Enter the money ammount you want to transfer</b></label>
-                        <br>
-                        <label>
-                            <input type="text" placeholder="Enter a money amount" name="money" required="">
-                        </label>
-
-                       <label>
-                            <input type="text" placeholder="Enter the id of the destinator" name="destinator_id" required="">
-                        </label>
-
-                        <label class="hidden">
-                            Post type:
-                            <input type="radio" name="post-type" value="transfer" checked="checked">
-                        </label>
-                        <button type="submit" class="button_style">Send</button>
-                    </div>
-
-                </form>
-            </center>
-        </div>
-
-
-        <div id="Get credit" class="tabcontent" style="display: none;">
-            <center>
-                <form action="client.html" method="post">
-                    <label class="hidden">
-                        Post type:
-                        <input type="text" name="login_id" value="{{login_id}}" checked="checked">
-                    </label>
-                    <h1>Finally, access for everyone.</h1>
-                    <div class="container">
-                        <label for="money"><b>Enter the amount of money you want to get:</b></label>
-                        <br>
-                        <label>
-                            <input type="text" placeholder="Enter the money ammount" name="money" required="">
-                        </label>
-
-                        <label>
-                            <input type="text" placeholder="Enter the period in months" name="period" required="">
-                        </label>
-
-                        <label class="hidden">
-                            Post type:
-                            <input type="radio" name="post-type" value="get_credit" checked="checked">
-                        </label>
-                        <button type="submit" class="button_style">Get the money</button>
-                    </div>
-
-                </form>
-            </center>
-        </div>
-
-        <div id="Pay debt" class="tabcontent" style="display: none;">
-            <center>
-                <form class="form" action="client.html" method="post">
-
-                    <label class="hidden">
-                        Post type:
-                        <input type="text" name="login_id" value="{{login_id}}" checked="checked">
-                    </label>
-
-                    <div class="container">
-                        <center>
-                            <h1>I'm debt free!</h1>
-                        </center>
-                        <label for="money"><b>Enter the id of the debt you want to pay:</b></label>
-                        <br>
-                        <label>
-                            <input type="text" placeholder="Enter the debt id of the debt you want to pay"
-                                name="debt_id" required="">
-                        </label>
-
-                        <label class="hidden">
-                            Post type:
-                            <input type="radio" name="post-type" value="pay_debt" checked="checked">
-                        </label>
-                        <button type="submit" class="button_style">Pay</button>
-                    </div>
-
-                </form>
-            </center>
-        </div>
-
-        <script>
-            w3.slideshow(".nature", 3500);
-        </script>
-
-        <br>
-        <p class="lead">Support Team</p>
-        <div class="container">
-            <div class="card-deck mb-3 text-center">
-                <div class="card mb-4 shadow-sm">
-                    <div class="card-header">
-                        <h4 class="my-0 font-weight-normal">Eduard Toth</h4>
-                    </div>
-                    <div class="card-body">
-                        <img src="../static/pictures/1.png" width="120px" height="120px">
-                        <ul class="list-unstyled mt-3 mb-4">
-                            <li>Email support</li>
-                            <li>Help center access</li>
-                        </ul>
-                        <h1 class="card-title pricing-card-title">toth@bome.ro</h1>
-                    </div>
                 </div>
-                <div class="card mb-4 shadow-sm">
-                    <div class="card-header">
-                        <h4 class="my-0 font-weight-normal">Claudia Budimir</h4>
-                    </div>
-                    <div class="card-body">
-                        <img src="../static/pictures/2.png" width="120px" height="120px">
-                        <ul class="list-unstyled mt-3 mb-4">
-                            <li>Priority email support</li>
-                            <li>Help center access</li>
-                        </ul>
-                        <h1 class="card-title pricing-card-title">budi@bome.ro</h1>
-                    </div>
+
+            </form>
+        </center>
+    </div>
+
+    <div id="Withdraw money" class="tabcontent" style="display: none;">
+        <center>
+            <form action="client.html" method="post">
+                <label class="hidden">
+                    Post type:
+                    <input type="number" min="0" name="login_id" value="{{ login_id }}" checked="checked">
+                </label>
+                <h1>Cash(your)flow.</h1>
+                <div class="container">
+                    <label for="money"><b>Enter the amount of money you want to withdraw:</b></label>
+                    <br>
+                    <label>
+                        <input type="number" min="0" placeholder="Enter a money amount" name="money" required="">
+                    </label>
+
+                    <button type="submit" class="button_style">Withdraw</button>
+                    <label class="hidden">
+                        <input type="radio" name="post-type" value="withdraw" checked="checked">
+                    </label>
                 </div>
-                <div class="card mb-4 shadow-sm">
-                    <div class="card-header">
-                        <h4 class="my-0 font-weight-normal">Dragan Vitomir</h4>
-                    </div>
-                    <div class="card-body">
-                        <img src="../static/pictures/3.png" width="120px" height="120px">
-                        <ul class="list-unstyled mt-3 mb-4">
-                            <li>Phone and email support</li>
-                            <li>+40 0730376140</li>
-                        </ul>
-                        <h1 class="card-title pricing-card-title">drvit@bome.ro</h1>
-                    </div>
+
+            </form>
+        </center>
+    </div>
+
+    <div id="Transfer money" class="tabcontent" style="display: none;">
+        <center>
+            <form action="client.html" method="post">
+                <label class="hidden">
+                    <input type="text" name="login_id" value="{{ login_id }}" checked="checked">
+                </label>
+                <h1>Transfer money</h1>
+                <div class="container">
+                    <label for="money"><b>Enter the money ammount you want to transfer</b></label>
+                    <br>
+                    <label>
+                        <input type="number" min="0" placeholder="Enter a money amount" name="money" required="">
+                    </label>
+
+                    <label>
+                        <input type="text" placeholder="Enter the id of the destinator" name="destinator_id"
+                               required="">
+                    </label>
+
+                    <button type="submit" class="button_style">Send</button>
+                    <label class="hidden">
+                        Post type:
+                        <input type="radio" name="post-type" value="transfer" checked="checked">
+                    </label>
+                </div>
+
+            </form>
+        </center>
+    </div>
+
+
+    <div id="Get credit" class="tabcontent" style="display: none;">
+        <center>
+            <form action="client.html" method="post">
+                <label class="hidden">
+                    Post type:
+                    <input type="text" name="login_id" value="{{ login_id }}" checked="checked">
+                </label>
+                <h1>Finally, access for everyone.</h1>
+                <div class="container">
+                    <label for="money"><b>Enter the amount of money you want to get:</b></label>
+                    <br>
+                    <label>
+                        <input type="number" min="0" placeholder="Enter the money ammount" name="money" required="">
+                    </label>
+
+                    <label>
+                        <input type="number" min="0" placeholder="Enter the period in months" name="period" required="">
+                    </label>
+
+
+                    <button type="submit" class="button_style">Get the money</button>
+                    <label class="hidden">
+                        Post type:
+                        <input type="radio" name="post-type" value="get_credit" checked="checked">
+                    </label>
+                </div>
+
+            </form>
+        </center>
+    </div>
+
+    <div id="Pay debt" class="tabcontent" style="display: none;">
+        <center>
+            <form class="form" action="client.html" method="post">
+
+                <label class="hidden">
+                    Post type:
+                    <input type="number" min="0" name="login_id" value="{{ login_id }}" checked="checked">
+                </label>
+
+                <div class="container">
+                    <center>
+                        <h1>I'm debt free!</h1>
+                    </center>
+                    <label for="money"><b>Enter the id of the debt you want to pay:</b></label>
+                    <br>
+                    <label>
+                        <input type="number" min="0" placeholder="Enter the debt id of the debt you want to pay"
+                               name="debt_id" required="">
+                    </label>
+
+                    <button type="submit" class="button_style">Pay</button>
+
+                    <label class="hidden">
+                        Post type:
+                        <input type="radio" name="post-type" value="pay_debt" checked="checked">
+                    </label>
+                </div>
+
+            </form>
+        </center>
+    </div>
+
+    <script>
+        w3.slideshow(".nature", 3500);
+    </script>
+
+    <br>
+    <p class="lead">Support Team</p>
+    <div class="container">
+        <div class="card-deck mb-3 text-center">
+            <div class="card mb-4 shadow-sm">
+                <div class="card-header">
+                    <h4 class="my-0 font-weight-normal">Eduard Toth</h4>
+                </div>
+                <div class="card-body">
+                    <img src="../static/pictures/1.png" width="120px" height="120px">
+                    <ul class="list-unstyled mt-3 mb-4">
+                        <li>Email support</li>
+                        <li>Help center access</li>
+                    </ul>
+                    <h1 class="card-title pricing-card-title">toth@bome.ro</h1>
+                </div>
+            </div>
+            <div class="card mb-4 shadow-sm">
+                <div class="card-header">
+                    <h4 class="my-0 font-weight-normal">Claudia Budimir</h4>
+                </div>
+                <div class="card-body">
+                    <img src="../static/pictures/2.png" width="120px" height="120px">
+                    <ul class="list-unstyled mt-3 mb-4">
+                        <li>Priority email support</li>
+                        <li>Help center access</li>
+                    </ul>
+                    <h1 class="card-title pricing-card-title">budi@bome.ro</h1>
+                </div>
+            </div>
+            <div class="card mb-4 shadow-sm">
+                <div class="card-header">
+                    <h4 class="my-0 font-weight-normal">Dragan Vitomir</h4>
+                </div>
+                <div class="card-body">
+                    <img src="../static/pictures/3.png" width="120px" height="120px">
+                    <ul class="list-unstyled mt-3 mb-4">
+                        <li>Phone and email support</li>
+                        <li>+40 0730376140</li>
+                    </ul>
+                    <h1 class="card-title pricing-card-title">drvit@bome.ro</h1>
                 </div>
             </div>
         </div>
-        <script>
-            w3.slideshow(".nature", 3500);
-        </script>
+    </div>
+    <script>
+        w3.slideshow(".nature", 3500);
+    </script>
 
-        <div class="footer">
-            <p class="footer-company-name">BankOnMe © 2020</p>
-        </div>
-        <!-- Optional JavaScript -->
-        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-        <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+    <div class="footer">
+        <p class="footer-company-name">BankOnMe © 2020</p>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
             integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
             crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
             integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
             crossorigin="anonymous"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
             integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
             crossorigin="anonymous"></script>
 
