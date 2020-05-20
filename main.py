@@ -17,7 +17,7 @@ from flask_mail import Message
 app = Flask(__name__)
 
 app.config['SECRET_KEY'] = '5791628bb0b13ce0c676dfde280ba245'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://Edy:Edy_password@localhost/Bank2'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:root@localhost/bank'
 db = SQLAlchemy(app)
 app.config['MAIL_SERVER'] = 'smtp.googlemail.com'
 app.config['MAIL_PORT'] = 587

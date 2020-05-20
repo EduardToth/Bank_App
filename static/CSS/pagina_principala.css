@@ -5,11 +5,13 @@ body {font-family: Arial;}
   overflow: hidden;
   background-color:#343a40;
 }
+
 .navbar
 {
   overflow: hidden;
   background-color:#343a40;
 }
+
 /* Style the buttons inside the tab */
 .tab button {
   background-color:#343a40;
@@ -74,6 +76,7 @@ body {font-family: Arial;}
   background-color: #0069d9;
   border-color: #0062cc
 }
+
 /* Change background color of buttons on hover */
 .tab button:hover {
   color: #fff;
@@ -88,7 +91,6 @@ body {font-family: Arial;}
   border-color: #0062cc
 }
 
-
 /* Style the tab content */
 .tabcontent {
   display: none;
@@ -102,6 +104,7 @@ body {font-family: Arial;}
   width:100%;
   text-align: center;
 }
+
 .inner
 {
   display: inline-block;
