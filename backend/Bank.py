@@ -17,7 +17,7 @@ class Bank:
         my_cursor = db.cursor()
 
         try:
-            my_cursor.execute("SELECT password FROM Clients")
+            my_cursor.execute("SELECT password FROM clients")
         except BaseException as ex:
             db.close()
             raise Exception("Something went wrong. Please try again later")
@@ -86,7 +86,7 @@ class Bank:
 
         try:
             mycursor.execute(
-                "SELECT * FROM Clients WHERE name=%s AND password=%s", (nameP, passwordHexa))
+                "SELECT * FROM clients WHERE name=%s AND password=%s", (nameP, passwordHexa))
         except BaseException as exception:
             print(str(exception))
             mydb.close()
@@ -111,7 +111,7 @@ class Bank:
         mycursor = database_connection.cursor()
 
         try:
-            mycursor.execute("SELECT * FROM Admins WHERE name=%s AND password=%s",
+            mycursor.execute("SELECT * FROM admins WHERE name=%s AND password=%s",
                              (nameP, password_in_hexa))
         except BaseException as exception:
             database_connection.close()
@@ -129,7 +129,7 @@ class Bank:
         mycursor = mydb.cursor()
 
         try:
-            mycursor.execute("SELECT login_id FROM Clients")
+            mycursor.execute("SELECT login_id FROM clients")
             mydb.close()
         except BaseException as exception:
             mydb.close()
@@ -149,7 +149,7 @@ class Bank:
         my_cursor = db_connection.cursor()
 
         try:
-            my_cursor.execute("SELECT * FROM Clients WHERE login_id = %s", login_id)
+            my_cursor.execute("SELECT * FROM clients WHERE login_id = %s", login_id)
         except BaseException as exception:
             db_connection.close()
             raise Exception("Something went wrong. Please try again later")
@@ -165,7 +165,7 @@ class Bank:
         mycursor = mydb.cursor()
         try:
             mycursor.execute(
-                "SELECT blocked FROM Clients WHERE login_id = %s", login_id)
+                "SELECT blocked FROM clients WHERE login_id = %s", login_id)
             mydb.close()
         except BaseException as exception:
             mydb.close()
@@ -180,7 +180,7 @@ class Bank:
         my_cursor = my_database.cursor()
 
         try:
-            my_cursor.execute("SELECT login_id FROM Clients")
+            my_cursor.execute("SELECT login_id FROM clients")
             my_database.close()
         except BaseException as exception:
             my_database.close()
@@ -194,7 +194,7 @@ class Bank:
         mydb = Bank.createConnection()
         mycursor = mydb.cursor()
         try:
-            mycursor.execute("SELECT * FROM Admins WHERE id = %s", login_id)
+            mycursor.execute("SELECT * FROM admins WHERE id = %s", login_id)
             mydb.close()
         except BaseException as exception:
             mydb.close()
@@ -211,7 +211,7 @@ class Bank:
         mycursor = database_connection.cursor()
 
         try:
-            mycursor.execute("SELECT is_logged FROM Clients WHERE login_id = %s", login_id)
+            mycursor.execute("SELECT is_logged FROM clients WHERE login_id = %s", login_id)
             database_connection.close()
             is_logged_list = mycursor.fetchall()
             return is_logged_list[0][0]
@@ -224,7 +224,7 @@ class Bank:
         mycursor = database_connection.cursor()
 
         try:
-            mycursor.execute("SELECT is_logged FROM Admins WHERE id = %s", login_id)
+            mycursor.execute("SELECT is_logged FROM admins WHERE id = %s", login_id)
             database_connection.close()
             is_logged_list = mycursor.fetchall()
             return is_logged_list[0][0]

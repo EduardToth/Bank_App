@@ -17,7 +17,7 @@ class Admin:
         my_cursor = my_database.cursor()
 
         try:
-            my_cursor.execute("SELECT login_id FROM Clients")
+            my_cursor.execute("SELECT login_id FROM clients")
             my_database.close()
         except Exception as exception:
             my_database.close()
@@ -33,7 +33,7 @@ class Admin:
 
     def __password_exist_in_database(self, mydb, password_introduced):
         mycursor = mydb.cursor()
-        mycursor.execute("SELECT password FROM Admins")
+        mycursor.execute("SELECT password FROM admins")
 
         myresult = mycursor.fetchall()
 
@@ -51,7 +51,7 @@ class Admin:
         mycursor = mydb.cursor()
 
         try:
-            mycursor.execute("INSERT INTO Admins (name, password) VALUES (%s, %s)", (name, password))
+            mycursor.execute("INSERT INTO admins (name, password) VALUES (%s, %s)", (name, password))
             mydb.commit()
         except BaseException as e:
             mydb.close()
@@ -92,7 +92,7 @@ class Admin:
         my_cursor = database_connection.cursor()
 
         try:
-            my_cursor.execute("UPDATE Clients SET blocked = %s WHERE login_id=%s", (True, login_id))
+            my_cursor.execute("UPDATE clients SET blocked = %s WHERE login_id=%s", (True, login_id))
             database_connection.commit()
 
             result = my_cursor.rowcount
@@ -116,7 +116,7 @@ class Admin:
         my_cursor = database_connection.cursor()
 
         try:
-            my_cursor.execute("UPDATE Clients SET blocked = %s WHERE login_id=%s", (False, login_id))
+            my_cursor.execute("UPDATE clients SET blocked = %s WHERE login_id=%s", (False, login_id))
             database_connection.commit()
 
             result = my_cursor.rowcount
@@ -137,7 +137,7 @@ class Admin:
         my_cursor = database_connection.cursor()
 
         try:
-            my_cursor.execute("UPDATE Admins SET is_logged = %s WHERE id=%s", (is_logged, self.__login_id))
+            my_cursor.execute("UPDATE admins SET is_logged = %s WHERE id=%s", (is_logged, self.__login_id))
             database_connection.commit()
 
             database_connection.close()
