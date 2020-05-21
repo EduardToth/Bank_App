@@ -40,7 +40,7 @@ class Client:
             if Bank.Bank.is_blocked_the_account_with_id(self.__login_id):
                 raise ClientException("The account is blocked. Could not deposit money")
 
-            my_cursor.execute("UPDATE Clients SET moneyOwned = %s WHERE name = %s AND password = %s",
+            my_cursor.execute("UPDATE clients SET moneyOwned = %s WHERE name = %s AND password = %s",
                               (crypt(self.__depositedMoney), self.__userName, password_in_hexa))
             db_connection.commit()
 
@@ -70,7 +70,7 @@ class Client:
         try:
             if Bank.Bank.is_blocked_the_account_with_id(self.__login_id):
                 raise ClientException("The account is blocked. Could not withdraw money")
-            mycursor.execute("UPDATE Clients SET moneyOwned = %s WHERE name = %s AND password = %s",
+            mycursor.execute("UPDATE clients SET moneyOwned = %s WHERE name = %s AND password = %s",
                              (crypt(self.__depositedMoney), self.__userName, passwordHexa))
             mydb.commit()
 
@@ -93,7 +93,7 @@ class Client:
         mycursor = mydb.cursor()
 
         try:
-            mycursor.execute("UPDATE Clients SET debt = %s WHERE name = %s AND password = %s",
+            mycursor.execute("UPDATE clients SET debt = %s WHERE name = %s AND password = %s",
                              (crypt(self.__moneyBorrowed), self.__userName, passwordHexa))
             mydb.commit()
             mydb.close()
@@ -124,7 +124,7 @@ class Client:
 
             self.__depositedMoney += money_requested
             self.__moneyBorrowed += money_requested
-            my_cursor.execute("UPDATE Clients SET moneyOwned = %s WHERE password=%s",
+            my_cursor.execute("UPDATE clients SET moneyOwned = %s WHERE password=%s",
                               (crypt(self.__depositedMoney), self.__password))
             database_connection.commit()
 
@@ -167,7 +167,7 @@ class Client:
             self.__update_debt()
 
             self.__depositedMoney -= debt.get_money_to_pay_monthly()
-            mycursor.execute("UPDATE Clients SET moneyOwned = %s WHERE login_id=%s",
+            mycursor.execute("UPDATE clients SET moneyOwned = %s WHERE login_id=%s",
                              (crypt(self.__depositedMoney), self.__login_id))
             mydb.commit()
             mydb.close()
@@ -221,7 +221,7 @@ class Client:
         my_cursor = database_connection.cursor()
 
         try:
-            my_cursor.execute("UPDATE Clients SET is_logged = %s WHERE login_id=%s", (is_logged, self.__login_id))
+            my_cursor.execute("UPDATE clients SET is_logged = %s WHERE login_id=%s", (is_logged, self.__login_id))
             database_connection.commit()
 
             database_connection.close()
@@ -254,7 +254,7 @@ class Client:
         try:
             database_connection = Bank.Bank.createConnection()
             my_cursor = database_connection.cursor()
-            my_cursor.execute("INSERT INTO Clients (name , password,"
+            my_cursor.execute("INSERT INTO clients (name , password,"
                               " moneyOwned , debt , login_id , blocked, is_logged,"
                               " postal_code, phone_number, nationality, email, monthly_income)"
                               "VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
