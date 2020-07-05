@@ -8,7 +8,6 @@
     <link href="../static/CSS/universal.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="../static/CSS/pagina_principala.css">
     <link rel="stylesheet" href="../static/CSS/client&admin_style.css">
-    <script src="../static/JavaScript/slide_show.js"></script>
     <script src="../static/JavaScript/utility_module.js"></script>
     <script src="../static/JavaScript/navbar_customizing.js"></script>
 
@@ -33,6 +32,8 @@
         </button>
         <button class="tablinks" onclick="executeButton(event, 'Unblock client account')">Unblock client
             account
+        </button>
+        <button class="tablinks" onclick="executeButton(event, 'Create admin account')">Create admin account
         </button>
         <button type="button" class="tablinks"
                 onclick="window.location.href='home.html?id={{ login_id }}&mode=2';">Log out
@@ -137,11 +138,42 @@
         <br>
     </div>
 
+    <div id="Create admin account" class="tabcontent" style="display: none;">
+        <center>
+            <form action="admin.html" method="post">
+                <label class="hidden">
+                    <input type="radio" name="login_id" value="{{ login_id }}" checked="checked">
+                </label><br><br><br><br>
+                <h1>Create new admin account</h1>
+                <div class="container">
+
+                    <input type="text" class="form-control" placeholder="Enter the name of the admin"
+                           name="admin-name" required=""><br>
+
+                    <input type="text" class="form-control" placeholder="Enter the email of the admin"
+                           name="email" required=""><br>
+
+                    <input type="password" class="form-control" placeholder="Password" name="password"
+                           required=""><br>
+                    <input type="password" class="form-control" placeholder="Confirm password" name="password_again"
+                           required="" oninput="check(this)">
+
+                    <button type="submit" class="button_style">Create</button>
+
+                    <label class="hidden">
+                        <input type="radio" name="post-type" value="create-admin" checked="checked">
+                    </label>
+                </div>
+            </form>
+        </center>
+        <br>
+    </div>
+
+
     <div class="footer">
         <p class="footer-company-name">BankOnMe © 2020</p>
     </div>
 </div>
 
 </body>
-
 </html>

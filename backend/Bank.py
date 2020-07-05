@@ -269,3 +269,25 @@ class Bank:
         if money_requested / period_in_months <= the_money_the_client_could_pay:
             return True
         return False
+
+
+    @staticmethod
+    def get_last_admin_login_id():
+        mydb = Bank.createConnection()
+        mycursor = mydb.cursor()
+
+        try:
+            mycursor.execute("SELECT id FROM admins")
+            mydb.close()
+        except BaseException as exception:
+            print( str(exception ) )
+            mydb.close()
+            raise Exception("Something went wrong. Please try again later")
+
+        login_ids = mycursor.fetchall()
+        last_login_id = 0
+        for login_id in reversed(login_ids):
+            if last_login_id < login_id[0]:
+                last_login_id = login_id[0]
+
+        return last_login_id

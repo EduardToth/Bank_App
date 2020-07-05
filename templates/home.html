@@ -10,18 +10,6 @@
     <link rel="stylesheet" href="../static/CSS/pagina_principala.css">
     <link rel="stylesheet" href="../static/CSS/home_style.css">
     <script src="../static/JavaScript/navbar_customizing.js"></script>
-{#    <style>#}
-{#        input::-webkit-outer-spin-button,#}
-{#        input::-webkit-inner-spin-button {#}
-{#            -webkit-appearance: none;#}
-{#            margin: 0;#}
-{#        }#}
-{##}
-{#        /* Firefox */#}
-{#        input[type=number] {#}
-{#            -moz-appearance: textfield;#}
-{#        }#}
-{#    </style>#}
 </head>
 
 <body>
@@ -212,9 +200,6 @@
                     </label>
 
                     <button type="submit" class="btn btn-success btn-lg btn-block">Login</button>
-                    <small class="text-muted ml-2">
-                        <a href="{{ url_for('reset_request_client') }}">Forgot Password?</a>
-                    </small>
                 </div>
             </center>
         </div>
@@ -254,7 +239,7 @@
                                required=""><br>
                         <input type="password" class="form-control" placeholder="Password" name="password"
                                required=""><br>
-                        <input type="password" class="form-control" placeholder="Confirm password" name="password"
+                        <input type="password" class="form-control" placeholder="Confirm password" name="password_again"
                                required="">
                     </div>
                     <br>
@@ -291,9 +276,6 @@
                     </label>
 
                     <button type="submit" class="btn btn-success btn-lg btn-block">Login</button>
-                    <small class="text-muted ml-2">
-                        <a href="{{ url_for('reset_request_admin') }}">Forgot Password?</a>
-                    </small>
                 </div>
             </center>
         </div>
@@ -301,63 +283,20 @@
 </div>
 
 <br>
-<p class="lead">Support Team</p>
-<div class="container">
-    <div class="card-deck mb-3 text-center">
-        <div class="card mb-4 shadow-sm">
-            <div class="card-header">
-                <h4 class="my-0 font-weight-normal">Eduard Toth</h4>
-            </div>
-            <div class="card-body">
-                <img src="../static/pictures/1.png" width="120px" height="120px">
-                <ul class="list-unstyled mt-3 mb-4">
-                    <li>Email support</li>
-                    <li>Help center access</li>
-                </ul>
-                <h1 class="card-title pricing-card-title">toth@bome.ro</h1>
-            </div>
-        </div>
-        <div class="card mb-4 shadow-sm">
-            <div class="card-header">
-                <h4 class="my-0 font-weight-normal">Claudia Budimir</h4>
-            </div>
-            <div class="card-body">
-                <img src="../static/pictures/2.png" width="120px" height="120px">
-                <ul class="list-unstyled mt-3 mb-4">
-                    <li>Priority email support</li>
-                    <li>Help center access</li>
-                </ul>
-                <h1 class="card-title pricing-card-title">budi@bome.ro</h1>
-            </div>
-        </div>
-        <div class="card mb-4 shadow-sm">
-            <div class="card-header">
-                <h4 class="my-0 font-weight-normal">Dragan Vitomir</h4>
-            </div>
-            <div class="card-body">
-                <img src="../static/pictures/3.png" width="120px" height="120px">
-                <ul class="list-unstyled mt-3 mb-4">
-                    <li>Phone and email support</li>
-                    <li>+40 0730376140</li>
-                </ul>
-                <h1 class="card-title pricing-card-title">drvit@bome.ro</h1>
-            </div>
-        </div>
-    </div>
 
-    <div class="footer">
-        <p class="footer-company-name">BankOnMe © 2020</p>
-    </div>
+<div class="footer">
+    <p class="footer-company-name">BankOnMe © 2020</p>
+</div>
 
-     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
-            integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
-            crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-            integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
-            crossorigin="anonymous"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
-            integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
-            crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
 </body>
 
 </html>

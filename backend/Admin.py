@@ -1,8 +1,10 @@
+import hashlib
 import os
 
 from . import Bank
 from .ClientException import ClientException
 from .encryption import crypt, decrypt
+
 
 class Admin:
     def __init__(self, name, password, homeBank, login_id, email):
@@ -43,18 +45,25 @@ class Admin:
                 exist = True
         return exist
 
-    def create_admin_account(self, name, password):
+    def create_admin_account(self, name, password, email):
         mydb = Bank.Bank.createConnection()
+        hashed_password = hashlib.md5(password.encode("utf-8"))
+        password_in_hexa = hashed_password.hexdigest()
         if self.__password_exist_in_database(mydb, password) == 1:
-            raise ClientException("The client already exist in database")
+            raise ClientException("The admin already exist in database")
 
         mycursor = mydb.cursor()
 
         try:
-            mycursor.execute("INSERT INTO admins (name, password) VALUES (%s, %s)", (name, password))
+            id = Bank.Bank.get_last_admin_login_id()
+            id += 1
+            mycursor.execute("INSERT INTO admins (name, password, id, is_logged, email)"
+                             " VALUES (%s, %s, %s, %s, %s)",
+                             (name, password_in_hexa, id, 0, email))
             mydb.commit()
         except BaseException as e:
             mydb.close()
+            print(str(e))
             raise Exception("Something went wrong. Please try again later")
         finally:
             mydb.close()
@@ -63,11 +72,11 @@ class Admin:
         bank_sCredit = self.__homeBank.get_total_ammount_of_money()
         bank_sCredit += money
 
-        my_db_connection = Bank.Bank.createConnection ( )
-        mycursor = my_db_connection.cursor ( )
-        try :
-            mycursor.execute ( "UPDATE bank SET moneyOwned = %s WHERE name='ING'" , crypt(bank_sCredit) )
-            my_db_connection.commit ( )
+        my_db_connection = Bank.Bank.createConnection()
+        mycursor = my_db_connection.cursor()
+        try:
+            mycursor.execute("UPDATE bank SET moneyOwned = %s WHERE name='ING'", crypt(bank_sCredit))
+            my_db_connection.commit()
 
             result = mycursor.rowcount
             if result == 0:

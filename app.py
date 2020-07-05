@@ -2,78 +2,30 @@ import os
 
 import flask
 
-from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
-from flask_sqlalchemy import SQLAlchemy
-from flask import Flask, render_template, url_for, flash, redirect, request
-from backend.forms import ResetPasswordForm, RequestResetForm
+from flask import Flask, render_template, request
 from backend.Bank import Bank
 from backend.ClientException import ClientException
-import hashlib
-
-from flask_mail import Mail
-
-from flask_mail import Message
 
 app = Flask(__name__)
 
-app.config['SECRET_KEY'] = '5791628bb0b13ce0c676dfde280ba245'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://garbanlarisa:madalina_111@lefti.cm.upt.ro/lefti_garbanlarisa'
-db = SQLAlchemy(app)
-app.config['MAIL_SERVER'] = 'smtp.googlemail.com'
-app.config['MAIL_PORT'] = 587
-app.config['MAIL_USE_TLS'] = True
-app.config['MAIL_USERNAME'] = 'bankappCDE'
-app.config['MAIL_PASSWORD'] = 'bankapp1234'
-mail = Mail(app)
 
+def handle_create_admin_request(bank):
+    name = request.form.get('admin-name')
+    password = request.form.get('password')
+    password_again = request.form.get('password_again')
 
-class Admins(db.Model):
-    name = db.Column(db.String(50), nullable=False)
-    password = db.Column(db.String(50), unique=True)
-    id = db.Column(db.Integer, unique=True, primary_key=True)
-    email = db.Column(db.String(50))
-    is_logged = db.Column(db.Integer)
+    if not(password == password_again):
+        return render_failure_template("The passwords introduced did not match")
 
-    def get_reset_token(self, expires_sec=1800):
-        s = Serializer(app.config['SECRET_KEY'], expires_sec)
-        return s.dumps({'user_id': self.id}).decode('utf-8')
+    host_admin_login_id = int(request.form.get("login_id"))
+    email = request.form.get('email')
 
-    @staticmethod
-    def verify_reset_token(token):
-        s = Serializer(app.config['SECRET_KEY'])
-        try:
-            user_id = s.loads(token)['user_id']
-        except:
-            return None
-        return Admins.query.get(user_id)
-
-
-class Clients(db.Model):
-    name = db.Column(db.String(50), nullable=False)
-    password = db.Column(db.String(255), unique=True)
-    moneyOwned = db.Column(db.Integer)
-    debt = db.Column(db.Integer)
-    login_id = db.Column(db.Integer, unique=True, primary_key=True)
-    blocked = db.Column(db.Integer)
-    is_logged = db.Column(db.Integer)
-    postal_code = db.Column(db.String(50))
-    nationality = db.Column(db.String(50))
-    phone_number = db.Column(db.String(50))
-    email = db.Column(db.String(50))
-    monthly_income = db.Column(db.Integer)
-
-    def get_reset_token(self, expires_sec=1800):
-        s = Serializer(app.config['SECRET_KEY'], expires_sec)
-        return s.dumps({'user_id': self.login_id}).decode('utf-8')
-
-    @staticmethod
-    def verify_reset_token(token):
-        s = Serializer(app.config['SECRET_KEY'])
-        try:
-            user_id = s.loads(token)['user_id']
-        except:
-            return None
-        return Clients.query.get(user_id)
+    try:
+        admin = bank.get_admin_after_the_login_id(host_admin_login_id)
+        admin.create_admin_account(name, password, email)
+        return render_success_template("Account created")
+    except BaseException as exception:
+        return render_failure_template(str(exception))
 
 
 def render_success_template(success_message):
@@ -87,6 +39,9 @@ def render_failure_template(error_message):
 def handle_client_register_request(bank):
     name = request.form.get('name')
     password = request.form.get('password')
+    password_again  = request.form.get('password_again')
+    if not(password == password_again):
+        return render_failure_template('The passwords introduced did not match')
     postal_code = request.form.get('address')
     phone_number = request.form.get('phone')
     nationality = request.form.get('nationality')
@@ -323,7 +278,8 @@ def handle_admin_request():
             return handle_block_client_account_request(bank)
         elif request.form.get('post-type') == 'unblock-client':
             return handle_unblock_client_account_request(bank)
-
+        elif request.form.get('post-type') == 'create-admin':
+            return handle_create_admin_request(bank)
         return render_failure_template('Something went wrong. Please try again later')
     else:
         try:
@@ -351,70 +307,6 @@ def render_home_page_request():
             return render_template('home.html')
 
     return render_template('home.html')
-
-
-def send_reset_email(user):
-    token = user.get_reset_token()
-    msg = Message('Password Reset Request',
-                  sender='noreply@demo.com',
-                  recipients=[user.email])
-    msg.body = f'''To reset your password, visit the following link:
-{url_for('.reset_token', token=token, user=user, _external=True)}
-If you did not make this request then simply ignore this email and no changes will be made.
-'''
-    mail.send(msg)
-
-
-@app.route("/reset_password", methods=['GET', 'POST'])
-def reset_request_client():
-    form = RequestResetForm()
-    if form.validate_on_submit():
-        client = Clients.query.filter_by(email=form.email.data).first()
-        if client is None:
-            flash('That email does not exist in our database!', 'warning')
-        else:
-            send_reset_email(client)
-            flash('An email has been sent with instructions to reset your password.', 'info')
-            return redirect(url_for('render_home_page_request'))
-    return render_template('reset_request.html', form=form)
-
-
-@app.route("/reset_password/admin", methods=['GET', 'POST'])
-def reset_request_admin():
-    form = RequestResetForm()
-    if form.validate_on_submit():
-        admin = Admins.query.filter_by(email=form.email.data).first()
-        if admin is None:
-            flash('That email does not exist in our database!', 'warning')
-        else:
-            send_reset_email(admin)
-            flash('An email has been sent with instructions to reset your password.', 'info')
-            return redirect(url_for('render_home_page_request'))
-    return render_template('reset_request.html', form=form)
-
-
-@app.route("/reset_password/<token>/<user>", methods=['GET', 'POST'])
-def reset_token(token, user):
-    c = user[1]
-    if c == 'C':
-        user = Clients.verify_reset_token(token)
-    else:
-        user = Admins.verify_reset_token(token)
-    if user is None:
-        flash('That is an invalid or expired token', 'warning')
-        if c == 'C':
-            return redirect(url_for('reset_request_client'))
-        else:
-            return redirect(url_for('reset_request_admin'))
-    form = ResetPasswordForm()
-    if form.validate_on_submit():
-        passwordHashed = hashlib.md5((form.password.data).encode("utf-8"))
-        passwordHexa = passwordHashed.hexdigest()
-        user.password = passwordHexa
-        db.session.commit()
-        flash('Your password has been updated! You are now able to log in', 'success')
-        return redirect(url_for('render_home_page_request'))
-    return render_template('reset_token.html', title='Reset Password', form=form)
 
 
 if __name__ == '__main__':
