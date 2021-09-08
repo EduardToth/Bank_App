@@ -42,7 +42,7 @@ olefile==0.46
 overrides==3.0.0
 pbr==5.4.5
 pexpect==4.8.0
-Pillow==7.1.2
+Pillow==8.3.2
 protobuf==3.12.1
 ptyprocess==0.6.0
 pycparser==2.20
